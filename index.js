@@ -19,8 +19,7 @@ bot.command("weather", async (ctx) => {
   try {
     await ctx.replyWithHTML(text.weatherText);
   } catch (error) {
-    await ctx.reply("Something went wrong...lets try again ! 🤓");
-    console.error(error);
+    await ctx.reply(text.errorMessage);
   }
 });
 
@@ -36,7 +35,6 @@ function getRandomPhotoCommand(category) {
       );
     } catch (error) {
       await ctx.reply(text.errorMessage);
-      console.error(error);
     }
   });
 }
