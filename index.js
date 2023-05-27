@@ -6,20 +6,16 @@ const text = require("./src/constants/constants");
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
 bot.start((ctx) =>
-  ctx.reply(
-    `Hello ${
-      ctx.message.from.first_name ? ctx.message.from.first_name : "stranger"
-    }!`
-  )
+  ctx.reply(`Hello ${ctx.message.from.first_name || "stranger"}!`)
 );
 
 bot.help((ctx) => ctx.reply(text.commands));
 
-bot.command("weather", async (ctx) => {
+bot.command("weather", (ctx) => {
   try {
-    await ctx.replyWithHTML(text.weatherText);
-  } catch (error) {
-    await ctx.reply(text.errorMessage);
+    ctx.replyWithHTML(text.weatherText);
+  } catch {
+    ctx.reply(text.errorMessage);
   }
 });
 
@@ -30,11 +26,11 @@ function getRandomPhotoCommand(category) {
     const randomNumber = Math.round(-0.5 + Math.random() * 201);
     try {
       const responseData = (await axios.get(URL)).data;
-      await ctx.replyWithPhoto(
+      ctx.replyWithPhoto(
         Input.fromURL(responseData.hits[randomNumber].webformatURL)
       );
-    } catch (error) {
-      await ctx.reply(text.errorMessage);
+    } catch {
+      ctx.reply(text.errorMessage);
     }
   });
 }
@@ -60,9 +56,11 @@ bot.on("message", async (ctx) => {
         .join("/")}`,
     });
   } catch (error) {
-    error.response.statusText === "Bad Request"
-      ? await ctx.reply(text.BadRequestMessage)
-      : await ctx.reply(text.errorMessage);
+    if (error.response.statusText === "Bad Request") {
+      ctx.reply(text.BadRequestMessage);
+    } else {
+      ctx.reply(text.errorMessage);
+    }
   }
 });
 
