@@ -1,6 +1,6 @@
 require("dotenv").config();
 const axios = require("axios");
-const { Telegraf, Markup, Input } = require("telegraf");
+const { Telegraf, Input } = require("telegraf");
 const text = require("./src/constants/constants");
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
@@ -19,33 +19,52 @@ bot.command("weather", async (ctx) => {
   try {
     await ctx.replyWithHTML(text.weatherText);
   } catch (error) {
+    await ctx.reply("Something went wrong...lets try again ! 🤓");
     console.error(error);
   }
 });
+
+function getRandomPhotoCommand(category) {
+  const URL = `https://pixabay.com/api/?key=${process.env.PHOTOS_API_KEY}&q=${category}&image_type=photo&per_page=200`;
+
+  bot.command(category, async (ctx) => {
+    const randomNumber = Math.round(-0.5 + Math.random() * 201);
+    try {
+      const responseData = (await axios.get(URL)).data;
+      await ctx.replyWithPhoto(
+        Input.fromURL(responseData.hits[randomNumber].webformatURL)
+      );
+    } catch (error) {
+      await ctx.reply(text.errorMessage);
+      console.error(error);
+    }
+  });
+}
+
+getRandomPhotoCommand("cat");
+getRandomPhotoCommand("dog");
 
 bot.on("message", async (ctx) => {
   const URL = `https://api.weatherapi.com/v1/current.json?key=${process.env.WEATHER_API_KEY} &q=${ctx.message.text}&aqi=no`;
 
   try {
-    const weatherData = (await axios.get(URL)).data;
+    const responseData = (await axios.get(URL)).data;
 
     await ctx.replyWithHTML(
-      `Current weather in ${weatherData.location.name}: <b>${weatherData.current.temp_c}°C ${weatherData.current.condition.text}</b>
+      `Current weather in ${responseData.location.name}: <b>${responseData.current.temp_c}°C ${responseData.current.condition.text}</b>
       `
     );
 
     await ctx.replyWithPhoto({
-      source: `./src/images/${weatherData.current.condition.icon
+      source: `./src/images/${responseData.current.condition.icon
         .split("/")
         .slice(-2)
         .join("/")}`,
     });
   } catch (error) {
     error.response.statusText === "Bad Request"
-      ? await ctx.reply(
-          "Sorry I don't know this place 🙈 Let's try something else !"
-        )
-      : await ctx.reply("Something went wrong...lets try again ! 🤓");
+      ? await ctx.reply(text.BadRequestMessage)
+      : await ctx.reply(text.errorMessage);
   }
 });
 
