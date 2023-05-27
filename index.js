@@ -27,21 +27,25 @@ bot.on("message", async (ctx) => {
   const URL = `https://api.weatherapi.com/v1/current.json?key=${process.env.WEATHER_API_KEY} &q=${ctx.message.text}&aqi=no`;
 
   try {
-    const response = await axios.get(URL);
+    const weatherData = (await axios.get(URL)).data;
 
     await ctx.replyWithHTML(
-      `Current weather in ${response.data.location.name}: <b>${response.data.current.temp_c}°C ${response.data.current.condition.text}</b>
+      `Current weather in ${weatherData.location.name}: <b>${weatherData.current.temp_c}°C ${weatherData.current.condition.text}</b>
       `
     );
 
     await ctx.replyWithPhoto({
-      source: `./src/images/${response.data.current.condition.icon
+      source: `./src/images/${weatherData.current.condition.icon
         .split("/")
         .slice(-2)
         .join("/")}`,
     });
   } catch (error) {
-    console.error(error);
+    error.response.statusText === "Bad Request"
+      ? await ctx.reply(
+          "Sorry I don't know this place 🙈 Let's try something else !"
+        )
+      : await ctx.reply("Something went wrong...lets try again ! 🤓");
   }
 });
 
