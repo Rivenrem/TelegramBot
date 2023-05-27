@@ -1,12 +1,16 @@
 const { Telegraf } = require("telegraf");
-const { message } = require("telegraf/filters");
 require("dotenv").config();
+const helpText = require("./constants");
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
-bot.start((ctx) => ctx.reply("Welcome"));
-bot.help((ctx) => ctx.reply("Send me a sticker"));
-bot.on(message("sticker"), (ctx) => ctx.reply("🤪"));
-bot.hears("hi", (ctx) => ctx.reply("Hey there"));
+bot.start((ctx) =>
+  ctx.reply(
+    `Hello ${
+      ctx.message.from.first_name ? ctx.message.from.first_name : "stranger"
+    }!`
+  )
+);
+bot.help((ctx) => ctx.reply(helpText.commands));
 bot.launch();
 
 process.once("SIGINT", () => bot.stop("SIGINT"));
