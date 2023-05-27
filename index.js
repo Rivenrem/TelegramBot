@@ -13,7 +13,7 @@ bot.help((ctx) => ctx.reply(text.commands));
 
 bot.command("weather", (ctx) => {
   try {
-    ctx.replyWithHTML(text.weatherText);
+    ctx.replyWithHTML(text.weather);
   } catch {
     ctx.reply(text.errorMessage);
   }
@@ -24,6 +24,7 @@ function getRandomPhotoCommand(category) {
 
   bot.command(category, async (ctx) => {
     const randomNumber = Math.round(-0.5 + Math.random() * 201);
+
     try {
       const responseData = (await axios.get(URL)).data;
       ctx.replyWithPhoto(
@@ -57,7 +58,7 @@ bot.on("message", async (ctx) => {
     });
   } catch (error) {
     if (error.response.statusText === "Bad Request") {
-      ctx.reply(text.BadRequestMessage);
+      ctx.reply(text.badRequestMessage);
     } else {
       ctx.reply(text.errorMessage);
     }

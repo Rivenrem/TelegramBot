@@ -5,7 +5,7 @@ const commands = `/help - get a list of commands
 /weather - check the weather
 `;
 
-const weatherText = `
+const weather = `
 Please, tell me the city you want to know the weather 🌤️
 `;
 
@@ -13,11 +13,11 @@ const errorMessage = `
 Something went wrong...lets try again ! 🤓
 `;
 
-const BadRequestMessage = `
+const badRequestMessage = `
 Sorry I don't know this place 🙈 Let's try something else !
 `;
 
 module.exports.commands = commands;
-module.exports.weatherText = weatherText;
+module.exports.weather = weather;
 module.exports.errorMessage = errorMessage;
-module.exports.BadRequestMessage = BadRequestMessage;
+module.exports.badRequestMessage = badRequestMessage;
