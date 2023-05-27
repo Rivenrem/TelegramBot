@@ -2,6 +2,9 @@ require("dotenv").config();
 const axios = require("axios");
 const { Telegraf, Input } = require("telegraf");
 const text = require("./src/constants/constants");
+const {
+  getRandomPhotoCommand,
+} = require("./src/helpers/getRandomPhotoCommand.js");
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
@@ -19,25 +22,8 @@ bot.command("weather", (ctx) => {
   }
 });
 
-function getRandomPhotoCommand(category) {
-  const URL = `https://pixabay.com/api/?key=${process.env.PHOTOS_API_KEY}&q=${category}&image_type=photo&per_page=200`;
-
-  bot.command(category, async (ctx) => {
-    const randomNumber = Math.round(-0.5 + Math.random() * 201);
-
-    try {
-      const responseData = (await axios.get(URL)).data;
-      ctx.replyWithPhoto(
-        Input.fromURL(responseData.hits[randomNumber].webformatURL)
-      );
-    } catch {
-      ctx.reply(text.errorMessage);
-    }
-  });
-}
-
-getRandomPhotoCommand("cat");
-getRandomPhotoCommand("dog");
+getRandomPhotoCommand("cat", bot);
+getRandomPhotoCommand("dog", bot);
 
 bot.on("message", async (ctx) => {
   const URL = `https://api.weatherapi.com/v1/current.json?key=${process.env.WEATHER_API_KEY} &q=${ctx.message.text}&aqi=no`;
