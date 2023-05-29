@@ -7,9 +7,9 @@ export class StartCommand extends Command {
     super(bot);
   }
 
-  handle(): void{
+  handle(): void {
     this.bot.start((ctx) => {
-      ctx.reply(`Hello ${ctx.message.from.first_name || "stranger"}!`)
-    })
+      ctx.reply(`Hello ${ctx.message.from.first_name || "stranger"}!`);
+    });
   }
 }

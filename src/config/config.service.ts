@@ -3,23 +3,22 @@ import { IConfigService } from "./config.interface";
 
 export class ConfigService implements IConfigService {
   private config: DotenvParseOutput;
-  
+
   constructor() {
     const { error, parsed } = config();
     if (error) {
-      throw new Error('There is no .env file')
+      throw new Error("There is no .env file");
     }
     if (!parsed) {
-      throw new Error('.env file is empty')
+      throw new Error(".env file is empty");
     }
     this.config = parsed;
   }
 
   get(key: string): string {
-    const res = this.config[key]
+    const res = this.config[key];
     if (!res) {
-      
-      throw new Error('No key')
+      throw new Error("No key");
     }
     return res;
   }

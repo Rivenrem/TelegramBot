@@ -16,4 +16,3 @@ Something went wrong...lets try again ! 🤓
 export const badRequestMessage = `
 Sorry I don't know this place 🙈 Let's try something else !
 `;
-
