@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "build": "tsc",
+    "tsc": "tsc",
+    "start": "node ./dist/app.js",
     "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,7 +18,13 @@
     "telegraf": "^4.12.2"
   },
   "devDependencies": {
+    "@types/dotenv": "^8.2.0",
+    "@types/node": "^20.2.5",
+    "@typescript-eslint/eslint-plugin": "^5.59.7",
+    "@typescript-eslint/parser": "^5.59.7",
     "dotenv": "^16.0.3",
-    "nodemon": "^2.0.22"
+    "eslint": "^8.41.0",
+    "nodemon": "^2.0.22",
+    "typescript": "^5.0.4"
   }
 }
