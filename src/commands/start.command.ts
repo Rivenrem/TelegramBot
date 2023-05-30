@@ -1,9 +1,9 @@
-import { Telegraf } from "telegraf";
+import { Scenes, Telegraf } from "telegraf";
 import { Command } from "./command.class";
-import { IBotContext } from "../context/context.interface";
+// import { IBotContext } from "../context/context.interface";
 
 export class StartCommand extends Command {
-  constructor(bot: Telegraf<IBotContext>) {
+  constructor(bot: Telegraf<Scenes.WizardContext>) {
     super(bot);
   }
 
