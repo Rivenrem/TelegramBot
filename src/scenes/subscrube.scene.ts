@@ -1,13 +1,13 @@
 import { BaseScene } from "telegraf/typings/scenes";
+import { scheduleWeatherTask } from "../helpers/scheduleeatherTask";
+import { MyContext, sessionData } from "../context/context.interface";
+import { Message } from "typegram";
+import { ScheduledTask } from "node-cron";
 import {
   weatherSubscribtion,
   doneMessage,
   wrongLocationSubscribe,
 } from "../constants/constants";
-import { scheduledWeatherTask } from "../helpers/scheduledWeatherTask";
-import { MyContext, sessionData } from "../context/context.interface";
-import { Message } from "typegram";
-import { ScheduledTask } from "node-cron";
 
 export const subscribeScene = new BaseScene<MyContext>("SUBSCRRIBE_SCENE");
 export let weatherTask: ScheduledTask;
@@ -25,7 +25,7 @@ subscribeScene.on("message", async (ctx) => {
     SD.chatID = ctx.chat.id;
     SD.subscribedLocation = (ctx.message as Message.TextMessage).text;
 
-    weatherTask = scheduledWeatherTask(ctx);
+    weatherTask = scheduleWeatherTask(ctx);
     weatherTask.start();
 
     ctx.reply(doneMessage);

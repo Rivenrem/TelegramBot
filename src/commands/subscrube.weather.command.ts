@@ -1,9 +1,9 @@
 import { Telegraf } from "telegraf";
-import { Command } from "./command.class";
-
-import { doneMessage, notSubscribed } from "../constants/constants";
 import { MyContext } from "../context/context.interface";
+
+import { Command } from "./command.class";
 import { weatherTask } from "../scenes/subscrube.scene";
+import { doneMessage, notSubscribed } from "../constants/constants";
 
 export class WeatherSubscribtion extends Command {
   constructor(bot: Telegraf<MyContext>) {
@@ -11,14 +11,13 @@ export class WeatherSubscribtion extends Command {
   }
 
   handle(): void {
-    this.bot.command("subscribe", async (ctx) => {
-      await ctx.scene.enter("SUBSCRRIBE_SCENE");
+    this.bot.command("subscribe", (ctx) => {
+      ctx.scene.enter("SUBSCRRIBE_SCENE");
     });
 
     this.bot.command("unsubscribe", (ctx) => {
       if (weatherTask) {
         weatherTask.stop();
-        // weatherTask = null;
         ctx.reply(doneMessage);
       } else {
         ctx.reply(notSubscribed);

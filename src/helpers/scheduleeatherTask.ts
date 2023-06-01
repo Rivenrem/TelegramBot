@@ -2,7 +2,7 @@ import cron, { ScheduledTask } from "node-cron";
 import { displayWeather } from "./displayWeather";
 import { MyContext } from "../context/context.interface";
 
-export const scheduledWeatherTask = (ctx: MyContext): ScheduledTask =>
+export const scheduleWeatherTask = (ctx: MyContext): ScheduledTask =>
   cron.schedule(
     "*/1 * * * *",
     () => {
@@ -13,8 +13,6 @@ export const scheduledWeatherTask = (ctx: MyContext): ScheduledTask =>
           ctx.session.chatID,
           "Here is your daily weather ! 🌤"
         );
-      } else {
-        throw new Error();
       }
     },
     { scheduled: true }

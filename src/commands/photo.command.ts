@@ -1,8 +1,8 @@
 import axios from "axios";
-import { Telegraf, Input } from "telegraf";
 import { Command } from "./command.class";
-import { ConfigService } from "../config/config.service";
+import { Telegraf, Input } from "telegraf";
 import { errorMessage } from "../constants/constants";
+import { ConfigService } from "../config/config.service";
 import { MyContext } from "../context/context.interface";
 
 const configService = new ConfigService();

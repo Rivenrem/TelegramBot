@@ -1,17 +1,18 @@
-import { Scenes, Telegraf } from "telegraf";
-import { MyContext } from "./context/context.interface";
+import { Telegraf } from "telegraf";
+import { Stage } from "telegraf/typings/scenes";
 import LocalSession from "telegraf-session-local";
-import { IConfigService } from "./config/config.interface";
+import { MyContext } from "./context/context.interface";
 import { ConfigService } from "./config/config.service";
-import { Command } from "./commands/command.class";
+import { IConfigService } from "./config/config.interface";
+
 import { weatherScene } from "./scenes/weather.scene";
 import { subscribeScene } from "./scenes/subscrube.scene";
-import { Stage } from "telegraf/typings/scenes";
 
+import { Command } from "./commands/command.class";
+import { HelpCommand } from "./commands/help.command";
+import { PhotoCommand } from "./commands/photo.command";
 import { StartCommand } from "./commands/start.command";
 import { WeatherCommand } from "./commands/weather.commmand";
-import { PhotoCommand } from "./commands/photo.command";
-import { HelpCommand } from "./commands/help.command";
 import { WeatherSubscribtion } from "./commands/subscrube.weather.command";
 
 const stage = new Stage<MyContext>([weatherScene, subscribeScene]);

@@ -1,5 +1,5 @@
 import { Context } from "telegraf";
-import { requestWeather } from "./request.weather";
+import { requestWeather } from "./requestWeather";
 import { badRequestMessage } from "../constants/constants";
 
 export const displayWeather = async (ctx: Context, text: string) => {
