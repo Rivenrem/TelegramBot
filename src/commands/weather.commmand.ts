@@ -6,8 +6,8 @@ export class WeatherCommand extends Command {
   }
 
   handle(): void {
-    this.bot.command("weather", (ctx) => {
-      ctx.scene.enter("WEATHER");
+    this.bot.command("weather", async (ctx) => {
+      await ctx.scene.enter("WEATHER_SCENE");
     });
   }
 }

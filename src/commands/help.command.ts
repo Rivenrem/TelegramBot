@@ -1,6 +1,5 @@
 import { Telegraf } from "telegraf";
 import { Command } from "./command.class";
-// import { IBotContext } from "../context/context.interface";
 import { commands } from "../constants/constants";
 import { Scenes } from "telegraf";
 
