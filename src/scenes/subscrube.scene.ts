@@ -1,33 +1,34 @@
 import { BaseScene } from "telegraf/typings/scenes";
-import { Scenes } from "telegraf";
-import { ScheduledTask } from "node-cron";
 import {
   weatherSubscribtion,
   doneMessage,
   wrongLocationSubscribe,
 } from "../constants/constants";
 import { scheduledWeatherTask } from "../helpers/scheduledWeatherTask";
+import { MyContext, sessionData } from "../context/context.interface";
+import { Message } from "typegram";
+import { ScheduledTask } from "node-cron";
 
-export let currentTask: ScheduledTask;
+export const subscribeScene = new BaseScene<MyContext>("SUBSCRRIBE_SCENE");
+export let weatherTask: ScheduledTask;
 
-export const subscribeScene = new BaseScene<Scenes.WizardContext>(
-  "SUBSCRRIBE_SCENE"
-);
-
-subscribeScene.enter(async (ctx) => {
-  await ctx.replyWithHTML(weatherSubscribtion);
+subscribeScene.enter((ctx) => {
+  ctx.replyWithHTML(weatherSubscribtion);
 });
 
 subscribeScene.on("message", async (ctx) => {
   if (!("text" in ctx.message)) {
     ctx.reply(wrongLocationSubscribe);
   } else {
-    const location = ctx.message.text;
+    const SD: sessionData = ctx.session;
 
-    currentTask = scheduledWeatherTask(ctx, ctx.chat?.id, location);
-    currentTask.start();
+    SD.chatID = ctx.chat.id;
+    SD.subscribedLocation = (ctx.message as Message.TextMessage).text;
+
+    weatherTask = scheduledWeatherTask(ctx);
+    weatherTask.start();
 
     ctx.reply(doneMessage);
-    ctx.scene.leave();
   }
+  ctx.scene.leave();
 });

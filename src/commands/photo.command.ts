@@ -3,15 +3,12 @@ import { Telegraf, Input } from "telegraf";
 import { Command } from "./command.class";
 import { ConfigService } from "../config/config.service";
 import { errorMessage } from "../constants/constants";
-import { Scenes } from "telegraf";
+import { MyContext } from "../context/context.interface";
 
 const configService = new ConfigService();
 
 export class PhotoCommand extends Command {
-  constructor(
-    bot: Telegraf<Scenes.WizardContext>,
-    private readonly category: string
-  ) {
+  constructor(bot: Telegraf<MyContext>, private readonly category: string) {
     super(bot);
   }
 

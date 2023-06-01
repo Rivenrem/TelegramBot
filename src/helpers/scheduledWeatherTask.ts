@@ -1,19 +1,18 @@
-import cron from "node-cron";
-import { Context } from "telegraf";
+import cron, { ScheduledTask } from "node-cron";
 import { displayWeather } from "./displayWeather";
+import { MyContext } from "../context/context.interface";
 
-export const scheduledWeatherTask = (
-  ctx: Context,
-  id: number | undefined,
-  location: string
-) =>
+export const scheduledWeatherTask = (ctx: MyContext): ScheduledTask =>
   cron.schedule(
     "*/1 * * * *",
     () => {
-      if (id) {
-        displayWeather(ctx, location);
+      if (ctx.session.chatID && ctx.session.subscribedLocation) {
+        displayWeather(ctx, ctx.session.subscribedLocation);
 
-        ctx.telegram.sendMessage(id, "Here is your daily weather ! 🌤");
+        ctx.telegram.sendMessage(
+          ctx.session.chatID,
+          "Here is your daily weather ! 🌤"
+        );
       } else {
         throw new Error();
       }

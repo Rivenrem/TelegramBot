@@ -1,7 +1,8 @@
-import { Scenes, Telegraf } from "telegraf";
+import { Telegraf } from "telegraf";
 import { Command } from "./command.class";
+import { MyContext } from "../context/context.interface";
 export class WeatherCommand extends Command {
-  constructor(bot: Telegraf<Scenes.WizardContext>) {
+  constructor(bot: Telegraf<MyContext>) {
     super(bot);
   }
 

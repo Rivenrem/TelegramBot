@@ -1,31 +1,24 @@
-import { Telegraf, Scenes } from "telegraf";
+import { Telegraf } from "telegraf";
 import { Command } from "./command.class";
 
-import { currentTask } from "../scenes/subscrube.scene";
-import {
-  errorMessage,
-  doneMessage,
-  notSubscribed,
-} from "../constants/constants";
+import { doneMessage, notSubscribed } from "../constants/constants";
+import { MyContext } from "../context/context.interface";
+import { weatherTask } from "../scenes/subscrube.scene";
 
 export class WeatherSubscribtion extends Command {
-  constructor(bot: Telegraf<Scenes.WizardContext>) {
+  constructor(bot: Telegraf<MyContext>) {
     super(bot);
   }
 
   handle(): void {
     this.bot.command("subscribe", async (ctx) => {
-      try {
-        await ctx.scene.enter("SUBSCRRIBE_SCENE");
-      } catch (e) {
-        console.log(e);
-        ctx.reply(errorMessage);
-      }
+      await ctx.scene.enter("SUBSCRRIBE_SCENE");
     });
 
     this.bot.command("unsubscribe", (ctx) => {
-      if (currentTask) {
-        currentTask.stop();
+      if (weatherTask) {
+        weatherTask.stop();
+        // weatherTask = null;
         ctx.reply(doneMessage);
       } else {
         ctx.reply(notSubscribed);

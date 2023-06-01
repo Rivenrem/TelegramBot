@@ -1,5 +1,6 @@
+import { Scenes, Telegraf } from "telegraf";
+import { MyContext } from "./context/context.interface";
 import LocalSession from "telegraf-session-local";
-import { Telegraf, Scenes } from "telegraf";
 import { IConfigService } from "./config/config.interface";
 import { ConfigService } from "./config/config.service";
 import { Command } from "./commands/command.class";
@@ -13,16 +14,14 @@ import { PhotoCommand } from "./commands/photo.command";
 import { HelpCommand } from "./commands/help.command";
 import { WeatherSubscribtion } from "./commands/subscrube.weather.command";
 
-const stage = new Stage<Scenes.WizardContext>([weatherScene, subscribeScene]);
+const stage = new Stage<MyContext>([weatherScene, subscribeScene]);
 const localSession = new LocalSession({ database: "sessions.json" });
 
 class Bot {
-  bot: Telegraf<Scenes.WizardContext>;
+  bot: Telegraf<MyContext>;
   commands: Command[] = [];
   constructor(private readonly configService: IConfigService) {
-    this.bot = new Telegraf<Scenes.WizardContext>(
-      this.configService.get("BOT_TOKEN")
-    );
+    this.bot = new Telegraf<MyContext>(this.configService.get("BOT_TOKEN"));
     this.bot.use(localSession.middleware());
     this.bot.use(stage.middleware());
   }

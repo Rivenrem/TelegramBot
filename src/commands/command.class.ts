@@ -1,8 +1,8 @@
 import { Telegraf } from "telegraf";
-import { Scenes } from "telegraf";
+import { MyContext } from "../context/context.interface";
 
 export abstract class Command {
-  constructor(public bot: Telegraf<Scenes.WizardContext>) {}
+  constructor(public bot: Telegraf<MyContext>) {}
 
   abstract handle(): void;
 }

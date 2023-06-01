@@ -1,10 +1,10 @@
 import { Telegraf } from "telegraf";
 import { Command } from "./command.class";
 import { commands } from "../constants/constants";
-import { Scenes } from "telegraf";
+import { MyContext } from "../context/context.interface";
 
 export class HelpCommand extends Command {
-  constructor(bot: Telegraf<Scenes.WizardContext>) {
+  constructor(bot: Telegraf<MyContext>) {
     super(bot);
   }
 
