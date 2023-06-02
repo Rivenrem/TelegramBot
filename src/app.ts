@@ -15,12 +15,17 @@ import { StartCommand } from "./commands/start.command";
 import { WeatherCommand } from "./commands/weather.commmand";
 import { WeatherSubscribtion } from "./commands/subscrube.weather.command";
 
+import express from "express";
+import { connectToDatabase } from "./config/database.service";
+import { taskRouter } from "./routes/taskRouter";
+
 const stage = new Stage<MyContext>([weatherScene, subscribeScene]);
 const localSession = new LocalSession({ database: "sessions.json" });
 
 class Bot {
   bot: Telegraf<MyContext>;
   commands: Command[] = [];
+
   constructor(private readonly configService: IConfigService) {
     this.bot = new Telegraf<MyContext>(this.configService.get("BOT_TOKEN"));
     this.bot.use(localSession.middleware());
@@ -28,6 +33,7 @@ class Bot {
   }
 
   init() {
+    console.log("here");
     this.commands = [
       new HelpCommand(this.bot),
       new PhotoCommand(this.bot, "cat"),
@@ -46,3 +52,17 @@ class Bot {
 
 const bot = new Bot(new ConfigService());
 bot.init();
+const app = express();
+
+connectToDatabase()
+  .then(() => {
+    app.use("/ToDos", taskRouter);
+
+    app.listen(27017, () => {
+      console.log(`Server started at https://localhost:27017`);
+    });
+  })
+  .catch((error: Error) => {
+    console.error("Database connection failed", error);
+    process.exit();
+  });

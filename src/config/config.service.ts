@@ -1,11 +1,11 @@
-import { config, DotenvParseOutput } from "dotenv";
 import { IConfigService } from "./config.interface";
+import * as dotenv from "dotenv";
 
 export class ConfigService implements IConfigService {
-  private config: DotenvParseOutput;
+  private config: dotenv.DotenvParseOutput;
 
   constructor() {
-    const { error, parsed } = config();
+    const { error, parsed } = dotenv.config();
     if (error) {
       throw new Error("There is no .env file");
     }
