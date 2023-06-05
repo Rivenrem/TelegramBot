@@ -35,3 +35,7 @@ Please send me the city name for subscription !
 export const notSubscribed = `
 You are not subscribed
 `;
+
+export const taskQuestion = `
+What do you want to do ?
+`;
