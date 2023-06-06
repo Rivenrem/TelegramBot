@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Command } from "./command.class";
 import { Telegraf, Input } from "telegraf";
-import { errorMessage } from "../constants/constants";
+import message from "../constants/constants";
 import { MyContext } from "../context/context.interface";
 import { IConfigService } from "../config/config.interface";
 
@@ -28,7 +28,7 @@ export class PhotoCommand extends Command {
           Input.fromURL(responseData.hits[randomNumber].webformatURL)
         );
       } catch {
-        ctx.reply(errorMessage);
+        ctx.reply(message.error);
       }
     });
   }

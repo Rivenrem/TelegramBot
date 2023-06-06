@@ -6,9 +6,6 @@ export interface sessionData extends Scenes.WizardSession {
   dbObjectID?: string;
   taskToRemind?: string;
 }
-export interface Callback {
-  text: string;
-}
 export interface MyContext extends Scenes.WizardContext, Context {
   session: sessionData;
 }

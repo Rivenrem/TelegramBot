@@ -1,9 +1,10 @@
 import { Telegraf, Markup } from "telegraf";
 import { Command } from "./command.class";
-import { Callback, MyContext } from "../context/context.interface";
-import { taskQuestion } from "../constants/constants";
+import { MyContext } from "../context/context.interface";
+import message from "../constants/constants";
 import taskRepository from "../../repositories/task.repository";
 import { deleteTask } from "../../services/task.service";
+import { ICallback } from "../interfaces/callback.interface";
 
 export class TaskCommand extends Command {
   constructor(bot: Telegraf<MyContext>) {
@@ -12,7 +13,7 @@ export class TaskCommand extends Command {
 
   handle(): void {
     this.bot.command("task", async (ctx) => {
-      await ctx.reply(taskQuestion, {
+      await ctx.reply(message.addTask, {
         ...Markup.inlineKeyboard([
           Markup.button.callback("Get all my tasks 📝", "getAllTasks"),
           Markup.button.callback("Add new task ✏️", "addNewTask"),
@@ -50,7 +51,7 @@ export class TaskCommand extends Command {
     });
 
     this.bot.action("deleteTask", (ctx) => {
-      const callback = ctx.callbackQuery.message as Callback;
+      const callback = ctx.callbackQuery.message as ICallback;
       const taskToDelete = callback.text;
 
       if (ctx.session.dbObjectID) {
@@ -60,7 +61,7 @@ export class TaskCommand extends Command {
     });
 
     this.bot.action("remindAboutTask", async (ctx) => {
-      const callback = ctx.callbackQuery.message as Callback;
+      const callback = ctx.callbackQuery.message as ICallback;
       const taskToRemind = callback.text;
 
       ctx.session.taskToRemind = taskToRemind;

@@ -1,6 +1,6 @@
 import { Context } from "telegraf";
 import { requestWeather } from "./requestWeather";
-import { badRequestMessage } from "../constants/constants";
+import message from "../constants/constants";
 
 export const displayWeather = async (ctx: Context, text: string) => {
   try {
@@ -18,7 +18,7 @@ export const displayWeather = async (ctx: Context, text: string) => {
     });
   } catch (error) {
     if (error instanceof Error) {
-      await ctx.reply(badRequestMessage);
+      await ctx.reply(message.badRequest);
     } else console.log(error);
   }
 };

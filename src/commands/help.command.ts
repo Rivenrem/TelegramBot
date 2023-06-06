@@ -1,6 +1,6 @@
 import { Telegraf } from "telegraf";
 import { Command } from "./command.class";
-import { commands } from "../constants/constants";
+import message from "../constants/constants";
 import { MyContext } from "../context/context.interface";
 
 export class HelpCommand extends Command {
@@ -9,6 +9,6 @@ export class HelpCommand extends Command {
   }
 
   handle(): void {
-    this.bot.help((ctx) => ctx.reply(commands));
+    this.bot.help((ctx) => ctx.reply(message.commands));
   }
 }

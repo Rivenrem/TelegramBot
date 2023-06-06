@@ -5,13 +5,13 @@ import taskRepository from "../../repositories/task.repository";
 import { update } from "../../services/task.service";
 import { MyContext } from "../context/context.interface";
 
-import { doneMessage, taskQuestion } from "../constants/constants";
+import messages from "../constants/constants";
 
 export const addTaskScene = new WizardScene<MyContext>(
   "ADD_TASK_SCENE",
 
   async (ctx) => {
-    ctx.reply(taskQuestion);
+    ctx.reply(messages.addTask);
     return ctx.wizard.next();
   },
 
@@ -27,7 +27,7 @@ export const addTaskScene = new WizardScene<MyContext>(
         throw new Error();
       }
 
-      ctx.reply(doneMessage);
+      ctx.reply(messages.done);
     } catch (error) {
       console.log(`Can't create new task: ${error}`);
     }

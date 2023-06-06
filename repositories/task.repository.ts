@@ -1,6 +1,6 @@
 import { Task, TaskClass } from "../models/task";
 import { MyContext } from "../src/context/context.interface";
-import { doneMessage } from "../src/constants/constants";
+import message from "../src/constants/constants";
 
 const findById = async (objectId: string): Promise<TaskClass> => {
   const task = await Task.findById(objectId);
@@ -16,7 +16,7 @@ const create = async (
   const task = new Task(taskData);
 
   task.save();
-  ctx.reply(doneMessage);
+  ctx.reply(message.done);
 
   return task;
 };

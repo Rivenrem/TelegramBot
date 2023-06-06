@@ -3,23 +3,19 @@ import { scheduleWeatherTask } from "../helpers/scheduleeatherTask";
 import { MyContext, sessionData } from "../context/context.interface";
 import { Message } from "typegram";
 import { ScheduledTask } from "node-cron";
-import {
-  weatherSubscribtion,
-  doneMessage,
-  wrongLocationSubscribe,
-} from "../constants/constants";
+import message from "../constants/constants";
 import { getHoursAndMinutes } from "../helpers/getHoursAndMinutes";
 
 export const subscribeScene = new WizardScene<MyContext>(
   "SUBSCRRIBE_SCENE",
   async (ctx) => {
-    ctx.reply(weatherSubscribtion);
+    ctx.reply(message.weatherSubscribtion);
     return ctx.wizard.next();
   },
 
   async (ctx) => {
     if (!ctx.message || !("text" in ctx.message)) {
-      ctx.reply(wrongLocationSubscribe);
+      ctx.reply(message.wrongLocationSubscribe);
     } else {
       const SD: sessionData = ctx.session;
 
@@ -42,7 +38,7 @@ export const subscribeScene = new WizardScene<MyContext>(
       weatherTask.start();
 
       ctx.reply(
-        `${doneMessage}You will recive weather in ${ctx.session.subscribedLocation} every day at ${HH}:${MM} !`
+        `${message.done}You will recive weather in ${ctx.session.subscribedLocation} every day at ${HH}:${MM} !`
       );
       ctx.scene.leave();
     } else {
