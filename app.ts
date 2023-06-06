@@ -14,7 +14,8 @@ import { PhotoCommand } from "./src/commands/photo.command";
 import { StartCommand } from "./src/commands/start.command";
 import { WeatherCommand } from "./src/commands/weather.commmand";
 import { WeatherSubscribtion } from "./src/commands/subscrube-weather.command";
-import { startServer } from "./server";
+import express from "express";
+import { connect } from "mongoose";
 import { addTaskScene } from "./src/scenes/addTask.scene";
 import { TaskCommand } from "./src/commands/task.command";
 import { remindTaskScene } from "./src/scenes/remindTask.scene";
@@ -29,6 +30,8 @@ const stage = new Stage<MyContext>([
   suggestScene,
 ]);
 const localSession = new LocalSession({ database: "sessions.json" });
+const app = express();
+const PORT = configService.get("PORT");
 
 class Bot {
   bot: Telegraf<MyContext>;
@@ -62,4 +65,15 @@ class Bot {
 const bot = new Bot(configService);
 bot.init();
 
-startServer();
+(async function () {
+  try {
+    await connect(configService.get("DB_CONN_STRING"));
+    console.log("Connected to DB");
+
+    app.listen(PORT, () => {
+      console.log(`Server started at http://localhost:${PORT}`);
+    });
+  } catch (error) {
+    console.log(`Server start error: ${error}`);
+  }
+})();
