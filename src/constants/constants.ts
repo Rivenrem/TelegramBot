@@ -9,38 +9,28 @@ const commands = `/help - get a list of commands
 /suggest - receive an offer of places where to go in the specified city 
 `;
 
-const weather = `
-Please, tell me the city you want to know the weather 🌤️
-`;
+const weather = "Please, tell me the city you want to know the weather 🌤️";
 
-const weatherSubscribtion = `
-Please, tell me the city you want to subscribe on 🌤️
-`;
+const weatherSubscribtion =
+  "Please, tell me the city you want to subscribe on 🌤️";
 
-const error = `
-Something went wrong, let's try again ⛔
-`;
+const error = "Something went wrong, let's try again ⛔";
 
-const badRequest = `
-Sorry I don't know this place 🙈 Let's try something else !
-`;
+const badRequest =
+  "Sorry I don't know this place 🙈 Let's try something else !";
 
-const done = `
-Done ! ✅
-`;
+const done = "Done ! ✅";
 
 const wrongLocationSubscribe = `
 Sorry, but it's incorrect location.
-Please send me the city name for subscription !
-`;
+Please send me the city name for subscription!`;
 
-const notSubscribed = `
-You are not subscribed
-`;
+const notSubscribed = "You are not subscribed";
 
-const addTask = `
-What do you want to do ?
-`;
+const addTask = "What do you want to do ?";
+
+const weatherSubscribtionTime =
+  "Type at which hour you want to receive your weather. Send to me time in 24-hours format (e.g. 08:23)";
 
 export default {
   commands,
@@ -52,4 +42,5 @@ export default {
   wrongLocationSubscribe,
   notSubscribed,
   addTask,
+  weatherSubscribtionTime,
 };
