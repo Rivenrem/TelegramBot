@@ -3,7 +3,7 @@ import { MyContext } from "context/context.interface";
 import Command from "./command.class";
 
 import { weatherTask } from "scenes/subscrube.scene";
-import message from "constants/constants";
+import messages from "constants/constants";
 
 export default class WeatherSubscribtion extends Command {
   constructor(bot: Telegraf<MyContext>) {
@@ -18,9 +18,9 @@ export default class WeatherSubscribtion extends Command {
     this.bot.command("unsubscribe", (ctx) => {
       if (weatherTask) {
         weatherTask.stop();
-        ctx.reply(message.done);
+        ctx.reply(messages.done);
       } else {
-        ctx.reply(message.notSubscribed);
+        ctx.reply(messages.notSubscribed);
       }
     });
   }

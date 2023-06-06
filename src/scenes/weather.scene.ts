@@ -1,13 +1,13 @@
 import { WizardScene } from "telegraf/typings/scenes";
 import { Message } from "typegram";
 import displayWeather from "helpers/displayWeather";
-import message from "constants/constants";
+import messages from "constants/constants";
 import { MyContext } from "context/context.interface";
 
 export const weatherScene = new WizardScene<MyContext>(
   "WEATHER_SCENE",
   async (ctx) => {
-    await ctx.reply(message.weather);
+    await ctx.reply(messages.weather);
     return ctx.wizard.next();
   },
   async (ctx) => {

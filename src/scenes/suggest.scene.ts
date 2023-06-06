@@ -2,14 +2,13 @@ import { WizardScene } from "telegraf/typings/scenes";
 import { Message } from "typegram";
 import { MyContext } from "context/context.interface";
 import getSuggestion from "helpers/getSuggestion";
+import messages from "constants/constants";
 
 export const suggestScene = new WizardScene<MyContext>(
   "SUGGEST_SCENE",
 
   async (ctx) => {
-    await ctx.reply(
-      "In which city would you like to receive an offer of places ?"
-    );
+    await ctx.reply(messages.suggestCity);
     return ctx.wizard.next();
   },
 

@@ -3,15 +3,13 @@ import { MyContext } from "context/context.interface";
 import { Message } from "typegram";
 import reminderTask from "helpers/createReminde";
 import getHoursAndMinutes from "helpers/getHoursAndMinutes";
-import message from "constants/constants";
+import messages from "constants/constants";
 
 export const remindTaskScene = new WizardScene<MyContext>(
   "REMIND_TASK_SCENE",
 
   async (ctx) => {
-    await ctx.reply(
-      "When to remind you of a task ? Send to me time in 24-hours format (e.g. 08:23)"
-    );
+    await ctx.reply(messages.reminderTime);
     return ctx.wizard.next();
   },
 
@@ -23,12 +21,10 @@ export const remindTaskScene = new WizardScene<MyContext>(
 
       reminderTask(ctx, HH, MM, ctx.session.taskToRemind);
 
-      ctx.reply(
-        `${message.done}You will get a remind about your task at ${HH}:${MM} !`
-      );
+      ctx.reply(`You will get a remind about your task at ${HH}:${MM} !`);
       ctx.scene.leave();
     } else {
-      ctx.reply("Wrong time format.Try again");
+      ctx.reply(messages.wrongTime);
     }
   }
 );

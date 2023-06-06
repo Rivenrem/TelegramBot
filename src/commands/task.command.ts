@@ -7,7 +7,7 @@ import { ICallback } from "interfaces/callback.interface";
 import taskRepository from "repositories/task.repository";
 import { deleteTask } from "services/task.service";
 
-import message from "constants/constants";
+import messages from "constants/constants";
 
 export default class TaskCommand extends Command {
   constructor(bot: Telegraf<MyContext>) {
@@ -16,7 +16,7 @@ export default class TaskCommand extends Command {
 
   handle(): void {
     this.bot.command("task", (ctx) => {
-      ctx.reply(message.addTask, {
+      ctx.reply(messages.addTask, {
         ...Markup.inlineKeyboard([
           Markup.button.callback("Get all my tasks 📝", "getAllTasks"),
           Markup.button.callback("Add new task ✏️", "addNewTask"),
@@ -26,7 +26,7 @@ export default class TaskCommand extends Command {
 
     this.bot.action("getAllTasks", async (ctx) => {
       if (!ctx.session.dbObjectID) {
-        ctx.reply("You don't have tasks. Lets create them ?", {
+        ctx.reply(messages.noTasks, {
           ...Markup.inlineKeyboard([
             Markup.button.callback("yes", "addNewTask"),
           ]),

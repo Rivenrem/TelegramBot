@@ -14,6 +14,9 @@ const weather = "Please, tell me the city you want to know the weather 🌤️";
 const weatherSubscribtion =
   "Please, tell me the city you want to subscribe on 🌤️";
 
+const suggestCity =
+  "In which city would you like to receive an offer of places ?";
+
 const error = "Something went wrong, let's try again ⛔";
 
 const badRequest =
@@ -32,6 +35,12 @@ const addTask = "What do you want to do ?";
 const weatherSubscribtionTime =
   "Type at which hour you want to receive your weather. Send to me time in 24-hours format (e.g. 08:23)";
 
+const reminderTime =
+  "When to remind you of a task ? Send to me time in 24-hours format (e.g. 08:23)";
+
+const noTasks = "You don't have tasks. Lets create them ?";
+const wrongTime = "Wrong time format.Try again";
+
 export default {
   commands,
   weather,
@@ -43,4 +52,8 @@ export default {
   notSubscribed,
   addTask,
   weatherSubscribtionTime,
+  noTasks,
+  reminderTime,
+  wrongTime,
+  suggestCity,
 };

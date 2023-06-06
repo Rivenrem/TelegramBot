@@ -6,25 +6,25 @@ import { MyContext } from "context/context.interface";
 import scheduleWeatherTask from "helpers/scheduleeatherTask";
 import getHoursAndMinutes from "helpers/getHoursAndMinutes";
 
-import message from "constants/constants";
+import messages from "constants/constants";
 
 export const subscribeScene = new WizardScene<MyContext>(
   "SUBSCRRIBE_SCENE",
   async (ctx) => {
-    ctx.reply(message.weatherSubscribtion);
+    ctx.reply(messages.weatherSubscribtion);
     return ctx.wizard.next();
   },
 
   async (ctx) => {
     if (!ctx.message || !("text" in ctx.message)) {
-      ctx.reply(message.wrongLocationSubscribe);
+      ctx.reply(messages.wrongLocationSubscribe);
       return;
     }
 
     ctx.session.chatID = ctx.chat?.id;
     ctx.session.subscribedLocation = (ctx.message as Message.TextMessage).text;
 
-    ctx.reply(message.weatherSubscribtionTime);
+    ctx.reply(messages.weatherSubscribtionTime);
 
     return ctx.wizard.next();
   },
@@ -39,11 +39,11 @@ export const subscribeScene = new WizardScene<MyContext>(
       weatherTask.start();
 
       ctx.reply(
-        `${message.done}You will recive weather in ${ctx.session.subscribedLocation} every day at ${HH}:${MM} !`
+        `You will recive weather in ${ctx.session.subscribedLocation} every day at ${HH}:${MM} !`
       );
       ctx.scene.leave();
     } else {
-      ctx.reply("Wrong time format.Try again");
+      ctx.reply(messages.wrongTime);
     }
   }
 );

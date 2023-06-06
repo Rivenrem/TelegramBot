@@ -2,7 +2,7 @@ import Command from "./command.class";
 import { Telegraf, Input } from "telegraf";
 import { MyContext } from "context/context.interface";
 
-import message from "constants/constants";
+import messages from "constants/constants";
 import getPhotoURL from "helpers/getPhotoURL";
 
 export default class PhotoCommand extends Command {
@@ -17,7 +17,7 @@ export default class PhotoCommand extends Command {
 
         ctx.replyWithPhoto(Input.fromURL(URL));
       } catch {
-        ctx.reply(message.error);
+        ctx.reply(messages.error);
       }
     });
   }
