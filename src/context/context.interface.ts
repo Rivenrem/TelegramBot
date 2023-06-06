@@ -1,10 +1,12 @@
 import { Context, Scenes } from "telegraf";
-import { ObjectId } from "mongoose";
 
 export interface sessionData extends Scenes.WizardSession {
-  subscribedLocation?: string | undefined;
+  subscribedLocation?: string;
   chatID?: number;
-  dbObjectID?: ObjectId;
+  dbObjectID?: string;
+}
+export interface Callback {
+  text: string;
 }
 export interface MyContext extends Scenes.WizardContext, Context {
   session: sessionData;

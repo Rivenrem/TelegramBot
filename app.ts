@@ -15,10 +15,14 @@ import { StartCommand } from "./src/commands/start.command";
 import { WeatherCommand } from "./src/commands/weather.commmand";
 import { WeatherSubscribtion } from "./src/commands/subscrube-weather.command";
 import { startServer } from "./server";
-import { taskScene } from "./src/scenes/task.scene";
+import { addTaskScene } from "./src/scenes/addTask.scene";
 import { TaskCommand } from "./src/commands/task.command";
 
-const stage = new Stage<MyContext>([weatherScene, subscribeScene, taskScene]);
+const stage = new Stage<MyContext>([
+  weatherScene,
+  subscribeScene,
+  addTaskScene,
+]);
 const localSession = new LocalSession({ database: "sessions.json" });
 
 class Bot {
@@ -32,7 +36,6 @@ class Bot {
   }
 
   init() {
-    console.log("here im catacatcac");
     this.commands = [
       new HelpCommand(this.bot),
       new PhotoCommand(this.bot, "cat"),
@@ -40,7 +43,7 @@ class Bot {
       new StartCommand(this.bot),
       new WeatherCommand(this.bot),
       new WeatherSubscribtion(this.bot),
-      new TaskCommand(this.bot, this.configService),
+      new TaskCommand(this.bot),
     ];
     for (const command of this.commands) {
       command.handle();

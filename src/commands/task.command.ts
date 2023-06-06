@@ -1,18 +1,12 @@
 import { Telegraf, Markup } from "telegraf";
 import { Command } from "./command.class";
-import { MyContext } from "../context/context.interface";
-import { doneMessage, taskQuestion } from "../constants/constants";
-import axios, { AxiosResponse } from "axios";
-import { TaskClass } from "../../models/task";
-import { IConfigService } from "../config/config.interface";
-import { getTaskById } from "../../controllers/task-controller";
-import { findById } from "../../repositories/task.repository";
+import { Callback, MyContext } from "../context/context.interface";
+import { taskQuestion } from "../constants/constants";
+import taskRepository from "../../repositories/task.repository";
+import { deleteTask } from "../../services/task.service";
 
 export class TaskCommand extends Command {
-  constructor(
-    bot: Telegraf<MyContext>,
-    private readonly configService: IConfigService
-  ) {
+  constructor(bot: Telegraf<MyContext>) {
     super(bot);
   }
 
@@ -20,19 +14,15 @@ export class TaskCommand extends Command {
     this.bot.command("task", async (ctx) => {
       await ctx.reply(taskQuestion, {
         ...Markup.inlineKeyboard([
-          Markup.button.callback("Get all my tasks", "getAllTasks"),
-          Markup.button.callback("Add new task", "addNewTask"),
+          Markup.button.callback("Get all my tasks 📝", "getAllTasks"),
+          Markup.button.callback("Add new task ✏️", "addNewTask"),
         ]),
       });
     });
 
-    this.bot.action("addNewTask", async (ctx) => {
-      ctx.scene.enter("TASK_SCENE");
-    });
-
     this.bot.action("getAllTasks", async (ctx) => {
       if (!ctx.session.dbObjectID) {
-        ctx.reply("You don't have tasks. Lets create some ?", {
+        ctx.reply("You don't have tasks. Lets create them ?", {
           ...Markup.inlineKeyboard([
             Markup.button.callback("yes", "addNewTask"),
           ]),
@@ -41,32 +31,36 @@ export class TaskCommand extends Command {
       let response;
 
       if (ctx.session.dbObjectID) {
-        response = await findById(ctx.session.dbObjectID);
+        response = await taskRepository.findById(ctx.session.dbObjectID);
       }
 
+      await ctx.reply("Your tasks:");
       response?.tasksArray.map(async (task: string) => {
-        await ctx.reply("Here are your tasks:");
-        await ctx.reply(task, {
+        await ctx.reply(`📌 ${task}`, {
           ...Markup.inlineKeyboard([
-            Markup.button.callback("Delete task", "deleteTask"),
-            Markup.button.callback("Edit task", "editTask"),
+            Markup.button.callback("Delete task ❌", "deleteTask"),
+            Markup.button.callback("Add reminder ⏰", "remindAboutTask"),
           ]),
         });
       });
     });
 
-    // this.bot.action("deleteTask", (ctx) => {
-    //   {
-    //     axios
-    //       .delete(
-    //         `http://localhost:${this.configService.get("PORT")}/tasks/${
-    //           task.id
-    //         }`
-    //       )
-    //       .then(() => {
-    //         ctx.reply(doneMessage);
-    //       });
-    //   }
-    // });
+    this.bot.action("addNewTask", async (ctx) => {
+      ctx.scene.enter("ADD_TASK_SCENE");
+    });
+
+    this.bot.action("deleteTask", (ctx) => {
+      const callback = ctx.callbackQuery.message as Callback;
+      const taskToDelete = callback.text;
+
+      if (ctx.session.dbObjectID) {
+        deleteTask(ctx.session.dbObjectID, taskToDelete);
+        ctx.deleteMessage(ctx.callbackQuery.message?.message_id);
+      }
+    });
+
+    this.bot.action("remindAboutTask", async (ctx) => {
+      ctx.scene.enter("REMIND_TASK_SCENE");
+    });
   }
 }
