@@ -4,10 +4,11 @@ import { MyContext } from "../context/context.interface";
 
 export const scheduleWeatherTask = (
   ctx: MyContext,
-  hour: string
+  HH: string,
+  MM: string
 ): ScheduledTask =>
   cron.schedule(
-    `0 ${hour} * * *`,
+    `${MM} ${HH} * * *`,
     () => {
       if (ctx.session.chatID && ctx.session.subscribedLocation) {
         displayWeather(ctx, ctx.session.subscribedLocation);
@@ -18,5 +19,8 @@ export const scheduleWeatherTask = (
         );
       }
     },
-    { scheduled: true }
+    {
+      scheduled: true,
+      timezone: "Europe/Minsk",
+    }
   );

@@ -17,11 +17,13 @@ import { WeatherSubscribtion } from "./src/commands/subscrube-weather.command";
 import { startServer } from "./server";
 import { addTaskScene } from "./src/scenes/addTask.scene";
 import { TaskCommand } from "./src/commands/task.command";
+import { remindTaskScene } from "./src/scenes/remindTask.scene";
 
 const stage = new Stage<MyContext>([
   weatherScene,
   subscribeScene,
   addTaskScene,
+  remindTaskScene,
 ]);
 const localSession = new LocalSession({ database: "sessions.json" });
 

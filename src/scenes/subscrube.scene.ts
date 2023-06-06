@@ -8,6 +8,7 @@ import {
   doneMessage,
   wrongLocationSubscribe,
 } from "../constants/constants";
+import { timeFormatCheck } from "../helpers/timeformatCheck";
 
 export const subscribeScene = new WizardScene<MyContext>(
   "SUBSCRRIBE_SCENE",
@@ -25,21 +26,23 @@ export const subscribeScene = new WizardScene<MyContext>(
       SD.chatID = ctx.chat?.id;
       SD.subscribedLocation = (ctx.message as Message.TextMessage).text;
       ctx.replyWithHTML(
-        "Type at which hour you want to receive your weather(send hour in diapason 0-23)"
+        "Type at which hour you want to receive your weather(Send to me time in 24-hours format (e.g. 08:23))"
       );
       return ctx.wizard.next();
     }
   },
 
   async (ctx) => {
-    const hour = (ctx.message as Message.TextMessage).text;
+    const time = (ctx.message as Message.TextMessage).text;
 
-    if (hour.match(/^([0-1]?[0-9]|2[0-3])$/gi)) {
-      weatherTask = scheduleWeatherTask(ctx, hour);
+    if (timeFormatCheck(time)) {
+      const [HH, MM] = timeFormatCheck(time) as RegExpMatchArray;
+
+      weatherTask = scheduleWeatherTask(ctx, HH, MM);
       weatherTask.start();
 
       ctx.reply(
-        `${doneMessage}You will recive weather in ${ctx.session.subscribedLocation} every day at ${hour}:00 !`
+        `${doneMessage}You will recive weather in ${ctx.session.subscribedLocation} every day at ${HH}:${MM} !`
       );
       ctx.scene.leave();
     } else {

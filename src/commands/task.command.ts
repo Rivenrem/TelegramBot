@@ -60,6 +60,11 @@ export class TaskCommand extends Command {
     });
 
     this.bot.action("remindAboutTask", async (ctx) => {
+      const callback = ctx.callbackQuery.message as Callback;
+      const taskToRemind = callback.text;
+
+      ctx.session.taskToRemind = taskToRemind;
+
       ctx.scene.enter("REMIND_TASK_SCENE");
     });
   }

@@ -4,6 +4,7 @@ export interface sessionData extends Scenes.WizardSession {
   subscribedLocation?: string;
   chatID?: number;
   dbObjectID?: string;
+  taskToRemind?: string;
 }
 export interface Callback {
   text: string;
