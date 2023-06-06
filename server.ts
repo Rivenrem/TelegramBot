@@ -1,8 +1,6 @@
 import express from "express";
 import { connect } from "mongoose";
-import { ConfigService } from "./src/config/config.service";
-
-const configService = new ConfigService();
+import configService from "./src/config/config.service";
 
 const app = express();
 const PORT = configService.get("PORT");

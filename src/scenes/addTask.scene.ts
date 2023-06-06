@@ -1,8 +1,8 @@
 import { WizardScene } from "telegraf/typings/scenes";
 import { Message } from "typegram";
-import { Task } from "../../models/task";
-import taskRepository from "../../repositories/task.repository";
-import { update } from "../../services/task.service";
+import { Task } from "../models/task";
+import taskRepository from "../repositories/task.repository";
+import { update } from "../services/task.service";
 import { MyContext } from "../context/context.interface";
 
 import messages from "../constants/constants";

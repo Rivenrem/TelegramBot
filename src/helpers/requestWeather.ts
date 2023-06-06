@@ -1,7 +1,5 @@
-import { ConfigService } from "../config/config.service";
+import configService from "../config/config.service";
 import axios from "axios";
-
-const configService = new ConfigService();
 
 export async function requestWeather(category: string) {
   const URL = `https://api.weatherapi.com/v1/current.json?key=${configService.get(

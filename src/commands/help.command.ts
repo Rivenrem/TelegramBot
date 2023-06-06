@@ -1,7 +1,8 @@
 import { Telegraf } from "telegraf";
-import { Command } from "./command.class";
-import message from "../constants/constants";
 import { MyContext } from "../context/context.interface";
+import { Command } from "./command.class";
+
+import message from "../constants/constants";
 
 export class HelpCommand extends Command {
   constructor(bot: Telegraf<MyContext>) {

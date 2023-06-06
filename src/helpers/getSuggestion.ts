@@ -1,8 +1,6 @@
 import axios from "axios";
-import { ConfigService } from "../config/config.service";
+import configService from "../config/config.service";
 import { ISuggestion } from "../interfaces/suggestion.interface";
-
-const configService = new ConfigService();
 
 export const getSuggestion = async (city: string): Promise<ISuggestion> => {
   const responseWithCoordinates = await axios.get(

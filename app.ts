@@ -2,7 +2,7 @@ import { Telegraf } from "telegraf";
 import { Stage } from "telegraf/typings/scenes";
 import LocalSession from "telegraf-session-local";
 import { MyContext } from "./src/context/context.interface";
-import { ConfigService } from "./src/config/config.service";
+import configService from "./src/config/config.service";
 import { IConfigService } from "./src/config/config.interface";
 
 import { weatherScene } from "./src/scenes/weather.scene";
@@ -43,8 +43,8 @@ class Bot {
   init() {
     this.commands = [
       new HelpCommand(this.bot),
-      new PhotoCommand(this.bot, "cat", this.configService),
-      new PhotoCommand(this.bot, "dog", this.configService),
+      new PhotoCommand(this.bot, "cat"),
+      new PhotoCommand(this.bot, "dog"),
       new StartCommand(this.bot),
       new WeatherCommand(this.bot),
       new WeatherSubscribtion(this.bot),
@@ -59,7 +59,7 @@ class Bot {
   }
 }
 
-const bot = new Bot(new ConfigService());
+const bot = new Bot(configService);
 bot.init();
 
 startServer();

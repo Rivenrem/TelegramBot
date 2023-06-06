@@ -1,10 +1,13 @@
 import { Telegraf, Markup } from "telegraf";
 import { Command } from "./command.class";
+
 import { MyContext } from "../context/context.interface";
-import message from "../constants/constants";
-import taskRepository from "../../repositories/task.repository";
-import { deleteTask } from "../../services/task.service";
 import { ICallback } from "../interfaces/callback.interface";
+
+import taskRepository from "../repositories/task.repository";
+import { deleteTask } from "../services/task.service";
+
+import message from "../constants/constants";
 
 export class TaskCommand extends Command {
   constructor(bot: Telegraf<MyContext>) {

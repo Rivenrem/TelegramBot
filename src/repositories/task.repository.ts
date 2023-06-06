@@ -1,11 +1,13 @@
 import { Task, TaskClass } from "../models/task";
-import { MyContext } from "../src/context/context.interface";
-import message from "../src/constants/constants";
+import { MyContext } from "../context/context.interface";
+
+import message from "../constants/constants";
 
 const findById = async (objectId: string): Promise<TaskClass> => {
   const task = await Task.findById(objectId);
 
   if (!task) throw new Error("Task is not found");
+
   return task;
 };
 
@@ -14,8 +16,8 @@ const create = async (
   ctx: MyContext
 ): Promise<TaskClass> => {
   const task = new Task(taskData);
-
   task.save();
+
   ctx.reply(message.done);
 
   return task;
