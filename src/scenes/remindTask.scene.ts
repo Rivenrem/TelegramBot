@@ -2,7 +2,7 @@ import { WizardScene } from "telegraf/typings/scenes";
 import { MyContext } from "../context/context.interface";
 import { Message } from "typegram";
 import { reminderTask } from "../helpers/createReminde";
-import { timeFormatCheck } from "../helpers/timeformatCheck";
+import { getHoursAndMinutes } from "../helpers/getHoursAndMinutes";
 import { doneMessage } from "../constants/constants";
 
 export const remindTaskScene = new WizardScene<MyContext>(
@@ -18,8 +18,8 @@ export const remindTaskScene = new WizardScene<MyContext>(
   (ctx) => {
     const time = (ctx.message as Message.TextMessage).text;
 
-    if (timeFormatCheck(time) && ctx.session.taskToRemind) {
-      const [HH, MM] = timeFormatCheck(time) as RegExpMatchArray;
+    if (getHoursAndMinutes(time) && ctx.session.taskToRemind) {
+      const [HH, MM] = getHoursAndMinutes(time) as RegExpMatchArray;
 
       reminderTask(ctx, HH, MM, ctx.session.taskToRemind);
 

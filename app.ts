@@ -18,12 +18,15 @@ import { startServer } from "./server";
 import { addTaskScene } from "./src/scenes/addTask.scene";
 import { TaskCommand } from "./src/commands/task.command";
 import { remindTaskScene } from "./src/scenes/remindTask.scene";
+import { SuggestCommand } from "./src/commands/suggestPlace.command";
+import { suggestScene } from "./src/scenes/suggest.scene";
 
 const stage = new Stage<MyContext>([
   weatherScene,
   subscribeScene,
   addTaskScene,
   remindTaskScene,
+  suggestScene,
 ]);
 const localSession = new LocalSession({ database: "sessions.json" });
 
@@ -40,12 +43,13 @@ class Bot {
   init() {
     this.commands = [
       new HelpCommand(this.bot),
-      new PhotoCommand(this.bot, "cat"),
-      new PhotoCommand(this.bot, "dog"),
+      new PhotoCommand(this.bot, "cat", this.configService),
+      new PhotoCommand(this.bot, "dog", this.configService),
       new StartCommand(this.bot),
       new WeatherCommand(this.bot),
       new WeatherSubscribtion(this.bot),
       new TaskCommand(this.bot),
+      new SuggestCommand(this.bot),
     ];
     for (const command of this.commands) {
       command.handle();

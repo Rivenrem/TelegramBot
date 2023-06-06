@@ -7,7 +7,7 @@ import { MyContext } from "../context/context.interface";
 export const weatherScene = new WizardScene<MyContext>(
   "WEATHER_SCENE",
   async (ctx) => {
-    await ctx.replyWithHTML(weather);
+    await ctx.reply(weather);
     return ctx.wizard.next();
   },
   async (ctx) => {
