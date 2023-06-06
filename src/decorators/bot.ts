@@ -2,13 +2,13 @@ import { Telegraf } from "telegraf";
 import { Stage } from "telegraf/typings/scenes";
 import LocalSession from "telegraf-session-local";
 
-import Command from "../commands/command.class";
-import commands from "../commands/index";
+import Command from "commands/command.class";
+import commands from "commands/index";
 
-import scenes from "../scenes/index";
+import scenes from "scenes/index";
 
-import { IConfigService } from "../config/config.interface";
-import { MyContext } from "../context/context.interface";
+import { IConfigService } from "config/config.interface";
+import { MyContext } from "context/context.interface";
 
 const stage = new Stage<MyContext>(scenes);
 const localSession = new LocalSession({ database: "sessions.json" });

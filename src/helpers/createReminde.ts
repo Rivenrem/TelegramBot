@@ -1,5 +1,5 @@
 import schedule from "node-schedule";
-import { MyContext } from "../context/context.interface";
+import { MyContext } from "context/context.interface";
 
 export default function reminderTask(
   ctx: MyContext,

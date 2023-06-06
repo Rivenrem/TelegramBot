@@ -1,11 +1,11 @@
 import { WizardScene } from "telegraf/typings/scenes";
 import { Message } from "typegram";
-import { Task } from "../models/task";
-import taskRepository from "../repositories/task.repository";
-import { update } from "../services/task.service";
-import { MyContext } from "../context/context.interface";
+import { Task } from "models/task";
+import taskRepository from "repositories/task.repository";
+import { update } from "services/task.service";
+import { MyContext } from "context/context.interface";
 
-import messages from "../constants/constants";
+import messages from "constants/constants";
 
 export const addTaskScene = new WizardScene<MyContext>(
   "ADD_TASK_SCENE",
@@ -29,7 +29,7 @@ export const addTaskScene = new WizardScene<MyContext>(
 
       ctx.reply(messages.done);
     } catch (error) {
-      console.log(`Can't create new task: ${error}`);
+      console.error(`Can't create new task: ${error}`);
     }
 
     ctx.scene.leave();

@@ -1,9 +1,9 @@
 import { WizardScene } from "telegraf/typings/scenes";
-import { MyContext } from "../context/context.interface";
+import { MyContext } from "context/context.interface";
 import { Message } from "typegram";
-import reminderTask from "../helpers/createReminde";
-import getHoursAndMinutes from "../helpers/getHoursAndMinutes";
-import message from "../constants/constants";
+import reminderTask from "helpers/createReminde";
+import getHoursAndMinutes from "helpers/getHoursAndMinutes";
+import message from "constants/constants";
 
 export const remindTaskScene = new WizardScene<MyContext>(
   "REMIND_TASK_SCENE",

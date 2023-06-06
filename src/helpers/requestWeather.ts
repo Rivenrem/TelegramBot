@@ -1,4 +1,4 @@
-import configService from "../config/config.service";
+import configService from "config/config.service";
 import axios, { AxiosResponse } from "axios";
 
 export default async function requestWeather(

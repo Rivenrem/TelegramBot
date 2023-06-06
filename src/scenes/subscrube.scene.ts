@@ -1,12 +1,12 @@
 import { Message } from "typegram";
 import { ScheduledTask } from "node-cron";
 import { WizardScene } from "telegraf/typings/scenes";
-import { MyContext } from "../context/context.interface";
+import { MyContext } from "context/context.interface";
 
-import scheduleWeatherTask from "../helpers/scheduleeatherTask";
-import getHoursAndMinutes from "../helpers/getHoursAndMinutes";
+import scheduleWeatherTask from "helpers/scheduleeatherTask";
+import getHoursAndMinutes from "helpers/getHoursAndMinutes";
 
-import message from "../constants/constants";
+import message from "constants/constants";
 
 export const subscribeScene = new WizardScene<MyContext>(
   "SUBSCRRIBE_SCENE",
@@ -18,16 +18,15 @@ export const subscribeScene = new WizardScene<MyContext>(
   async (ctx) => {
     if (!ctx.message || !("text" in ctx.message)) {
       ctx.reply(message.wrongLocationSubscribe);
-    } else {
-      ctx.session.chatID = ctx.chat?.id;
-      ctx.session.subscribedLocation = (
-        ctx.message as Message.TextMessage
-      ).text;
-
-      ctx.reply(message.weatherSubscribtionTime);
-
-      return ctx.wizard.next();
+      return;
     }
+
+    ctx.session.chatID = ctx.chat?.id;
+    ctx.session.subscribedLocation = (ctx.message as Message.TextMessage).text;
+
+    ctx.reply(message.weatherSubscribtionTime);
+
+    return ctx.wizard.next();
   },
 
   async (ctx) => {

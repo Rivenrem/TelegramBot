@@ -1,7 +1,7 @@
 import { WizardScene } from "telegraf/typings/scenes";
 import { Message } from "typegram";
-import { MyContext } from "../context/context.interface";
-import getSuggestion from "../helpers/getSuggestion";
+import { MyContext } from "context/context.interface";
+import getSuggestion from "helpers/getSuggestion";
 
 export const suggestScene = new WizardScene<MyContext>(
   "SUGGEST_SCENE",
@@ -22,8 +22,8 @@ export const suggestScene = new WizardScene<MyContext>(
       ctx.replyWithHTML(
         `Suggestion for you: ${place.name}. To know more: follow https://www.wikidata.org/wiki/${place.wikidata}`
       );
-    } catch {
-      console.log;
+    } catch (error) {
+      console.error(error);
     }
     ctx.scene.leave();
   }

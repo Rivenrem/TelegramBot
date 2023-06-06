@@ -1,9 +1,9 @@
 import { Telegraf } from "telegraf";
-import { MyContext } from "../context/context.interface";
+import { MyContext } from "context/context.interface";
 import Command from "./command.class";
 
-import { weatherTask } from "../scenes/subscrube.scene";
-import message from "../constants/constants";
+import { weatherTask } from "scenes/subscrube.scene";
+import message from "constants/constants";
 
 export default class WeatherSubscribtion extends Command {
   constructor(bot: Telegraf<MyContext>) {
