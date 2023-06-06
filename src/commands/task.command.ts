@@ -15,8 +15,8 @@ export default class TaskCommand extends Command {
   }
 
   handle(): void {
-    this.bot.command("task", async (ctx) => {
-      await ctx.reply(message.addTask, {
+    this.bot.command("task", (ctx) => {
+      ctx.reply(message.addTask, {
         ...Markup.inlineKeyboard([
           Markup.button.callback("Get all my tasks 📝", "getAllTasks"),
           Markup.button.callback("Add new task ✏️", "addNewTask"),
@@ -31,15 +31,15 @@ export default class TaskCommand extends Command {
             Markup.button.callback("yes", "addNewTask"),
           ]),
         });
-      }
-      let response;
 
-      if (ctx.session.dbObjectID) {
-        response = await taskRepository.findById(ctx.session.dbObjectID);
+        return;
       }
+
+      const response = await taskRepository.findById(ctx.session.dbObjectID);
 
       await ctx.reply("Your tasks:");
-      response?.tasksArray.map(async (task: string) => {
+
+      response.tasksArray.map(async (task: string) => {
         await ctx.reply(`📌 ${task}`, {
           ...Markup.inlineKeyboard([
             Markup.button.callback("Delete task ❌", "deleteTask"),
@@ -49,7 +49,7 @@ export default class TaskCommand extends Command {
       });
     });
 
-    this.bot.action("addNewTask", async (ctx) => {
+    this.bot.action("addNewTask", (ctx) => {
       ctx.scene.enter("ADD_TASK_SCENE");
     });
 
@@ -63,7 +63,7 @@ export default class TaskCommand extends Command {
       }
     });
 
-    this.bot.action("remindAboutTask", async (ctx) => {
+    this.bot.action("remindAboutTask", (ctx) => {
       const callback = ctx.callbackQuery.message as ICallback;
       const taskToRemind = callback.text;
 
