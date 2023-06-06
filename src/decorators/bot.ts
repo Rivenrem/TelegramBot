@@ -5,22 +5,12 @@ import LocalSession from "telegraf-session-local";
 import { Command } from "../commands/command.class";
 import commands from "../commands/index";
 
-import { addTaskScene } from "../scenes/addTask.scene";
-import { remindTaskScene } from "../scenes/remindTask.scene";
-import { suggestScene } from "../scenes/suggest.scene";
-import { weatherScene } from "../scenes/weather.scene";
-import { subscribeScene } from "../scenes/subscrube.scene";
+import scenes from "../scenes/index";
 
 import { IConfigService } from "../config/config.interface";
 import { MyContext } from "../context/context.interface";
 
-const stage = new Stage<MyContext>([
-  weatherScene,
-  subscribeScene,
-  addTaskScene,
-  remindTaskScene,
-  suggestScene,
-]);
+const stage = new Stage<MyContext>(scenes);
 const localSession = new LocalSession({ database: "sessions.json" });
 
 export default class Bot {
