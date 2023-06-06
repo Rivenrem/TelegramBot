@@ -1,13 +1,13 @@
 import cron, { ScheduledTask } from "node-cron";
-import { displayWeather } from "./displayWeather";
+import displayWeather from "./displayWeather";
 import { MyContext } from "../context/context.interface";
 
-export const scheduleWeatherTask = (
+export default function scheduleWeatherTask(
   ctx: MyContext,
   HH: string,
   MM: string
-): ScheduledTask =>
-  cron.schedule(
+): ScheduledTask {
+  return cron.schedule(
     `${MM} ${HH} * * *`,
     () => {
       if (ctx.session.chatID && ctx.session.subscribedLocation) {
@@ -24,3 +24,4 @@ export const scheduleWeatherTask = (
       timezone: "Europe/Minsk",
     }
   );
+}

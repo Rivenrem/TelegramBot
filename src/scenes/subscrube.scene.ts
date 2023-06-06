@@ -3,8 +3,8 @@ import { ScheduledTask } from "node-cron";
 import { WizardScene } from "telegraf/typings/scenes";
 import { MyContext } from "../context/context.interface";
 
-import { scheduleWeatherTask } from "../helpers/scheduleeatherTask";
-import { getHoursAndMinutes } from "../helpers/getHoursAndMinutes";
+import scheduleWeatherTask from "../helpers/scheduleeatherTask";
+import getHoursAndMinutes from "../helpers/getHoursAndMinutes";
 
 import message from "../constants/constants";
 

@@ -1,24 +1,29 @@
 import { Context } from "telegraf";
-import { requestWeather } from "./requestWeather";
+import requestWeather from "./requestWeather";
 import message from "../constants/constants";
 
-export const displayWeather = async (ctx: Context, text: string) => {
+export default async function displayWeather(
+  ctx: Context,
+  text: string
+): Promise<void> {
   try {
-    const responseData = await requestWeather(text);
+    const response = await requestWeather(text);
     await ctx.replyWithHTML(
-      `Current weather in ${responseData.location.name}: <b>${responseData.current.temp_c}°C ${responseData.current.condition.text}</b>
+      `Current weather in ${response.data.location.name}: <b>${response.data.current.temp_c}°C ${response.data.current.condition.text}</b>
       `
     );
 
-    await ctx.replyWithPhoto({
-      source: `./src/images/${responseData.current.condition.icon
+    ctx.replyWithPhoto({
+      source: `./src/images/${response.data.current.condition.icon
         .split("/")
         .slice(-2)
         .join("/")}`,
     });
   } catch (error) {
     if (error instanceof Error) {
-      await ctx.reply(message.badRequest);
-    } else console.log(error);
+      ctx.reply(message.badRequest);
+    } else {
+      console.log(error);
+    }
   }
-};
+}

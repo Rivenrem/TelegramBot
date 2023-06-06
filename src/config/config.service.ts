@@ -16,11 +16,11 @@ class ConfigService implements IConfigService {
   }
 
   get(key: string): string {
-    const res = this.config[key];
-    if (!res) {
-      throw new Error("No key");
+    const value = this.config[key];
+    if (!value) {
+      throw new Error("No value for this key");
     }
-    return res;
+    return value;
   }
 }
 

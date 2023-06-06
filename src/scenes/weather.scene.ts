@@ -1,6 +1,6 @@
 import { WizardScene } from "telegraf/typings/scenes";
 import { Message } from "typegram";
-import { displayWeather } from "../helpers/displayWeather";
+import displayWeather from "../helpers/displayWeather";
 import message from "../constants/constants";
 import { MyContext } from "../context/context.interface";
 

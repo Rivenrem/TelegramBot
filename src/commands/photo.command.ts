@@ -3,7 +3,7 @@ import { Telegraf, Input } from "telegraf";
 import { MyContext } from "../context/context.interface";
 
 import message from "../constants/constants";
-import { getPhotoURL } from "../helpers/getPhotoURL";
+import getPhotoURL from "../helpers/getPhotoURL";
 
 export default class PhotoCommand extends Command {
   constructor(bot: Telegraf<MyContext>, private readonly category: string) {

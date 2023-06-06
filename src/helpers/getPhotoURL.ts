@@ -1,7 +1,7 @@
 import axios from "axios";
 import configService from "../config/config.service";
 
-export const getPhotoURL = async (category: string): Promise<string> => {
+export default async function getPhotoURL(category: string): Promise<string> {
   const URL = `https://pixabay.com/api/?key=${configService.get(
     "PHOTOS_API_KEY"
   )}&q=${category}&image_type=photo&per_page=200`;
@@ -14,4 +14,4 @@ export const getPhotoURL = async (category: string): Promise<string> => {
   } catch {
     throw new Error();
   }
-};
+}
