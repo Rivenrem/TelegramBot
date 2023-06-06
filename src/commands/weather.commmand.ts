@@ -1,7 +1,7 @@
 import { Telegraf } from "telegraf";
-import { Command } from "./command.class";
+import Command from "./command.class";
 import { MyContext } from "../context/context.interface";
-export class WeatherCommand extends Command {
+export default class WeatherCommand extends Command {
   constructor(bot: Telegraf<MyContext>) {
     super(bot);
   }

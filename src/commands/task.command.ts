@@ -1,5 +1,5 @@
 import { Telegraf, Markup } from "telegraf";
-import { Command } from "./command.class";
+import Command from "./command.class";
 
 import { MyContext } from "../context/context.interface";
 import { ICallback } from "../interfaces/callback.interface";
@@ -9,7 +9,7 @@ import { deleteTask } from "../services/task.service";
 
 import message from "../constants/constants";
 
-export class TaskCommand extends Command {
+export default class TaskCommand extends Command {
   constructor(bot: Telegraf<MyContext>) {
     super(bot);
   }
