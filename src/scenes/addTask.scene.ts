@@ -20,7 +20,7 @@ export const addTaskScene = new WizardScene<MyContext>(
 
     try {
       if (!ctx.session.dbObjectID && ctx.chat !== undefined) {
-        await taskRepository.create(new Task([message], ctx.chat.id), ctx);
+        taskRepository.create(new Task([message], ctx.chat.id));
       } else if (ctx.session.dbObjectID) {
         await update(ctx.session.dbObjectID, message.text);
       } else {

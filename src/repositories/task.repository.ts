@@ -1,7 +1,4 @@
 import { Task, TaskClass } from "../models/task";
-import { MyContext } from "../context/context.interface";
-
-import message from "../constants/constants";
 
 const findById = async (objectId: string): Promise<TaskClass> => {
   const task = await Task.findById(objectId);
@@ -11,23 +8,16 @@ const findById = async (objectId: string): Promise<TaskClass> => {
   return task;
 };
 
-const create = async (
-  taskData: TaskClass,
-  ctx: MyContext
-): Promise<TaskClass> => {
+const create = (taskData: TaskClass): TaskClass => {
   const task = new Task(taskData);
-  task.save();
 
-  ctx.reply(message.done);
+  task.save();
 
   return task;
 };
 
-const update = async (
-  objectId: string,
-  newTasks: Array<string>
-): Promise<void> => {
-  await Task.findByIdAndUpdate(objectId, {
+const update = (objectId: string, newTasks: Array<string>): void => {
+  Task.findByIdAndUpdate(objectId, {
     tasksArray: newTasks,
   });
 };
