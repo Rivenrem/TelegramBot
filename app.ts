@@ -19,6 +19,6 @@ const PORT = configService.get("PORT");
       console.log(`Server started at http://localhost:${PORT}`);
     });
   } catch (error) {
-    console.error(`Server start error: ${error}`);
+    console.log(`Server start error: ${error}`);
   }
 })();

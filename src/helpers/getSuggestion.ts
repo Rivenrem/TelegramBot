@@ -1,6 +1,6 @@
 import axios from "axios";
-import configService from "config/config.service";
-import { ISuggestion } from "interfaces/suggestion.interface";
+import configService from "../config/config.service";
+import { ISuggestion } from "../interfaces/suggestion.interface";
 
 export default async function getSuggestion(
   city: string

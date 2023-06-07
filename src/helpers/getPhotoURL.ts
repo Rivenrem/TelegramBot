@@ -1,5 +1,5 @@
 import axios from "axios";
-import configService from "config/config.service";
+import configService from "../config/config.service";
 
 export default async function getPhotoURL(category: string): Promise<string> {
   const URL = `https://pixabay.com/api/?key=${configService.get(

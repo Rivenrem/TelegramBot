@@ -1,6 +1,6 @@
 import { Context } from "telegraf";
 import requestWeather from "./requestWeather";
-import messages from "constants/constants";
+import messages from "../constants/constants";
 
 export default async function displayWeather(
   ctx: Context,
@@ -23,7 +23,7 @@ export default async function displayWeather(
     if (error instanceof Error) {
       ctx.reply(messages.badRequest);
     } else {
-      console.error(error);
+      console.log(error);
     }
   }
 }

@@ -1,6 +1,6 @@
 import cron, { ScheduledTask } from "node-cron";
 import displayWeather from "./displayWeather";
-import { MyContext } from "context/context.interface";
+import { MyContext } from "../context/context.interface";
 
 export default function scheduleWeatherTask(
   ctx: MyContext,

@@ -1,6 +1,6 @@
 import { Telegraf } from "telegraf";
 import Command from "./command.class";
-import { MyContext } from "context/context.interface";
+import { MyContext } from "../context/context.interface";
 
 export default class StartCommand extends Command {
   constructor(bot: Telegraf<MyContext>) {
