@@ -23,6 +23,7 @@ export const suggestScene = new WizardScene<MyContext>(
       );
     } catch (error) {
       console.error(error);
+      ctx.reply(messages.error);
     }
     ctx.scene.leave();
   }
