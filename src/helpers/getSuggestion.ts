@@ -24,7 +24,7 @@ export default async function getSuggestion(
     )}`
   );
   const limit = limitResponse.data.count;
-  const randomNumber = Math.round(Math.random() * limit - 1.5);
+  const randomNumber = Math.floor(Math.random() * (limit - 2) + 1);
 
   const placeResponse = await axios.get(
     `https://api.opentripmap.com/0.1/en/places/radius?radius=1000&lon=${lon}&lat=${lat}&format=json&limit=${limit}&apikey=${configService.get(
