@@ -8,16 +8,19 @@ const findById = async (objectId: string): Promise<TaskClass> => {
   return task;
 };
 
-const create = (taskData: TaskClass): TaskClass => {
+const create = (taskData: TaskClass): string => {
   const task = new Task(taskData);
 
   task.save();
 
-  return task;
+  return task._id.toString();
 };
 
-const update = (objectId: string, newTasks: Array<string>): void => {
-  Task.findByIdAndUpdate(objectId, {
+const update = async (
+  objectId: string,
+  newTasks: Array<string>
+): Promise<void> => {
+  await Task.findByIdAndUpdate(objectId, {
     tasksArray: newTasks,
   });
 };

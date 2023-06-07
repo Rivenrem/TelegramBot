@@ -37,6 +37,16 @@ export default class TaskCommand extends Command {
 
       const response = await taskRepository.findById(ctx.session.dbObjectID);
 
+      if (response.tasksArray.length === 0) {
+        ctx.reply(messages.noTasks, {
+          ...Markup.inlineKeyboard([
+            Markup.button.callback("yes", "addNewTask"),
+          ]),
+        });
+
+        return;
+      }
+
       await ctx.reply("Your tasks:");
 
       response.tasksArray.map(async (task: string) => {
