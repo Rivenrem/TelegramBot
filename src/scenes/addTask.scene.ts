@@ -1,14 +1,14 @@
-import { WizardScene } from "telegraf/typings/scenes";
 import { Message } from "typegram";
-// import { Task } from "../models/task";
+
 import taskRepository from "../repositories/task.repository";
 import { update } from "../services/task.service";
 import { MyContext } from "../context/context.interface";
 
 import messages from "../constants/constants";
 import { TaskClass } from "../models/task";
+import { Scenes } from "telegraf";
 
-export const addTaskScene = new WizardScene<MyContext>(
+export const addTaskScene = new Scenes.WizardScene<MyContext>(
   "ADD_TASK_SCENE",
 
   async (ctx) => {

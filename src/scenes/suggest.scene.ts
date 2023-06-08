@@ -1,10 +1,10 @@
-import { WizardScene } from "telegraf/typings/scenes";
 import { Message } from "typegram";
 import messages from "../constants/constants";
 import { MyContext } from "../context/context.interface";
 import getSuggestion from "../helpers/getSuggestion";
+import { Scenes } from "telegraf";
 
-export const suggestScene = new WizardScene<MyContext>(
+export const suggestScene = new Scenes.WizardScene<MyContext>(
   "SUGGEST_SCENE",
 
   async (ctx) => {

@@ -1,6 +1,6 @@
 import { Message } from "typegram";
 import { ScheduledTask } from "node-cron";
-import { WizardScene } from "telegraf/typings/scenes";
+import { Scenes } from "telegraf";
 import { MyContext } from "../context/context.interface";
 
 import scheduleWeatherTask from "../helpers/scheduleeatherTask";
@@ -8,7 +8,7 @@ import getHoursAndMinutes from "../helpers/getHoursAndMinutes";
 
 import messages from "../constants/constants";
 
-export const subscribeScene = new WizardScene<MyContext>(
+export const subscribeScene = new Scenes.WizardScene<MyContext>(
   "SUBSCRRIBE_SCENE",
   async (ctx) => {
     ctx.reply(messages.weatherSubscribtion);

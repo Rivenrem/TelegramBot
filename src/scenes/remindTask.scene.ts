@@ -1,11 +1,11 @@
-import { WizardScene } from "telegraf/typings/scenes";
 import { MyContext } from "../context/context.interface";
 import { Message } from "typegram";
 import reminderTask from "../helpers/createReminde";
 import getHoursAndMinutes from "../helpers/getHoursAndMinutes";
 import messages from "../constants/constants";
+import { Scenes } from "telegraf";
 
-export const remindTaskScene = new WizardScene<MyContext>(
+export const remindTaskScene = new Scenes.WizardScene<MyContext>(
   "REMIND_TASK_SCENE",
 
   async (ctx) => {

@@ -2,7 +2,7 @@
   "name": "telegram_bot",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "build": "tsc",
     "tsc": "tsc",
@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.22.1",
+    "@babel/helper-compilation-targets": "^7.22.1",
     "@types/debug": "^4.1.8",
     "@types/dotenv": "^8.2.0",
     "@types/node": "^20.2.5",
