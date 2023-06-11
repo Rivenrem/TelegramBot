@@ -17,7 +17,7 @@ export default class PhotoCommand extends Command {
 
         ctx.replyWithPhoto(Input.fromURL(URL));
       } catch {
-        ctx.reply(messages.error);
+        ctx.reply(messages.Error.base);
       }
     });
   }

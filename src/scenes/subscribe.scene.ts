@@ -11,20 +11,20 @@ import messages from "../constants/constants";
 export const subscribeScene = new Scenes.WizardScene<MyContext>(
   "SUBSCRRIBE_SCENE",
   async (ctx) => {
-    ctx.reply(messages.weatherSubscribtion);
+    ctx.reply(messages.Weather.Subscribtion);
     return ctx.wizard.next();
   },
 
   async (ctx) => {
     if (!ctx.message || !("text" in ctx.message)) {
-      ctx.reply(messages.wrongLocationSubscribe);
+      ctx.reply(messages.Error.badWeatherRequest);
       return;
     }
 
     ctx.session.chatID = ctx.chat?.id;
     ctx.session.subscribedLocation = (ctx.message as Message.TextMessage).text;
 
-    ctx.reply(messages.weatherSubscribtionTime);
+    ctx.reply(messages.Weather.SubscribtionTime);
 
     return ctx.wizard.next();
   },
@@ -43,7 +43,7 @@ export const subscribeScene = new Scenes.WizardScene<MyContext>(
       );
       ctx.scene.leave();
     } else {
-      ctx.reply(messages.wrongTime);
+      ctx.reply(messages.Error.wrongTime);
     }
   }
 );

@@ -20,7 +20,7 @@ export default class WeatherSubscribtion extends Command {
         weatherTask.get()!.stop();
         ctx.reply(messages.done);
       } else {
-        ctx.reply(messages.notSubscribed);
+        ctx.reply(messages.Error.notSubscribed);
       }
     });
   }

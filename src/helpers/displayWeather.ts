@@ -20,10 +20,6 @@ export default async function displayWeather(
         .join("/")}`,
     });
   } catch (error) {
-    if (error instanceof Error) {
-      ctx.reply(messages.badRequest);
-    } else {
-      console.log(error);
-    }
+    ctx.reply(messages.Error.base);
   }
 }

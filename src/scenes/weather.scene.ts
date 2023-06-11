@@ -7,7 +7,7 @@ import { Scenes } from "telegraf";
 export const weatherScene = new Scenes.WizardScene<MyContext>(
   "WEATHER_SCENE",
   async (ctx) => {
-    await ctx.reply(messages.weather);
+    await ctx.reply(messages.Weather.Forecast);
     return ctx.wizard.next();
   },
   async (ctx) => {

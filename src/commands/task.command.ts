@@ -16,7 +16,7 @@ export default class TaskCommand extends Command {
 
   handle(): void {
     this.bot.command("task", (ctx) => {
-      ctx.reply(messages.addTask, {
+      ctx.reply(messages.Task.addTask, {
         ...Markup.inlineKeyboard([
           Markup.button.callback("Get all my tasks 📝", "getAllTasks"),
           Markup.button.callback("Add new task ✏️", "addNewTask"),
@@ -26,7 +26,7 @@ export default class TaskCommand extends Command {
 
     this.bot.action("getAllTasks", async (ctx) => {
       if (!ctx.session.dbObjectID) {
-        ctx.reply(messages.noTasks, {
+        ctx.reply(messages.Error.noTasks, {
           ...Markup.inlineKeyboard([
             Markup.button.callback("yes", "addNewTask"),
           ]),
@@ -38,7 +38,7 @@ export default class TaskCommand extends Command {
       const response = await taskRepository.findById(ctx.session.dbObjectID);
 
       if (response.tasksArray.length === 0) {
-        ctx.reply(messages.noTasks, {
+        ctx.reply(messages.Error.noTasks, {
           ...Markup.inlineKeyboard([
             Markup.button.callback("yes", "addNewTask"),
           ]),

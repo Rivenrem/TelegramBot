@@ -12,7 +12,7 @@ export const addTaskScene = new Scenes.WizardScene<MyContext>(
   "ADD_TASK_SCENE",
 
   async (ctx) => {
-    ctx.reply(messages.addTask);
+    ctx.reply(messages.Task.addTask);
     return ctx.wizard.next();
   },
 
@@ -24,16 +24,19 @@ export const addTaskScene = new Scenes.WizardScene<MyContext>(
         const ID = taskRepository.create(
           new TaskClass([message.text], ctx.chat.id)
         );
+
         ctx.session.dbObjectID = ID;
+
         ctx.reply(messages.done);
       } else if (ctx.session.dbObjectID) {
         await update(ctx.session.dbObjectID, message.text);
+
         ctx.reply(messages.done);
       } else {
         throw new Error();
       }
     } catch (error) {
-      console.log(`Can't create new task: ${error}`);
+      ctx.reply(messages.Error.base);
     }
 
     ctx.scene.leave();
