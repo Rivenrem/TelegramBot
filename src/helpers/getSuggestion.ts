@@ -1,39 +1,20 @@
-import axios from "axios";
-import configService from "../config/config.service";
 import { ISuggestion } from "../interfaces/suggestion.interface";
 import getRandomNumber from "./getRandomNumber";
+import getSityCoordinates from "../api/getCityCoordinates";
+import getSuggestionLimit from "../api/getSuggestionLimit";
+import getSuggestedPlace from "../api/getSuggestedPlace";
 
 export default async function getSuggestion(
   city: string
 ): Promise<ISuggestion> {
   try {
-    const responseWithCoordinates = await axios.get(
-      `https://api.opentripmap.com/0.1/en/places/geoname?name=${city}&apikey=${configService.get(
-        "OPENTRIP_API_KEY"
-      )}`
-    );
+    const [lat, lon] = await getSityCoordinates(city);
 
-    if (responseWithCoordinates.data.status !== "OK") {
-      throw new Error();
-    }
+    const limit = await getSuggestionLimit(lat, lon);
 
-    const lat = responseWithCoordinates.data.lat;
-    const lon = responseWithCoordinates.data.lon;
+    const suggestedPlace = await getSuggestedPlace(lat, lon, limit);
 
-    const limitResponse = await axios.get(
-      `https://api.opentripmap.com/0.1/en/places/radius?radius=1000&lon=${lon}&lat=${lat}&format=count&apikey=${configService.get(
-        "OPENTRIP_API_KEY"
-      )}`
-    );
-    const limit = limitResponse.data.count;
-
-    const placeResponse = await axios.get(
-      `https://api.opentripmap.com/0.1/en/places/radius?radius=1000&lon=${lon}&lat=${lat}&format=json&limit=${limit}&apikey=${configService.get(
-        "OPENTRIP_API_KEY"
-      )}`
-    );
-
-    return placeResponse.data[getRandomNumber(Math.min(limit, 500))];
+    return suggestedPlace.data[getRandomNumber(Math.min(limit, 500))];
   } catch {
     throw new Error();
   }

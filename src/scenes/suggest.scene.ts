@@ -22,7 +22,6 @@ export const suggestScene = new Scenes.WizardScene<MyContext>(
         `Suggestion for you: ${place.name}. To know more: follow https://www.wikidata.org/wiki/${place.wikidata}`
       );
     } catch (error) {
-      console.error(error);
       ctx.reply(messages.Error.base);
     }
     ctx.scene.leave();
