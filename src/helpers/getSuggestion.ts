@@ -14,7 +14,7 @@ export default async function getSuggestion(
     );
 
     if (responseWithCoordinates.data.status !== "OK") {
-      throw new Error("Response error");
+      throw new Error();
     }
 
     const lat = responseWithCoordinates.data.lat;
@@ -32,7 +32,8 @@ export default async function getSuggestion(
         "OPENTRIP_API_KEY"
       )}`
     );
-    return placeResponse.data[getRandomNumber(limit)];
+
+    return placeResponse.data[getRandomNumber(Math.min(limit, 500))];
   } catch {
     throw new Error();
   }
