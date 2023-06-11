@@ -1,10 +1,10 @@
 import { Message } from "typegram";
-import { ScheduledTask } from "node-cron";
 import { Scenes } from "telegraf";
 import { MyContext } from "../context/context.interface";
 
 import scheduleWeatherTask from "../helpers/scheduleeatherTask";
 import getHoursAndMinutes from "../helpers/getHoursAndMinutes";
+import weatherTask from "../classes/weatherTask";
 
 import messages from "../constants/constants";
 
@@ -35,8 +35,8 @@ export const subscribeScene = new Scenes.WizardScene<MyContext>(
     if (getHoursAndMinutes(time)) {
       const [HH, MM] = getHoursAndMinutes(time) as RegExpMatchArray;
 
-      weatherTask = scheduleWeatherTask(ctx, HH, MM);
-      weatherTask.start();
+      weatherTask.set(scheduleWeatherTask(ctx, HH, MM));
+      weatherTask.get()!.start();
 
       ctx.reply(
         `You will recive weather in ${ctx.session.subscribedLocation} every day at ${HH}:${MM} !`
@@ -47,5 +47,3 @@ export const subscribeScene = new Scenes.WizardScene<MyContext>(
     }
   }
 );
-
-export let weatherTask: ScheduledTask;
