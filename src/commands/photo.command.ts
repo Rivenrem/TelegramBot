@@ -1,9 +1,10 @@
 import Command from "./command.class";
-import { Telegraf, Input } from "telegraf";
-import { MyContext } from "../context/context.interface";
+import {Telegraf, Input} from "telegraf";
+import {MyContext} from "../../types/context";
 
-import messages from "../constants/constants";
-import getPhotoURL from "../helpers/getPhotoURL";
+import messages from "../constants";
+import getPhotoURL from "../api/getPhotoURL";
+import processingPhotoCategory from "../helpers/processingPhotoCategory";
 
 export default class PhotoCommand extends Command {
   constructor(bot: Telegraf<MyContext>, private readonly category: string) {
@@ -12,12 +13,18 @@ export default class PhotoCommand extends Command {
 
   handle(): void {
     this.bot.command(this.category, async (ctx) => {
-      try {
-        const URL = await getPhotoURL(this.category);
+      const loadMessage = await ctx.reply(messages.loading);
 
-        ctx.replyWithPhoto(Input.fromURL(URL));
+      try {
+        const picURL = await getPhotoURL(
+          processingPhotoCategory(this.category)
+        );
+
+        await ctx.deleteMessage(loadMessage.message_id);
+        ctx.replyWithPhoto(Input.fromURL(picURL));
       } catch {
-        ctx.reply(messages.error);
+        await ctx.deleteMessage(loadMessage.message_id);
+        ctx.reply(messages.Error.base);
       }
     });
   }

@@ -1,16 +1,17 @@
-import { IConfigService } from "./config.interface";
+import {IConfigService} from ".";
 import * as dotenv from "dotenv";
+import messages from "../constants";
 
 class ConfigService implements IConfigService {
   private config: dotenv.DotenvParseOutput;
 
   constructor() {
-    const { error, parsed } = dotenv.config();
+    const {error, parsed} = dotenv.config();
     if (error) {
-      throw new Error("There is no .env file");
+      throw new Error(messages.Error.noEnvFile);
     }
     if (!parsed) {
-      throw new Error(".env file is empty");
+      throw new Error(messages.Error.emptyEnv);
     }
     this.config = parsed;
   }
@@ -18,7 +19,7 @@ class ConfigService implements IConfigService {
   get(key: string): string {
     const value = this.config[key];
     if (!value) {
-      throw new Error("No value for this key");
+      throw new Error(messages.Error.wrongEnvKey);
     }
     return value;
   }

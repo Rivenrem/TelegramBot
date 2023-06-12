@@ -1,10 +1,10 @@
 const regExp = new RegExp(/\b([01][0-9]|2[0-3]):([0-5][0-9])\b/);
 
 export default function getHoursAndMinutes(
-  str: string
+  time: string
 ): Array<string> | undefined {
-  if (str.match(regExp)) {
-    const [, HH, MM] = str.match(regExp) as RegExpMatchArray;
+  if (time.match(regExp)) {
+    const [, HH, MM] = time.match(regExp) as RegExpMatchArray;
     return [HH, MM];
   }
 }

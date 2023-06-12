@@ -1,29 +1,37 @@
-import { Context } from "telegraf";
-import requestWeather from "./requestWeather";
-import messages from "../constants/constants";
+import {MyContext} from "../../types/context";
+import messages from "../constants";
+import getWeather from "../api/getWeather";
+import uvIndexProcessing from "./uvIndexProcessing";
 
 export default async function displayWeather(
-  ctx: Context,
+  ctx: MyContext,
   text: string
 ): Promise<void> {
+  const loadMessage = await ctx.reply(messages.loading);
   try {
-    const response = await requestWeather(text);
-    await ctx.replyWithHTML(
-      `Current weather in ${response.data.location.name}: <b>${response.data.current.temp_c}°C ${response.data.current.condition.text}</b>
-      `
-    );
+    const weather = await getWeather(text);
+
+    ctx.deleteMessage(loadMessage.message_id);
+
+    await ctx.replyWithHTML(/*HTML*/ `
+    Current weather in ${weather.data.location.name}:
+
+      <b>🌡 ${weather.data.current.temp_c}°C (${weather.data.current.temp_f}°F )
+
+       ${weather.data.current.condition.text}</b>
+
+       ${uvIndexProcessing(weather.data.current.uv)}
+       `);
 
     ctx.replyWithPhoto({
-      source: `./src/images/${response.data.current.condition.icon
+      source: `./src/images/${weather.data.current.condition.icon
         .split("/")
         .slice(-2)
         .join("/")}`,
     });
   } catch (error) {
-    if (error instanceof Error) {
-      ctx.reply(messages.badRequest);
-    } else {
-      console.log(error);
-    }
+    await ctx.deleteMessage(loadMessage.message_id);
+    await ctx.reply(messages.Error.base);
+    ctx.scene.enter("WEATHER_SCENE");
   }
 }

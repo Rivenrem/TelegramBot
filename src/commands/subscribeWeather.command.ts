@@ -1,9 +1,9 @@
-import { Telegraf } from "telegraf";
-import { MyContext } from "../context/context.interface";
+import {Telegraf} from "telegraf";
+import {MyContext} from "../../types/context";
 import Command from "./command.class";
 
-import { weatherTask } from "../scenes/subscribe.scene";
-import messages from "../constants/constants";
+import messages from "../constants";
+import weatherTask from "../classes/weatherTask";
 
 export default class WeatherSubscribtion extends Command {
   constructor(bot: Telegraf<MyContext>) {
@@ -16,11 +16,12 @@ export default class WeatherSubscribtion extends Command {
     });
 
     this.bot.command("unsubscribe", (ctx) => {
-      if (weatherTask) {
-        weatherTask.stop();
+      if (weatherTask.get() && ctx.session.subscribedLocation != null) {
+        weatherTask.get()!.stop();
+        ctx.session.subscribedLocation = null;
         ctx.reply(messages.done);
       } else {
-        ctx.reply(messages.notSubscribed);
+        ctx.reply(messages.Error.notSubscribed);
       }
     });
   }

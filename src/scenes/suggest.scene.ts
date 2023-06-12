@@ -1,30 +1,53 @@
-import { Message } from "typegram";
-import messages from "../constants/constants";
-import { MyContext } from "../context/context.interface";
+import {Message} from "typegram";
+import messages from "../constants";
+import {MyContext} from "../../types/context";
 import getSuggestion from "../helpers/getSuggestion";
-import { Scenes } from "telegraf";
+import {Scenes} from "telegraf";
 
 export const suggestScene = new Scenes.WizardScene<MyContext>(
   "SUGGEST_SCENE",
 
   async (ctx) => {
-    await ctx.reply(messages.suggestCity);
+    await ctx.reply(messages.SuggestPlace.City);
     return ctx.wizard.next();
   },
 
   async (ctx) => {
     const message = ctx.message as Message.TextMessage;
+    const loadMessage = await ctx.reply(messages.loading);
 
     try {
       const place = await getSuggestion(message.text);
 
-      ctx.replyWithHTML(
-        `Suggestion for you: ${place.name}. To know more: follow https://www.wikidata.org/wiki/${place.wikidata}`
+      await ctx.deleteMessage(loadMessage.message_id);
+      await ctx.replyWithHTML(
+        `Suggestion for you: ${place.name}(Rate: ${place.rate}).
+
+        
+        ${
+          place.wikipedia_extracts
+            ? `<b>🟢 ${place.wikipedia_extracts?.title.slice(3)}</b>
+          
+          ${place.wikipedia_extracts?.text}`
+            : `🟢 To know more: ${place.otm}`
+        }
+
+        📌 Place on google map:
+        ${`https://www.google.com/maps/search/?api=1&query=${place.point.lat},${place.point.lon}`}
+
+        `
       );
+
+      if (place.preview?.source) {
+        ctx.replyWithPhoto({
+          url: place.preview?.source,
+        });
+      }
     } catch (error) {
-      console.error(error);
-      ctx.reply(messages.error);
+      await ctx.deleteMessage(loadMessage.message_id);
+      ctx.reply(messages.Error.base);
     }
+
     ctx.scene.leave();
   }
 );

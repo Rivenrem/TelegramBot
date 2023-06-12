@@ -1,13 +1,13 @@
-import { Telegraf, Markup } from "telegraf";
+import {Telegraf, Markup} from "telegraf";
 import Command from "./command.class";
 
-import { MyContext } from "../context/context.interface";
-import { ICallback } from "../interfaces/callback.interface";
+import {MyContext} from "../../types/context";
+import {ICallback} from "../../types/types";
 
-import taskRepository from "../repositories/task.repository";
-import { deleteTask } from "../services/task.service";
+import taskRepository from "../repositories";
+import {deleteTask} from "../services/task.service";
 
-import messages from "../constants/constants";
+import messages from "../constants";
 
 export default class TaskCommand extends Command {
   constructor(bot: Telegraf<MyContext>) {
@@ -16,7 +16,7 @@ export default class TaskCommand extends Command {
 
   handle(): void {
     this.bot.command("task", (ctx) => {
-      ctx.reply(messages.addTask, {
+      ctx.reply(messages.Task.addTask, {
         ...Markup.inlineKeyboard([
           Markup.button.callback("Get all my tasks 📝", "getAllTasks"),
           Markup.button.callback("Add new task ✏️", "addNewTask"),
@@ -26,7 +26,7 @@ export default class TaskCommand extends Command {
 
     this.bot.action("getAllTasks", async (ctx) => {
       if (!ctx.session.dbObjectID) {
-        ctx.reply(messages.noTasks, {
+        ctx.reply(messages.Error.noTasks, {
           ...Markup.inlineKeyboard([
             Markup.button.callback("yes", "addNewTask"),
           ]),
@@ -38,7 +38,7 @@ export default class TaskCommand extends Command {
       const response = await taskRepository.findById(ctx.session.dbObjectID);
 
       if (response.tasksArray.length === 0) {
-        ctx.reply(messages.noTasks, {
+        ctx.reply(messages.Error.noTasks, {
           ...Markup.inlineKeyboard([
             Markup.button.callback("yes", "addNewTask"),
           ]),

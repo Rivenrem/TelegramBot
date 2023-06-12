@@ -2,7 +2,7 @@ import express from "express";
 import { connect } from "mongoose";
 
 import configService from "./src/config/config.service";
-import Bot from "./src/decorators/bot";
+import Bot from "./src/classes/bot";
 
 const bot = new Bot(configService);
 const app = express();
