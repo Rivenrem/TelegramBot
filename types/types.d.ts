@@ -4,8 +4,24 @@ export interface ICallback {
 
 export interface ISuggestion {
   xid: string;
+
   name: string;
-  highlighted_name: string;
-  kinds: string;
-  wikidata: string;
+
+  rate: string;
+
+  preview?: {
+    source: string;
+  };
+
+  wikipedia_extracts?: {
+    title: string;
+    text: string;
+  };
+
+  point: {
+    lon: number;
+    lat: number;
+  };
+
+  otm: string;
 }

@@ -18,12 +18,33 @@ export const suggestScene = new Scenes.WizardScene<MyContext>(
     try {
       const place = await getSuggestion(message.text);
 
-      ctx.replyWithHTML(
-        `Suggestion for you: ${place.name}. To know more: follow https://www.wikidata.org/wiki/${place.wikidata}`
+      await ctx.replyWithHTML(
+        `Suggestion for you: ${place.name}(Rate: ${place.rate}).
+
+        
+        ${
+          place.wikipedia_extracts
+            ? `<b>🟢 ${place.wikipedia_extracts?.title.slice(3)}</b>
+          
+          ${place.wikipedia_extracts?.text}`
+            : `🟢 To know more: ${place.otm}`
+        }
+
+        📌 Place on google map:
+        ${`https://www.google.com/maps/search/?api=1&query=${place.point.lat},${place.point.lon}`}
+
+        `
       );
+
+      if (place.preview?.source) {
+        ctx.replyWithPhoto({
+          url: place.preview?.source,
+        });
+      }
     } catch (error) {
       ctx.reply(messages.Error.base);
     }
+
     ctx.scene.leave();
   }
 );
