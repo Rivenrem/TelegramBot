@@ -16,8 +16,9 @@ export default class WeatherSubscribtion extends Command {
     });
 
     this.bot.command("unsubscribe", (ctx) => {
-      if (weatherTask.get()) {
+      if (weatherTask.get() && ctx.session.subscribedLocation != null) {
         weatherTask.get()!.stop();
+        ctx.session.subscribedLocation = null;
         ctx.reply(messages.done);
       } else {
         ctx.reply(messages.Error.notSubscribed);

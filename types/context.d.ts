@@ -1,7 +1,7 @@
 import {Context, Scenes} from "telegraf";
 
 export interface sessionData extends Scenes.WizardSession {
-  subscribedLocation?: string;
+  subscribedLocation?: string | null;
   chatID?: number;
   dbObjectID?: string;
   taskToRemind?: string;
