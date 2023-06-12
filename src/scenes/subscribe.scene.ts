@@ -1,12 +1,12 @@
-import { Message } from "typegram";
-import { Scenes } from "telegraf";
-import { MyContext } from "../context/context.interface";
+import {Message} from "typegram";
+import {Scenes} from "telegraf";
+import {MyContext} from "../context";
 
 import scheduleWeatherTask from "../helpers/scheduleeatherTask";
 import getHoursAndMinutes from "../helpers/getHoursAndMinutes";
 import weatherTask from "../classes/weatherTask";
 
-import messages from "../constants/constants";
+import messages from "../constants";
 
 export const subscribeScene = new Scenes.WizardScene<MyContext>(
   "SUBSCRRIBE_SCENE",

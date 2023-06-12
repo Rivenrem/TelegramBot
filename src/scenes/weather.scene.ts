@@ -1,8 +1,8 @@
-import { Message } from "typegram";
+import {Message} from "typegram";
 import displayWeather from "../helpers/displayWeather";
-import messages from "../constants/constants";
-import { MyContext } from "../context/context.interface";
-import { Scenes } from "telegraf";
+import messages from "../constants";
+import {MyContext} from "../context";
+import {Scenes} from "telegraf";
 
 export const weatherScene = new Scenes.WizardScene<MyContext>(
   "WEATHER_SCENE",

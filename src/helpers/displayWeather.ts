@@ -1,5 +1,5 @@
-import { Context } from "telegraf";
-import messages from "../constants/constants";
+import {Context} from "telegraf";
+import messages from "../constants";
 import getWeather from "../api/getWeather";
 
 export default async function displayWeather(
@@ -10,8 +10,8 @@ export default async function displayWeather(
     const weather = await getWeather(text);
 
     await ctx.replyWithHTML(
-      `Current weather in ${weather.data.location.name}: <b>${weather.data.current.temp_c}°C ${weather.data.current.condition.text}</b>
-      `
+      `Current weather in ${weather.data.location.name}:
+      <b>${weather.data.current.temp_c}°C ${weather.data.current.condition.text}</b>`
     );
 
     ctx.replyWithPhoto({

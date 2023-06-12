@@ -1,12 +1,12 @@
-import { IConfigService } from "./config.interface";
+import {IConfigService} from ".";
 import * as dotenv from "dotenv";
-import messages from "../constants/constants";
+import messages from "../constants";
 
 class ConfigService implements IConfigService {
   private config: dotenv.DotenvParseOutput;
 
   constructor() {
-    const { error, parsed } = dotenv.config();
+    const {error, parsed} = dotenv.config();
     if (error) {
       throw new Error(messages.Error.noEnvFile);
     }

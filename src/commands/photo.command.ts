@@ -1,8 +1,8 @@
 import Command from "./command.class";
-import { Telegraf, Input } from "telegraf";
-import { MyContext } from "../context/context.interface";
+import {Telegraf, Input} from "telegraf";
+import {MyContext} from "../context";
 
-import messages from "../constants/constants";
+import messages from "../constants";
 import getPhotoURL from "../api/getPhotoURL";
 import processingPhotoCategory from "../helpers/processingPhotoCategory";
 
