@@ -1,9 +1,9 @@
-import {Context} from "telegraf";
+import {MyContext} from "../../types/context";
 import messages from "../constants";
 import getWeather from "../api/getWeather";
 
 export default async function displayWeather(
-  ctx: Context,
+  ctx: MyContext,
   text: string
 ): Promise<void> {
   try {
@@ -11,7 +11,9 @@ export default async function displayWeather(
 
     await ctx.replyWithHTML(
       `Current weather in ${weather.data.location.name}:
-      <b>${weather.data.current.temp_c}°C ${weather.data.current.condition.text}</b>`
+      <b>${weather.data.current.temp_c}°C(${weather.data.current.temp_f}°F )
+       ${weather.data.current.condition.text}</b>
+       `
     );
 
     ctx.replyWithPhoto({
@@ -21,6 +23,7 @@ export default async function displayWeather(
         .join("/")}`,
     });
   } catch (error) {
-    ctx.reply(messages.Error.base);
+    await ctx.reply(messages.Error.base);
+    ctx.scene.enter("WEATHER_SCENE");
   }
 }
