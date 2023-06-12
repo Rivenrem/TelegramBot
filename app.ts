@@ -1,5 +1,5 @@
 import express from "express";
-import { connect } from "mongoose";
+import {connect} from "mongoose";
 
 import configService from "./src/config/config.service";
 import Bot from "./src/classes/bot";
@@ -13,11 +13,8 @@ const PORT = configService.get("PORT");
     bot.init();
 
     await connect(configService.get("DB_CONN_STRING"));
-    console.log("Connected to DB");
 
-    app.listen(PORT, () => {
-      console.log(`Server started at http://localhost:${PORT}`);
-    });
+    app.listen(PORT);
   } catch (error) {
     console.log(`Server start error: ${error}`);
   }
