@@ -10,6 +10,8 @@ const commands = `/help - get a list of commands
 `;
 const done = "Done ! ✅";
 
+const loading = "Loading...";
+
 enum Weather {
   Forecast = "Please, tell me the city you want to know the weather 🌤️",
   Subscribtion = "Please, tell me the city you want to subscribe on 🌤️",
@@ -38,4 +40,4 @@ enum Task {
   reminderTime = "When to remind you of a task ? Send to me time in 24-hours format (e.g. 08:23)",
 }
 
-export default { commands, done, Weather, SuggestPlace, Error, Task };
+export default {commands, done, Weather, SuggestPlace, Error, Task, loading};

@@ -13,13 +13,17 @@ export default class PhotoCommand extends Command {
 
   handle(): void {
     this.bot.command(this.category, async (ctx) => {
+      const loadMessage = await ctx.reply(messages.loading);
+
       try {
         const picURL = await getPhotoURL(
           processingPhotoCategory(this.category)
         );
 
+        await ctx.deleteMessage(loadMessage.message_id);
         ctx.replyWithPhoto(Input.fromURL(picURL));
       } catch {
+        await ctx.deleteMessage(loadMessage.message_id);
         ctx.reply(messages.Error.base);
       }
     });

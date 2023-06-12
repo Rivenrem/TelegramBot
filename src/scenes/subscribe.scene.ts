@@ -16,7 +16,11 @@ export const subscribeScene = new Scenes.WizardScene<MyContext>(
   },
 
   async (ctx) => {
-    if (!ctx.message || !("text" in ctx.message)) {
+    if (
+      !ctx.message ||
+      !("text" in ctx.message) ||
+      ctx.message.text.match(/[0-9]/)
+    ) {
       ctx.reply(messages.Error.badWeatherRequest);
       return;
     }

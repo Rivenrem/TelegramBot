@@ -14,10 +14,12 @@ export const suggestScene = new Scenes.WizardScene<MyContext>(
 
   async (ctx) => {
     const message = ctx.message as Message.TextMessage;
+    const loadMessage = await ctx.reply(messages.loading);
 
     try {
       const place = await getSuggestion(message.text);
 
+      await ctx.deleteMessage(loadMessage.message_id);
       await ctx.replyWithHTML(
         `Suggestion for you: ${place.name}(Rate: ${place.rate}).
 
@@ -42,6 +44,7 @@ export const suggestScene = new Scenes.WizardScene<MyContext>(
         });
       }
     } catch (error) {
+      await ctx.deleteMessage(loadMessage.message_id);
       ctx.reply(messages.Error.base);
     }
 

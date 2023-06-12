@@ -7,13 +7,16 @@ export default async function displayWeather(
   ctx: MyContext,
   text: string
 ): Promise<void> {
+  const loadMessage = await ctx.reply(messages.loading);
   try {
     const weather = await getWeather(text);
+
+    ctx.deleteMessage(loadMessage.message_id);
 
     await ctx.replyWithHTML(/*HTML*/ `
     Current weather in ${weather.data.location.name}:
 
-      <b>${weather.data.current.temp_c}°C (${weather.data.current.temp_f}°F )
+      <b>🌡 ${weather.data.current.temp_c}°C (${weather.data.current.temp_f}°F )
 
        ${weather.data.current.condition.text}</b>
 
@@ -27,6 +30,7 @@ export default async function displayWeather(
         .join("/")}`,
     });
   } catch (error) {
+    await ctx.deleteMessage(loadMessage.message_id);
     await ctx.reply(messages.Error.base);
     ctx.scene.enter("WEATHER_SCENE");
   }
