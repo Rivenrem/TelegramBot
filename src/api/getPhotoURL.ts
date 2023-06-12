@@ -3,13 +3,11 @@ import configService from "../config/config.service";
 import getRandomNumber from "../helpers/getRandomNumber";
 
 export default async function getPhotoURL(category: string): Promise<string> {
-  const changedCategory = category === "cat" ? "kitty" : "puppy";
-
-  const URL = `https://pixabay.com/api/?key=${configService.get(
+  const URL = `${configService.get(
+    "PICS_STATIC_URL"
+  )}/api/?key=${configService.get(
     "PHOTOS_API_KEY"
-  )}&q=${
-    category === "cat" || category === "dog" ? changedCategory : category
-  }&image_type=photo&per_page=200`;
+  )}&q=${category}&image_type=photo&per_page=200`;
 
   try {
     const responseData = (await axios.get(URL)).data;

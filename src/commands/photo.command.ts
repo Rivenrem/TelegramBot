@@ -4,6 +4,7 @@ import { MyContext } from "../context/context.interface";
 
 import messages from "../constants/constants";
 import getPhotoURL from "../api/getPhotoURL";
+import processingPhotoCategory from "../helpers/processingPhotoCategory";
 
 export default class PhotoCommand extends Command {
   constructor(bot: Telegraf<MyContext>, private readonly category: string) {
@@ -13,9 +14,11 @@ export default class PhotoCommand extends Command {
   handle(): void {
     this.bot.command(this.category, async (ctx) => {
       try {
-        const URL = await getPhotoURL(this.category);
+        const picURL = await getPhotoURL(
+          processingPhotoCategory(this.category)
+        );
 
-        ctx.replyWithPhoto(Input.fromURL(URL));
+        ctx.replyWithPhoto(Input.fromURL(picURL));
       } catch {
         ctx.reply(messages.Error.base);
       }

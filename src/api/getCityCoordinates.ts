@@ -6,7 +6,9 @@ export default async function getSityCoordinates(
 ): Promise<string[]> {
   try {
     const coordinates = await axios.get(
-      `https://api.opentripmap.com/0.1/en/places/geoname?name=${cityName}&apikey=${configService.get(
+      `${configService.get(
+        "OPENTRIP_STATIC_URL"
+      )}/0.1/en/places/geoname?name=${cityName}&apikey=${configService.get(
         "OPENTRIP_API_KEY"
       )}`
     );

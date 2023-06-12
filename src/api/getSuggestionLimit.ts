@@ -7,7 +7,9 @@ export default async function getSuggestionLimit(
 ): Promise<number> {
   try {
     const limit = await axios.get(
-      `https://api.opentripmap.com/0.1/en/places/radius?radius=1000&lon=${lon}&lat=${lat}&format=count&apikey=${configService.get(
+      `${configService.get(
+        "OPENTRIP_STATIC_URL"
+      )}/0.1/en/places/radius?radius=1000&lon=${lon}&lat=${lat}&format=count&apikey=${configService.get(
         "OPENTRIP_API_KEY"
       )}`
     );
