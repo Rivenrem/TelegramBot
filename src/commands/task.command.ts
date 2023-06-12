@@ -1,8 +1,8 @@
 import {Telegraf, Markup} from "telegraf";
 import Command from "./command.class";
 
-import {MyContext} from "../context";
-import {ICallback} from "../interfaces/callback.interface";
+import {MyContext} from "../../types/context";
+import {ICallback} from "../../types/types";
 
 import taskRepository from "../repositories";
 import {deleteTask} from "../services/task.service";

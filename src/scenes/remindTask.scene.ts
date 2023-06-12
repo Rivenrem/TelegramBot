@@ -1,4 +1,4 @@
-import {MyContext} from "../context";
+import {MyContext} from "../../types/context";
 import {Message} from "typegram";
 import reminderTask from "../helpers/createReminde";
 import getHoursAndMinutes from "../helpers/getHoursAndMinutes";

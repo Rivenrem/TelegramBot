@@ -1,3 +1,7 @@
+export interface ICallback {
+  text: string;
+}
+
 export interface ISuggestion {
   xid: string;
   name: string;

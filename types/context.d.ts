@@ -1,4 +1,4 @@
-import { Context, Scenes } from "telegraf";
+import {Context, Scenes} from "telegraf";
 
 export interface sessionData extends Scenes.WizardSession {
   subscribedLocation?: string;
@@ -6,6 +6,7 @@ export interface sessionData extends Scenes.WizardSession {
   dbObjectID?: string;
   taskToRemind?: string;
 }
+
 export interface MyContext extends Scenes.WizardContext, Context {
   session: sessionData;
 }

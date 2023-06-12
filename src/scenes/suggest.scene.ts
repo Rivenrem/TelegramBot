@@ -1,6 +1,6 @@
 import {Message} from "typegram";
 import messages from "../constants";
-import {MyContext} from "../context";
+import {MyContext} from "../../types/context";
 import getSuggestion from "../helpers/getSuggestion";
 import {Scenes} from "telegraf";
 

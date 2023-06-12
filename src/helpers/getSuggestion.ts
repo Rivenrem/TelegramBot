@@ -1,4 +1,4 @@
-import { ISuggestion } from "../interfaces/suggestion.interface";
+import {ISuggestion} from "../../types/types";
 import getRandomNumber from "./getRandomNumber";
 import getSityCoordinates from "../api/getCityCoordinates";
 import getSuggestionLimit from "../api/getSuggestionLimit";

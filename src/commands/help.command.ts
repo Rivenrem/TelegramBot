@@ -1,5 +1,5 @@
 import {Telegraf} from "telegraf";
-import {MyContext} from "../context";
+import {MyContext} from "../../types/context";
 import Command from "./command.class";
 
 import messages from "../constants";

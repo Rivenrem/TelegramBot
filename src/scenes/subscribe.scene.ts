@@ -1,6 +1,6 @@
 import {Message} from "typegram";
 import {Scenes} from "telegraf";
-import {MyContext} from "../context";
+import {MyContext} from "../../types/context";
 
 import scheduleWeatherTask from "../helpers/scheduleeatherTask";
 import getHoursAndMinutes from "../helpers/getHoursAndMinutes";

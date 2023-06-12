@@ -2,7 +2,7 @@ import {Message} from "typegram";
 
 import taskRepository from "../repositories";
 import {update} from "../services/task.service";
-import {MyContext} from "../context";
+import {MyContext} from "../../types/context";
 
 import messages from "../constants";
 import {TaskClass} from "../models/task";
