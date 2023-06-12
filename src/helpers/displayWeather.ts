@@ -1,6 +1,7 @@
 import {MyContext} from "../../types/context";
 import messages from "../constants";
 import getWeather from "../api/getWeather";
+import uvIndexProcessing from "./uvIndexProcessing";
 
 export default async function displayWeather(
   ctx: MyContext,
@@ -9,12 +10,15 @@ export default async function displayWeather(
   try {
     const weather = await getWeather(text);
 
-    await ctx.replyWithHTML(
-      `Current weather in ${weather.data.location.name}:
-      <b>${weather.data.current.temp_c}°C(${weather.data.current.temp_f}°F )
+    await ctx.replyWithHTML(/*HTML*/ `
+    Current weather in ${weather.data.location.name}:
+
+      <b>${weather.data.current.temp_c}°C (${weather.data.current.temp_f}°F )
+
        ${weather.data.current.condition.text}</b>
-       `
-    );
+
+       ${uvIndexProcessing(weather.data.current.uv)}
+       `);
 
     ctx.replyWithPhoto({
       source: `./src/images/${weather.data.current.condition.icon
