@@ -11,17 +11,17 @@ export default async function displayWeather(
   try {
     const weather = await getWeather(text);
 
-    ctx.deleteMessage(loadMessage.message_id);
-
     await ctx.replyWithHTML(/*HTML*/ `
     Current weather in ${weather.data.location.name}:
+    
+    <b>🌡 ${weather.data.current.temp_c}°C (${weather.data.current.temp_f}°F )
+    
+    ${weather.data.current.condition.text}</b>
+    
+    ${uvIndexProcessing(weather.data.current.uv)}
+    `);
 
-      <b>🌡 ${weather.data.current.temp_c}°C (${weather.data.current.temp_f}°F )
-
-       ${weather.data.current.condition.text}</b>
-
-       ${uvIndexProcessing(weather.data.current.uv)}
-       `);
+    ctx.deleteMessage(loadMessage.message_id);
 
     ctx.replyWithPhoto({
       source: `./src/images/${weather.data.current.condition.icon

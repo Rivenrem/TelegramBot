@@ -20,8 +20,8 @@ export default class PhotoCommand extends Command {
           processingPhotoCategory(this.category)
         );
 
+        await ctx.replyWithPhoto(Input.fromURL(picURL));
         await ctx.deleteMessage(loadMessage.message_id);
-        ctx.replyWithPhoto(Input.fromURL(picURL));
       } catch {
         await ctx.deleteMessage(loadMessage.message_id);
         ctx.reply(messages.Error.base);

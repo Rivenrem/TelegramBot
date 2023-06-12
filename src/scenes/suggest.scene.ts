@@ -19,10 +19,9 @@ export const suggestScene = new Scenes.WizardScene<MyContext>(
     try {
       const place = await getSuggestion(message.text);
 
-      await ctx.deleteMessage(loadMessage.message_id);
       await ctx.replyWithHTML(
         `Suggestion for you: ${place.name}(Rate: ${place.rate}).
-
+        
         
         ${
           place.wikipedia_extracts
@@ -31,12 +30,14 @@ export const suggestScene = new Scenes.WizardScene<MyContext>(
           ${place.wikipedia_extracts?.text}`
             : `🟢 To know more: ${place.otm}`
         }
-
+        
         📌 Place on google map:
         ${`https://www.google.com/maps/search/?api=1&query=${place.point.lat},${place.point.lon}`}
-
+        
         `
       );
+
+      await ctx.deleteMessage(loadMessage.message_id);
 
       if (place.preview?.source) {
         ctx.replyWithPhoto({
