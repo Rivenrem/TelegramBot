@@ -1,9 +1,9 @@
-import { ISuggestion } from '../types/types';
-import getRandomNumber from './getRandomNumber';
-import getSityCoordinates from '../api/getCityCoordinates';
-import getSuggestionLimit from '../api/getSuggestionLimit';
-import getSuggestedPlace from '../api/getSuggestedPlace';
-import getInfoAboutSuggestion from '../api/getInfoAboutSuggestion';
+import { ISuggestion } from '#types/types.d.ts';
+import getRandomNumber from '#helpers/getRandomNumber.ts';
+import getSityCoordinates from '#api/getCityCoordinates.ts';
+import getSuggestionLimit from '#api/getSuggestionLimit.ts';
+import getSuggestedPlace from '#api/getSuggestedPlace.ts';
+import getInfoAboutSuggestion from '#api/getInfoAboutSuggestion.ts';
 
 export default async function getSuggestion(
     city: string,

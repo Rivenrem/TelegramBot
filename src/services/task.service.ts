@@ -1,4 +1,4 @@
-import taskRepository from '../repositories';
+import taskRepository from '#repositories/index.ts';
 
 export const update = async (objectId: string, newTask: string) => {
     const task = await taskRepository.findById(objectId);

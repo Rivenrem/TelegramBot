@@ -1,5 +1,5 @@
 import { Telegraf, Markup } from 'telegraf';
-import Command from './command.class';
+import Command from '#commands/command.class.ts';
 
 import { MyContext } from '../types/context';
 import { ICallback } from '../types/types';

@@ -1,12 +1,12 @@
 import { Message } from 'typegram';
-
-import taskRepository from '../repositories';
-import { update } from '../services/task.service';
-import { MyContext } from '../types/context';
-
-import messages from '../constants';
-import { TaskClass } from '../models/task';
 import { Scenes } from 'telegraf';
+
+import taskRepository from '#repositories/index.ts';
+import { update } from '#services/task.service.ts';
+import { MyContext } from '#types/context.d.ts';
+
+import messages from '#constants/index.ts';
+import { TaskClass } from '#models/task.ts';
 
 export const addTaskScene = new Scenes.WizardScene<MyContext>(
     'ADD_TASK_SCENE',

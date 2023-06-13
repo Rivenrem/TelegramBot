@@ -1,5 +1,5 @@
 import { Telegraf } from 'telegraf';
-import Command from './command.class';
+import Command from '#commands/command.class.ts';
 import { MyContext } from '../types/context';
 
 export default class StartCommand extends Command {

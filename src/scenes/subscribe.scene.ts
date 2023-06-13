@@ -1,12 +1,13 @@
 import { Message } from 'typegram';
 import { Scenes } from 'telegraf';
-import { MyContext } from '../types/context';
 
-import scheduleWeatherTask from '../helpers/scheduleeatherTask';
-import getHoursAndMinutes from '../helpers/getHoursAndMinutes';
-import weatherTask from '../classes/weatherTask';
+import { MyContext } from '#types/context.d.ts';
 
-import messages from '../constants';
+import scheduleWeatherTask from '#helpers/scheduleeatherTask.ts';
+import getHoursAndMinutes from '#helpers/getHoursAndMinutes.ts';
+import weatherTask from '#classes/weatherTask.ts';
+
+import messages from '#constants/index.ts';
 
 export const subscribeScene = new Scenes.WizardScene<MyContext>(
     'SUBSCRRIBE_SCENE',

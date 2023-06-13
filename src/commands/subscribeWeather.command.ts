@@ -1,6 +1,6 @@
 import { Telegraf } from 'telegraf';
 import { MyContext } from '../types/context';
-import Command from './command.class';
+import Command from '#commands/command.class.ts';
 
 import messages from '../constants';
 import weatherTask from '../classes/weatherTask';

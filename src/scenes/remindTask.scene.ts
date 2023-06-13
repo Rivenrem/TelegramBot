@@ -1,9 +1,11 @@
-import { MyContext } from '../types/context';
 import { Message } from 'typegram';
-import reminderTask from '../helpers/createReminde';
-import getHoursAndMinutes from '../helpers/getHoursAndMinutes';
-import messages from '../constants';
 import { Scenes } from 'telegraf';
+
+import { MyContext } from '#types/context.d.ts';
+
+import reminderTask from '#helpers/createReminde.ts';
+import getHoursAndMinutes from '#helpers/getHoursAndMinutes.ts';
+import messages from '#constants/index.ts';
 
 export const remindTaskScene = new Scenes.WizardScene<MyContext>(
     'REMIND_TASK_SCENE',
