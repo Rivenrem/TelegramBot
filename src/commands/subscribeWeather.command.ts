@@ -1,9 +1,9 @@
 import { Telegraf } from 'telegraf';
-import { MyContext } from '../types/context';
+import { MyContext } from '#types/context.d.ts';
 import Command from '#commands/command.class.ts';
 
-import messages from '../constants';
-import weatherTask from '../classes/weatherTask';
+import messages from '#constants/index.ts';
+import weatherTask from '#classes/weatherTask.ts';
 
 export default class WeatherSubscribtion extends Command {
     constructor(bot: Telegraf<MyContext>) {

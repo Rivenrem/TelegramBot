@@ -1,13 +1,13 @@
 import { Telegraf, Markup } from 'telegraf';
 import Command from '#commands/command.class.ts';
 
-import { MyContext } from '../types/context';
-import { ICallback } from '../types/types';
+import { MyContext } from '#types/context.d.ts';
+import { ICallback } from '#types/types.d.ts';
 
-import taskRepository from '../repositories';
-import { deleteTask } from '../services/task.service';
+import taskRepository from '#repositories/index.ts';
+import { deleteTask } from '#services/task.service.ts';
 
-import messages from '../constants';
+import messages from '#constants/index.ts';
 
 export default class TaskCommand extends Command {
     constructor(bot: Telegraf<MyContext>) {

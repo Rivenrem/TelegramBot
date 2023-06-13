@@ -9,7 +9,7 @@ import messages from '#constants/index.ts';
 export const weatherScene = new Scenes.WizardScene<MyContext>(
     'WEATHER_SCENE',
     async ctx => {
-        await ctx.reply(messages.Weather.Forecast);
+        await ctx.reply(messages.Weather.forecast);
         return ctx.wizard.next();
     },
     async ctx => {

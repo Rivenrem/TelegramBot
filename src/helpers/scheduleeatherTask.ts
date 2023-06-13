@@ -1,5 +1,5 @@
 import cron, { ScheduledTask } from 'node-cron';
-import displayWeather from './displayWeather';
+import displayWeather from '#helpers/displayWeather.ts';
 import { MyContext } from '#types/context.d.ts';
 import messages from '#constants/index.ts';
 
@@ -16,7 +16,7 @@ export default function scheduleWeatherTask(
 
                 ctx.telegram.sendMessage(
                     ctx.session.chatID,
-                    messages.Weather.ScheduledMessage,
+                    messages.Weather.scheduledMessage,
                 );
             }
         },

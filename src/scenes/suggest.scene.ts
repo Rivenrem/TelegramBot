@@ -10,7 +10,7 @@ export const suggestScene = new Scenes.WizardScene<MyContext>(
     'SUGGEST_SCENE',
 
     async ctx => {
-        await ctx.reply(messages.SuggestPlace.City);
+        await ctx.reply(messages.SuggestPlace.city);
         return ctx.wizard.next();
     },
 

@@ -6,8 +6,8 @@
             "es5", "es6", "dom", "dom.iterable"
         ],                                       
 
-    "module": "esnext",                       
-    "moduleResolution": "nodenext" ,
+    "module":"ES6",                       
+    "moduleResolution":"node16" ,
     "outDir": "./dist",                                   
     "esModuleInterop": true,                           
     "forceConsistentCasingInFileNames": true,      

@@ -12,7 +12,7 @@ import messages from '#constants/index.ts';
 export const subscribeScene = new Scenes.WizardScene<MyContext>(
     'SUBSCRRIBE_SCENE',
     async ctx => {
-        ctx.reply(messages.Weather.Subscribtion);
+        ctx.reply(messages.Weather.subscribtion);
         return ctx.wizard.next();
     },
 
@@ -31,7 +31,7 @@ export const subscribeScene = new Scenes.WizardScene<MyContext>(
             ctx.message as Message.TextMessage
         ).text;
 
-        ctx.reply(messages.Weather.SubscribtionTime);
+        ctx.reply(messages.Weather.subscribtionTime);
 
         return ctx.wizard.next();
     },

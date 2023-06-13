@@ -12,16 +12,19 @@ const done = 'Done ! ✅';
 
 const loading = 'Loading...';
 
+const safeUvIndex = 3;
+const responseLimin = 500;
+
 enum Weather {
-    Forecast = 'Please, tell me the city you want to know the weather 🌤️',
-    Subscribtion = 'Please, tell me the city you want to subscribe on 🌤️',
+    forecast = 'Please, tell me the city you want to know the weather 🌤️',
+    subscribtion = 'Please, tell me the city you want to subscribe on 🌤️',
     wrongLocation = "Sorry, but it's incorrect location.",
-    SubscribtionTime = 'Type at which hour you want to receive your weather. Send to me time in 24-hours format (e.g. 08:23)',
-    ScheduledMessage = 'Here are your daily weather 🌤️',
+    subscribtionTime = 'Type at which hour you want to receive your weather. Send to me time in 24-hours format (e.g. 08:23)',
+    scheduledMessage = 'Here are your daily weather 🌤️',
 }
 
 enum SuggestPlace {
-    City = 'In which city would you like to receive an offer of places ?',
+    city = 'In which city would you like to receive an offer of places ?',
 }
 
 enum Error {
@@ -40,4 +43,14 @@ enum Task {
     reminderTime = 'When to remind you of a task ? Send to me time in 24-hours format (e.g. 08:23)',
 }
 
-export default { commands, done, Weather, SuggestPlace, Error, Task, loading };
+export default {
+    commands,
+    done,
+    Weather,
+    SuggestPlace,
+    Error,
+    Task,
+    loading,
+    safeUvIndex,
+    responseLimin,
+};
