@@ -1,5 +1,5 @@
 import {Telegraf} from "telegraf";
-import {MyContext} from "../../types/context";
+import {MyContext} from "../types/context";
 import Command from "./command.class";
 
 export default class SuggestCommand extends Command {

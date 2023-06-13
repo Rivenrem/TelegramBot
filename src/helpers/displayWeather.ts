@@ -1,4 +1,4 @@
-import {MyContext} from "../../types/context";
+import {MyContext} from "../types/context";
 import messages from "../constants";
 import getWeather from "../api/getWeather";
 import uvIndexProcessing from "./uvIndexProcessing";

@@ -1,6 +1,6 @@
 import Command from "./command.class";
 import {Telegraf, Input} from "telegraf";
-import {MyContext} from "../../types/context";
+import {MyContext} from "../types/context";
 
 import messages from "../constants";
 import getPhotoURL from "../api/getPhotoURL";

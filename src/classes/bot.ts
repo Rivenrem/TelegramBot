@@ -7,7 +7,7 @@ import commands from "../commands/index";
 
 import scenes from "../scenes/index";
 
-import {MyContext} from "../../types/context";
+import {MyContext} from "../types/context";
 
 const stage = new Scenes.Stage<MyContext>(scenes);
 const localSession = new LocalSession({database: "sessions.json"});
