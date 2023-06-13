@@ -1,27 +1,27 @@
 export interface ICallback {
-  text: string;
+    text: string;
 }
 
 export interface ISuggestion {
-  xid: string;
+    xid: string;
 
-  name: string;
+    name: string;
 
-  rate: string;
+    rate: string;
 
-  preview?: {
-    source: string;
-  };
+    preview?: {
+        source: string;
+    };
 
-  wikipedia_extracts?: {
-    title: string;
-    text: string;
-  };
+    wikipedia_extracts?: {
+        title: string;
+        text: string;
+    };
 
-  point: {
-    lon: number;
-    lat: number;
-  };
+    point: {
+        lon: number;
+        lat: number;
+    };
 
-  otm: string;
+    otm: string;
 }

@@ -1,16 +1,16 @@
-import taskRepository from "../repositories";
+import taskRepository from '../repositories';
 
 export const update = async (objectId: string, newTask: string) => {
-  const task = await taskRepository.findById(objectId);
-  const tasksArray = task.tasksArray;
+    const task = await taskRepository.findById(objectId);
+    const tasksArray = task.tasksArray;
 
-  taskRepository.update(objectId, [...tasksArray, newTask]);
+    taskRepository.update(objectId, [...tasksArray, newTask]);
 };
 
 export const deleteTask = async (objectId: string, taskToDelete: string) => {
-  const task = await taskRepository.findById(objectId);
-  const tasksArray = task.tasksArray;
+    const task = await taskRepository.findById(objectId);
+    const tasksArray = task.tasksArray;
 
-  tasksArray.splice(tasksArray.indexOf(taskToDelete), 1);
-  taskRepository.update(objectId, tasksArray);
+    tasksArray.splice(tasksArray.indexOf(taskToDelete), 1);
+    taskRepository.update(objectId, tasksArray);
 };

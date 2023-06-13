@@ -1,15 +1,15 @@
-import {Telegraf} from "telegraf";
-import {MyContext} from "../types/context";
-import Command from "./command.class";
+import { Telegraf } from 'telegraf';
+import { MyContext } from '../types/context';
+import Command from './command.class';
 
 export default class SuggestCommand extends Command {
-  constructor(bot: Telegraf<MyContext>) {
-    super(bot);
-  }
+    constructor(bot: Telegraf<MyContext>) {
+        super(bot);
+    }
 
-  handle(): void {
-    this.bot.command("suggest", (ctx) => {
-      ctx.scene.enter("SUGGEST_SCENE");
-    });
-  }
+    handle(): void {
+        this.bot.command('suggest', ctx => {
+            ctx.scene.enter('SUGGEST_SCENE');
+        });
+    }
 }
