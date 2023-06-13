@@ -1,7 +1,7 @@
 {
     "name": "telegram_bot",
     "baseUrl": "./",
-    "paths": {
+    "imports": {
         "#api/*": "./src/api/*",
         "#classes/*": "./src/classes/*",
         "#commands/*": "./src/commands/*",
@@ -15,18 +15,15 @@
     },
     "type": "module",
     "version": "1.0.0",
-    "description": "",
-    "main": "app.js",
+    "main": "app.ts",
     "scripts": {
         "eslint": "eslint",
         "build": "tsc",
         "tsc": "tsc",
-        "start": "node ./dist/app.js",
+        "start": "ts-node-esm ./dist/app.js",
         "dev": "nodemon ./app.ts",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
-    "keywords": [],
-    "author": "",
     "license": "ISC",
     "dependencies": {
         "axios": "^1.4.0",
@@ -57,25 +54,5 @@
         "nodemon": "^2.0.22",
         "ts-node": "^10.9.1",
         "typescript": "^5.0.4"
-    },
-    "compilerOptions": {
-        "module": "ESNext",
-        "esModuleInterop": true,
-        "target": "ESNext",
-        "moduleResolution": "Node",
-        "outDir": "dist",
-        "forceConsistentCasingInFileNames": true,
-        "noFallthroughCasesInSwitch": true,
-        "isolatedModules": false,
-        "strict": true,
-        "noImplicitAny": true,
-        "useUnknownInCatchVariables": false,
-        "inlineSourceMap": true
-    },
-    "ts-node": {
-        "esm": true
-    },
-    "lib": [
-        "esnext"
-    ]
+    }
 }

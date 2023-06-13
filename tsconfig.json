@@ -1,19 +1,32 @@
 {
+    "imports": {
+        "#api/*": "./src/api/*",
+        "#classes/*": "./src/classes/*",
+        "#commands/*": "./src/commands/*",
+        "#constants/*": "./src/constants/*",
+        "#models/*": "./src/models/*",
+        "#repositories/*": "./src/repositories/*",
+        "#scenes/*": "./src/scenes/*",
+        "#services/*": "./src/services/*",
+        "#types/*": "./src/types/*",
+        "#helpers/*": "./src/helpers/*"
+    },
+                                 
   "compilerOptions": {
-
     "target": "es2016",                                
     "lib": [
             "es5", "es6", "dom", "dom.iterable"
         ],                                       
 
     "module":"ES6",                       
-    "moduleResolution":"node16" ,
+    "moduleResolution":"nodenext" ,
     "outDir": "./dist",                                   
     "esModuleInterop": true,                           
     "forceConsistentCasingInFileNames": true,      
     "rootDir": "./",
     "strict": true,                                      
-    "skipLibCheck": true                                 
     
-  }
+    "skipLibCheck": true,
+  },
+  
 }
