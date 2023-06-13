@@ -7,7 +7,6 @@ import commands from "../commands/index";
 
 import scenes from "../scenes/index";
 
-import {IConfigService} from "../config";
 import {MyContext} from "../../types/context";
 
 const stage = new Scenes.Stage<MyContext>(scenes);
@@ -17,8 +16,8 @@ export default class Bot {
   bot: Telegraf<MyContext>;
   commands: Command[] = [];
 
-  constructor(private readonly configService: IConfigService) {
-    this.bot = new Telegraf<MyContext>(this.configService.get("BOT_TOKEN"));
+  constructor() {
+    this.bot = new Telegraf<MyContext>(process.env.BOT_TOKEN!);
     this.bot.use(localSession.middleware());
     this.bot.use(stage.middleware());
   }

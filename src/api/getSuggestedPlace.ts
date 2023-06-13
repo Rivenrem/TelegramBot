@@ -1,5 +1,4 @@
-import axios, { AxiosResponse } from "axios";
-import configService from "../config/config.service";
+import axios, {AxiosResponse} from "axios";
 
 export default async function getSuggestedPlace(
   lat: string,
@@ -8,11 +7,7 @@ export default async function getSuggestedPlace(
 ): Promise<AxiosResponse> {
   try {
     const suggestedPlace = await axios.get(
-      `${configService.get(
-        "OPENTRIP_STATIC_URL"
-      )}/0.1/en/places/radius?radius=1000&lon=${lon}&lat=${lat}&format=json&limit=${limit}&apikey=${configService.get(
-        "OPENTRIP_API_KEY"
-      )}`
+      `${process.env.OPENTRIP_STATIC_URL}/0.1/en/places/radius?radius=1000&lon=${lon}&lat=${lat}&format=json&limit=${limit}&apikey=${process.env.OPENTRIP_API_KEY}`
     );
 
     return suggestedPlace;

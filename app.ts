@@ -1,18 +1,20 @@
 import express from "express";
 import {connect} from "mongoose";
+import dotenv from "dotenv";
 
-import configService from "./src/config/config.service";
 import Bot from "./src/classes/bot";
 
-const bot = new Bot(configService);
+dotenv.config();
 const app = express();
-const PORT = configService.get("PORT");
+
+const bot = new Bot();
+const PORT = process.env.PORT;
 
 (async function () {
   try {
     bot.init();
 
-    await connect(configService.get("DB_CONN_STRING"));
+    await connect(process.env.DB_CONN_STRING!);
 
     app.listen(PORT);
   } catch (error) {
