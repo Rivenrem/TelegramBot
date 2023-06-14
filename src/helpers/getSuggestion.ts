@@ -1,27 +1,30 @@
-import {ISuggestion} from "../../types/types";
-import getRandomNumber from "./getRandomNumber";
-import getSityCoordinates from "../api/getCityCoordinates";
-import getSuggestionLimit from "../api/getSuggestionLimit";
-import getSuggestedPlace from "../api/getSuggestedPlace";
-import getInfoAboutSuggestion from "../api/getInfoAboutSuggestion";
+import { ISuggestion } from '#types/types.d.ts';
+import getRandomNumber from '#helpers/getRandomNumber.ts';
+import getCityCoordinates from '#api/getCityCoordinates.ts';
+import getSuggestionLimit from '#api/getSuggestionLimit.ts';
+import getSuggestedPlace from '#api/getSuggestedPlace.ts';
+import getInfoAboutSuggestion from '#api/getInfoAboutSuggestion.ts';
+import constants from '#constants/index.ts';
 
 export default async function getSuggestion(
-  city: string
+    city: string,
 ): Promise<ISuggestion> {
-  try {
-    const [lat, lon] = await getSityCoordinates(city);
+    try {
+        const [lat, lon] = await getCityCoordinates(city);
 
-    const limit = await getSuggestionLimit(lat, lon);
+        const limit = await getSuggestionLimit(lat, lon);
 
-    const suggestedPlace = await getSuggestedPlace(lat, lon, limit);
+        const suggestedPlace = await getSuggestedPlace(lat, lon, limit);
 
-    const currentXid =
-      suggestedPlace.data[getRandomNumber(Math.min(limit, 500))].xid;
+        const currentXid =
+            suggestedPlace.data[
+                getRandomNumber(Math.min(limit, constants.responseLimin))
+            ].xid;
 
-    const suggestedPlaceInfo = await getInfoAboutSuggestion(currentXid);
+        const suggestedPlaceInfo = await getInfoAboutSuggestion(currentXid);
 
-    return suggestedPlaceInfo.data;
-  } catch {
-    throw new Error();
-  }
+        return suggestedPlaceInfo.data;
+    } catch {
+        throw new Error();
+    }
 }

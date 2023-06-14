@@ -1,3 +1,3 @@
 export default function getRandomNumber(limit: number) {
-  return Math.floor(Math.random() * (limit - 2) + 1);
+    return Math.floor(Math.random() * (limit - 2) + 1);
 }

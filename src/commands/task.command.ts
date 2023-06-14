@@ -1,85 +1,93 @@
-import {Telegraf, Markup} from "telegraf";
-import Command from "./command.class";
+import { Telegraf, Markup } from 'telegraf';
+import Command from '#commands/command.class.ts';
 
-import {MyContext} from "../../types/context";
-import {ICallback} from "../../types/types";
+import { MyContext } from '#types/context.d.ts';
+import { ICallback } from '#types/types.d.ts';
 
-import taskRepository from "../repositories";
-import {deleteTask} from "../services/task.service";
+import taskRepository from '#repositories/index.ts';
+import { deleteTask } from '#services/task.service.ts';
 
-import messages from "../constants";
+import messages from '#constants/index.ts';
 
 export default class TaskCommand extends Command {
-  constructor(bot: Telegraf<MyContext>) {
-    super(bot);
-  }
+    constructor(bot: Telegraf<MyContext>) {
+        super(bot);
+    }
 
-  handle(): void {
-    this.bot.command("task", (ctx) => {
-      ctx.reply(messages.Task.addTask, {
-        ...Markup.inlineKeyboard([
-          Markup.button.callback("Get all my tasks 📝", "getAllTasks"),
-          Markup.button.callback("Add new task ✏️", "addNewTask"),
-        ]),
-      });
-    });
-
-    this.bot.action("getAllTasks", async (ctx) => {
-      if (!ctx.session.dbObjectID) {
-        ctx.reply(messages.Error.noTasks, {
-          ...Markup.inlineKeyboard([
-            Markup.button.callback("yes", "addNewTask"),
-          ]),
+    handle(): void {
+        this.bot.command('task', ctx => {
+            ctx.reply(messages.Task.addTask, {
+                ...Markup.inlineKeyboard([
+                    Markup.button.callback(
+                        'Get all my tasks 📝',
+                        'getAllTasks',
+                    ),
+                    Markup.button.callback('Add new task ✏️', 'addNewTask'),
+                ]),
+            });
         });
 
-        return;
-      }
+        this.bot.action('getAllTasks', async ctx => {
+            if (!ctx.session.dbObjectID) {
+                ctx.reply(messages.Error.noTasks, {
+                    ...Markup.inlineKeyboard([
+                        Markup.button.callback('yes', 'addNewTask'),
+                    ]),
+                });
 
-      const response = await taskRepository.findById(ctx.session.dbObjectID);
+                return;
+            }
 
-      if (response.tasksArray.length === 0) {
-        ctx.reply(messages.Error.noTasks, {
-          ...Markup.inlineKeyboard([
-            Markup.button.callback("yes", "addNewTask"),
-          ]),
+            const response = await taskRepository.findById(
+                ctx.session.dbObjectID,
+            );
+
+            if (response.tasksArray.length === 0) {
+                ctx.reply(messages.Error.noTasks, {
+                    ...Markup.inlineKeyboard([
+                        Markup.button.callback('yes', 'addNewTask'),
+                    ]),
+                });
+
+                return;
+            }
+
+            await ctx.reply('Your tasks:');
+
+            response.tasksArray.map(async (task: string) => {
+                await ctx.reply(`📌 ${task}`, {
+                    ...Markup.inlineKeyboard([
+                        Markup.button.callback('Delete task ❌', 'deleteTask'),
+                        Markup.button.callback(
+                            'Add reminder ⏰',
+                            'remindAboutTask',
+                        ),
+                    ]),
+                });
+            });
         });
 
-        return;
-      }
-
-      await ctx.reply("Your tasks:");
-
-      response.tasksArray.map(async (task: string) => {
-        await ctx.reply(`📌 ${task}`, {
-          ...Markup.inlineKeyboard([
-            Markup.button.callback("Delete task ❌", "deleteTask"),
-            Markup.button.callback("Add reminder ⏰", "remindAboutTask"),
-          ]),
+        this.bot.action('addNewTask', ctx => {
+            ctx.scene.enter('ADD_TASK_SCENE');
         });
-      });
-    });
 
-    this.bot.action("addNewTask", (ctx) => {
-      ctx.scene.enter("ADD_TASK_SCENE");
-    });
+        this.bot.action('deleteTask', ctx => {
+            const callback = ctx.callbackQuery.message as ICallback;
+            const taskToDelete = callback.text;
 
-    this.bot.action("deleteTask", (ctx) => {
-      const callback = ctx.callbackQuery.message as ICallback;
-      const taskToDelete = callback.text;
+            if (ctx.session.dbObjectID) {
+                deleteTask(ctx.session.dbObjectID, taskToDelete);
+                ctx.deleteMessage(ctx.callbackQuery.message?.message_id);
+            }
+        });
 
-      if (ctx.session.dbObjectID) {
-        deleteTask(ctx.session.dbObjectID, taskToDelete);
-        ctx.deleteMessage(ctx.callbackQuery.message?.message_id);
-      }
-    });
+        this.bot.action('remindAboutTask', ctx => {
+            const callback = ctx.callbackQuery.message as ICallback;
+            const taskToRemind = callback.text;
 
-    this.bot.action("remindAboutTask", (ctx) => {
-      const callback = ctx.callbackQuery.message as ICallback;
-      const taskToRemind = callback.text;
+            ctx.session.taskToRemind = taskToRemind;
 
-      ctx.session.taskToRemind = taskToRemind;
-
-      ctx.scene.enter("REMIND_TASK_SCENE");
-    });
-  }
+            ctx.scene.enter('REMIND_TASK_SCENE');
+        });
+    }
 }

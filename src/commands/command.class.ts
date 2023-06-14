@@ -1,8 +1,8 @@
-import {Telegraf} from "telegraf";
-import {MyContext} from "../../types/context";
+import { Telegraf } from 'telegraf';
+import { MyContext } from '#types/context.d.ts';
 
 export default abstract class Command {
-  constructor(public bot: Telegraf<MyContext>) {}
+    constructor(public bot: Telegraf<MyContext>) {}
 
-  abstract handle(): void;
+    abstract handle(): void;
 }
