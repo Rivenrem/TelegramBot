@@ -1,5 +1,5 @@
 import axios from 'axios';
-import getRandomNumber from '#helpers/getRandomNumber.ts';
+import getRandomNumber from '../helpers/getRandomNumber';
 
 export default async function getPhotoURL(category: string): Promise<string> {
     const URL = `${process.env.PICS_STATIC_URL

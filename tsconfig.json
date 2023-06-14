@@ -6,12 +6,11 @@
             "es5", "es6", "dom", "dom.iterable"
         ],                                       
 
-    "module":"ES6",                       
-    "moduleResolution":"node16" ,
+    "module": "commonjs",
     "outDir": "./dist",                                   
     "esModuleInterop": true,                           
     "forceConsistentCasingInFileNames": true,      
-    "rootDir": "./",
+     "rootDir": "./",
     "strict": true,                                      
     "skipLibCheck": true                                 
     

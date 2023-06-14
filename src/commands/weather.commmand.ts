@@ -1,6 +1,6 @@
 import { Telegraf } from 'telegraf';
-import Command from '#commands/command.class.ts';
-import { MyContext } from '#types/context.d.ts';
+import Command from './command.class';
+import { MyContext } from '../types/context';
 
 export default class WeatherCommand extends Command {
     constructor(bot: Telegraf<MyContext>) {

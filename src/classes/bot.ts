@@ -1,42 +1,42 @@
-import { Telegraf } from 'telegraf';
-import { Scenes } from 'telegraf';
-import LocalSession from 'telegraf-session-local';
+import {Telegraf} from "telegraf";
+import {Scenes} from "telegraf";
+import LocalSession from "telegraf-session-local";
 
-import Command from '#commands/command.class.ts';
-import commands from '#commands/index.ts';
+import Command from "../commands/command.class";
+import commands from "../commands/index";
 
-import scenes from '#scenes/index.ts';
+import scenes from "../scenes/index";
 
-import { MyContext } from '#types/context.d.ts';
+import {MyContext} from "../types/context";
 
 const stage = new Scenes.Stage<MyContext>(scenes);
-const localSession = new LocalSession({ database: 'sessions.json' });
+const localSession = new LocalSession({database: "sessions.json"});
 
 export default class Bot {
-    bot: Telegraf<MyContext>;
-    commands: Command[] = [];
+  bot: Telegraf<MyContext>;
+  commands: Command[] = [];
 
-    constructor() {
-        this.bot = new Telegraf<MyContext>(process.env.BOT_TOKEN!);
-        this.bot.use(localSession.middleware());
-        this.bot.use(stage.middleware());
+  constructor() {
+    this.bot = new Telegraf<MyContext>(process.env.BOT_TOKEN!);
+    this.bot.use(localSession.middleware());
+    this.bot.use(stage.middleware());
+  }
+
+  init() {
+    this.commands = [
+      new commands.HelpCommand(this.bot),
+      new commands.PhotoCommand(this.bot, "cat"),
+      new commands.PhotoCommand(this.bot, "dog"),
+      new commands.StartCommand(this.bot),
+      new commands.WeatherCommand(this.bot),
+      new commands.WeatherSubscribtion(this.bot),
+      new commands.TaskCommand(this.bot),
+      new commands.SuggestCommand(this.bot),
+    ];
+    for (const command of this.commands) {
+      command.handle();
     }
 
-    init() {
-        this.commands = [
-            new commands.HelpCommand(this.bot),
-            new commands.PhotoCommand(this.bot, 'cat'),
-            new commands.PhotoCommand(this.bot, 'dog'),
-            new commands.StartCommand(this.bot),
-            new commands.WeatherCommand(this.bot),
-            new commands.WeatherSubscribtion(this.bot),
-            new commands.TaskCommand(this.bot),
-            new commands.SuggestCommand(this.bot),
-        ];
-        for (const command of this.commands) {
-            command.handle();
-        }
-
-        this.bot.launch();
-    }
+    this.bot.launch();
+  }
 }

@@ -1,4 +1,4 @@
-import { Task, TaskClass } from '#models/task.ts';
+import { Task, TaskClass } from '../models/task';
 
 const findById = async (objectId: string): Promise<TaskClass> => {
     const task = await Task.findById(objectId);

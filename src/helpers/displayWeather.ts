@@ -1,7 +1,7 @@
-import { MyContext } from '#types/context.d.ts';
-import messages from '#constants/index.ts';
-import getWeather from '#api/getWeather.ts';
-import uvIndexProcessing from '#helpers/uvIndexProcessing.ts';
+import { MyContext } from '../types/context';
+import messages from '../constants';
+import getWeather from '../api/getWeather';
+import uvIndexProcessing from './uvIndexProcessing';
 
 export default async function displayWeather(
     ctx: MyContext,

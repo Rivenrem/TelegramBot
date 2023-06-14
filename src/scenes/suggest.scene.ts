@@ -1,10 +1,8 @@
 import { Message } from 'typegram';
+import messages from '../constants';
+import { MyContext } from '../types/context';
+import getSuggestion from '../helpers/getSuggestion';
 import { Scenes } from 'telegraf';
-
-import { MyContext } from '#types/context.d.ts';
-
-import messages from '#constants/index.ts';
-import getSuggestion from '#helpers/getSuggestion.ts';
 
 export const suggestScene = new Scenes.WizardScene<MyContext>(
     'SUGGEST_SCENE',

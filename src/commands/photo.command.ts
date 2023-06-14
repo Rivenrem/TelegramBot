@@ -1,10 +1,10 @@
-import Command from '#commands/command.class.ts';
+import Command from './command.class';
 import { Telegraf, Input } from 'telegraf';
-import { MyContext } from '#types/context.d.ts';
+import { MyContext } from '../types/context';
 
-import messages from '#constants/index.ts';
-import getPhotoURL from '#api/getPhotoURL.ts';
-import processingPhotoCategory from '#helpers/processingPhotoCategory.ts';
+import messages from '../constants';
+import getPhotoURL from '../api/getPhotoURL';
+import processingPhotoCategory from '../helpers/processingPhotoCategory';
 
 export default class PhotoCommand extends Command {
     constructor(bot: Telegraf<MyContext>, private readonly category: string) {

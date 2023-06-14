@@ -1,4 +1,4 @@
-import constants from '#constants/index.ts';
+import constants from '../constants/index';
 
 export default function uvIndexProcessing(uvIndex: number) {
     return uvIndex <= constants.safeUvIndex

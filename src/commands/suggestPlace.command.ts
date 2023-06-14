@@ -1,6 +1,6 @@
 import { Telegraf } from 'telegraf';
-import { MyContext } from '#types/context.d.ts';
-import Command from '#commands/command.class.ts';
+import { MyContext } from '../types/context';
+import Command from './command.class';
 
 export default class SuggestCommand extends Command {
     constructor(bot: Telegraf<MyContext>) {

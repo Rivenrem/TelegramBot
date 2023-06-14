@@ -2,7 +2,7 @@ import express from 'express';
 import { connect } from 'mongoose';
 import dotenv from 'dotenv';
 
-import Bot from '#classes/bot.ts';
+import Bot from './src/classes/bot';
 
 dotenv.config();
 const app = express();
