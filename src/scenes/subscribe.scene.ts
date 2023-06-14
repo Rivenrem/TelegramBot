@@ -7,6 +7,7 @@ import getHoursAndMinutes from '../helpers/getHoursAndMinutes';
 import weatherTask from '../classes/weatherTask';
 
 import messages from '../constants';
+import getWeather from '../api/getWeather';
 
 export const subscribeScene = new Scenes.WizardScene<MyContext>(
     'SUBSCRRIBE_SCENE',
@@ -19,16 +20,27 @@ export const subscribeScene = new Scenes.WizardScene<MyContext>(
         if (
             !ctx.message ||
             !('text' in ctx.message) ||
-            ctx.message.text.match(/[0-9]/)
+            ctx.message.text.match(/\d/)
         ) {
             ctx.reply(messages.Error.badWeatherRequest);
             return;
         }
 
+        const location = (ctx.message as Message.TextMessage).text;
+
+        try {
+            const weatherResponse = await getWeather(location);
+
+            if (weatherResponse.status !== 200) {
+                throw new Error();
+            }
+        } catch {
+            ctx.reply(messages.Error.badWeatherRequest);
+            return;
+        }
+
         ctx.session.chatID = ctx.chat?.id;
-        ctx.session.subscribedLocation = (
-            ctx.message as Message.TextMessage
-        ).text;
+        ctx.session.subscribedLocation = location;
 
         ctx.reply(messages.Weather.subscribtionTime);
 
