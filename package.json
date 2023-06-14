@@ -36,7 +36,9 @@
         "node-schedule": "^2.1.1",
         "telegraf": "^4.12.2",
         "telegraf-session-local": "^2.1.1",
-        "typegram": "^5.0.0"
+        "typegram": "^5.0.0",
+        "ts-node": "^10.9.1",
+        "typescript": "^5.0.4"
     },
     "devDependencies": {
         "@babel/core": "^7.22.1",
