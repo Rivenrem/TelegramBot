@@ -1,12 +1,12 @@
 import cron, { ScheduledTask } from 'node-cron';
 import { IWeatherData } from 'src/types/weather';
 
-import getWeather from '../api/getWeather';
-import messages from '../constants';
+import { getWeather } from '../api/getWeather';
+import { constants } from '../constants';
 import { MyContext } from '../types/context';
-import displayWeather from './displayWeather';
+import { displayWeather } from './displayWeather';
 
-export default function scheduleWeatherTask(
+export function scheduleWeatherTask(
     context: MyContext,
     HH: string,
     MM: string,
@@ -22,10 +22,10 @@ export default function scheduleWeatherTask(
                 ) {
                     await context.telegram.sendMessage(
                         context.session.chatID,
-                        messages.Weather.scheduledMessage,
+                        constants.Weather.scheduledMessage,
                     );
 
-                    const loadMessage = await context.reply(messages.loading);
+                    const loadMessage = await context.reply(constants.loading);
 
                     try {
                         const weather = await getWeather(
@@ -38,7 +38,7 @@ export default function scheduleWeatherTask(
                         await context.deleteMessage(loadMessage.message_id);
                     } catch {
                         await context.deleteMessage(loadMessage.message_id);
-                        await context.reply(messages.Error.base);
+                        await context.reply(constants.Error.base);
                     }
                 }
             })(),

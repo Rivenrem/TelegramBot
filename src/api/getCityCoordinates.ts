@@ -1,9 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
-import { ICoordinatesData } from 'src/types/types';
+import { ICoordinatesData } from 'src/types/suggestion';
 
-export default async function getCityCoordinates(
-    cityName: string,
-): Promise<string[]> {
+export async function getCityCoordinates(cityName: string): Promise<string[]> {
     try {
         const coordinates: AxiosResponse = await axios.get(
             `${process.env.OPENTRIP_STATIC_URL

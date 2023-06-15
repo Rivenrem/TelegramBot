@@ -12,6 +12,4 @@ class WeatherTaskClass {
     }
 }
 
-const weatherTask = new WeatherTaskClass();
-
-export default weatherTask;
+export const weatherTask = new WeatherTaskClass();

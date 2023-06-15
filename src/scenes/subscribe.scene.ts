@@ -1,17 +1,17 @@
 import { Scenes } from 'telegraf';
 import { Message } from 'typegram';
 
-import getWeather from '../api/getWeather';
-import weatherTask from '../classes/weatherTask';
-import messages from '../constants';
-import getHoursAndMinutes from '../helpers/getHoursAndMinutes';
-import scheduleWeatherTask from '../helpers/scheduledWatherTask';
+import { getWeather } from '../api/getWeather';
+import { weatherTask } from '../classes/weatherTask';
+import { constants } from '../constants';
+import { getHoursAndMinutes } from '../helpers/getHoursAndMinutes';
+import { scheduleWeatherTask } from '../helpers/scheduledWatherTask';
 import { MyContext } from '../types/context';
 
-const subscribeScene = new Scenes.WizardScene<MyContext>(
-    'SUBSCRRIBE_SCENE',
+export const subscribeScene = new Scenes.WizardScene<MyContext>(
+    constants.Scenes.SUBSCRRIBE_SCENE,
     async context => {
-        await context.reply(messages.Weather.subscribtion);
+        await context.reply(constants.Weather.subscribtion);
         return context.wizard.next();
     },
 
@@ -21,7 +21,7 @@ const subscribeScene = new Scenes.WizardScene<MyContext>(
             !('text' in context.message) ||
             /\d/.test(context.message.text)
         ) {
-            await context.reply(messages.Error.badWeatherRequest);
+            await context.reply(constants.Error.badWeatherRequest);
             return;
         }
 
@@ -34,14 +34,14 @@ const subscribeScene = new Scenes.WizardScene<MyContext>(
                 throw new Error();
             }
         } catch {
-            await context.reply(messages.Error.badWeatherRequest);
+            await context.reply(constants.Error.badWeatherRequest);
             return;
         }
 
         context.session.chatID = context.chat?.id;
         context.session.subscribedLocation = location;
 
-        await context.reply(messages.Weather.subscribtionTime);
+        await context.reply(constants.Weather.subscribtionTime);
 
         context.wizard.next();
     },
@@ -62,9 +62,7 @@ const subscribeScene = new Scenes.WizardScene<MyContext>(
             );
             await context.scene.leave();
         } else {
-            await context.reply(messages.Error.wrongTime);
+            await context.reply(constants.Error.wrongTime);
         }
     },
 );
-
-export default subscribeScene;

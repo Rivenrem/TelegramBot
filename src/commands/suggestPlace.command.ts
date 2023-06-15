@@ -1,9 +1,10 @@
-import Command from './command.class';
+import { constants } from '../constants/index';
+import { Command } from './command.class';
 
-export default class SuggestCommand extends Command {
+export class SuggestCommand extends Command {
     handle(): void {
         this.bot.command('suggest', async context => {
-            await context.scene.enter('SUGGEST_SCENE');
+            await context.scene.enter(constants.Scenes.SUGGEST_SCENE);
         });
     }
 }

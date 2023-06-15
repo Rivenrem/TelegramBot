@@ -46,3 +46,9 @@ export interface IPlace {
 export interface ISuggestionLimitData {
     count: number;
 }
+
+export interface ICoordinatesData {
+    status: string;
+    lat: string;
+    lon: string;
+}

@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 
-export default async function getInfoAboutSuggestion(
+export async function getInfoAboutSuggestion(
     xid: string,
 ): Promise<AxiosResponse> {
     const placeDescription = await axios.get(

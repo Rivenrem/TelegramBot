@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 
-export default async function getSuggestedPlace(
+export async function getSuggestedPlace(
     lat: string,
     lon: string,
     limit: number,

@@ -4,7 +4,7 @@ import 'dotenv/config';
 import express from 'express';
 import { connect } from 'mongoose';
 
-import Bot from './src/classes/bot';
+import { Bot } from './src/classes/bot';
 
 const app = express();
 

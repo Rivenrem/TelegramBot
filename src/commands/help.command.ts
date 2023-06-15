@@ -1,8 +1,8 @@
-import messages from '../constants';
-import Command from './command.class';
+import { constants } from '../constants/index';
+import { Command } from './command.class';
 
-export default class HelpCommand extends Command {
+export class HelpCommand extends Command {
     handle(): void {
-        this.bot.help(context => context.reply(messages.commands));
+        this.bot.help(context => context.reply(constants.commands));
     }
 }

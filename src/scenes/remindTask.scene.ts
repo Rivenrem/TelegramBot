@@ -1,16 +1,16 @@
 import { Scenes } from 'telegraf';
 import { Message } from 'typegram';
 
-import messages from '../constants';
-import reminderTask from '../helpers/createReminde';
-import getHoursAndMinutes from '../helpers/getHoursAndMinutes';
+import { constants } from '../constants';
+import { reminderTask } from '../helpers/createReminde';
+import { getHoursAndMinutes } from '../helpers/getHoursAndMinutes';
 import { MyContext } from '../types/context';
 
-const remindTaskScene = new Scenes.WizardScene<MyContext>(
-    'REMIND_TASK_SCENE',
+export const remindTaskScene = new Scenes.WizardScene<MyContext>(
+    constants.Scenes.REMIND_TASK_SCENE,
 
     async context => {
-        await context.reply(messages.Task.reminderTime);
+        await context.reply(constants.Task.reminderTime);
         return context.wizard.next();
     },
 
@@ -28,9 +28,7 @@ const remindTaskScene = new Scenes.WizardScene<MyContext>(
             );
             await context.scene.leave();
         } else {
-            await context.reply(messages.Error.wrongTime);
+            await context.reply(constants.Error.wrongTime);
         }
     },
 );
-
-export default remindTaskScene;

@@ -1,6 +1,6 @@
 import { Task, TaskClass } from '../models/task';
 
-const findById = async (objectId: string): Promise<TaskClass> => {
+const findTasksById = async (objectId: string): Promise<TaskClass> => {
     const task = await Task.findById(objectId);
 
     if (!task) throw new Error('Task is not found');
@@ -8,7 +8,7 @@ const findById = async (objectId: string): Promise<TaskClass> => {
     return task;
 };
 
-const create = async (taskData: TaskClass): Promise<string> => {
+const createTask = async (taskData: TaskClass): Promise<string> => {
     const task = new Task(taskData);
 
     await task.save();
@@ -16,7 +16,7 @@ const create = async (taskData: TaskClass): Promise<string> => {
     return task.id as string;
 };
 
-const update = async (
+const updateTasks = async (
     objectId: string,
     newTasks: Array<string>,
 ): Promise<void> => {
@@ -25,4 +25,4 @@ const update = async (
     });
 };
 
-export default { findById, create, update };
+export const taskRepository = { createTask, findTasksById, updateTasks };

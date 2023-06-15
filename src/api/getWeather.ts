@@ -1,8 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 
-export default async function getWeather(
-    location: string,
-): Promise<AxiosResponse> {
+export async function getWeather(location: string): Promise<AxiosResponse> {
     try {
         const URL = `${process.env.WEATHER_STATIC_URL
             }/v1/current.json?key=${process.env.WEATHER_API_KEY

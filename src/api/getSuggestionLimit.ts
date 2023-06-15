@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { ISuggestionLimitData } from 'src/types/suggestion';
 
-export default async function getSuggestionLimit(
+export async function getSuggestionLimit(
     lat: string,
     lon: string,
 ): Promise<number> {

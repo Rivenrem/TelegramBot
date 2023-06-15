@@ -13,7 +13,7 @@ const done = 'Done ! ✅';
 const loading = 'Loading...';
 
 const safeUvIndex = 3;
-const responseLimin = 500;
+const responseLimit = 500;
 const photoPerPageLimit = 200;
 
 enum Weather {
@@ -44,15 +44,24 @@ enum Task {
     reminderTime = 'When to remind you of a task ? Send to me time in 24-hours format (e.g. 08:23)',
 }
 
-export default {
+enum Scenes {
+    REMIND_TASK_SCENE = 'REMIND_TASK_SCENE',
+    SUBSCRRIBE_SCENE = 'SUBSCRRIBE_SCENE',
+    SUGGEST_SCENE = 'SUGGEST_SCENE',
+    WEATHER_SCENE = 'WEATHER_SCENE',
+    ADD_TASK_SCENE = 'ADD_TASK_SCENE',
+}
+
+export const constants = {
     commands,
     done,
-    Weather,
-    SuggestPlace,
     Error,
-    Task,
     loading,
-    safeUvIndex,
-    responseLimin,
     photoPerPageLimit,
+    responseLimit,
+    safeUvIndex,
+    Scenes,
+    SuggestPlace,
+    Task,
+    Weather,
 };

@@ -2,21 +2,21 @@ import { IPlace } from 'src/types/suggestion';
 import { Scenes } from 'telegraf';
 import { Message } from 'typegram';
 
-import messages from '../constants';
-import getSuggestion from '../helpers/getSuggestion';
+import { constants } from '../constants';
+import { getSuggestion } from '../helpers/getSuggestion';
 import { MyContext } from '../types/context';
 
-const suggestScene = new Scenes.WizardScene<MyContext>(
-    'SUGGEST_SCENE',
+export const suggestScene = new Scenes.WizardScene<MyContext>(
+    constants.Scenes.SUGGEST_SCENE,
 
     async context => {
-        await context.reply(messages.SuggestPlace.city);
+        await context.reply(constants.SuggestPlace.city);
         return context.wizard.next();
     },
 
     async context => {
         const message = context.message as Message.TextMessage;
-        const loadMessage = await context.reply(messages.loading);
+        const loadMessage = await context.reply(constants.loading);
 
         try {
             const place: IPlace = await getSuggestion(message.text);
@@ -34,7 +34,7 @@ const suggestScene = new Scenes.WizardScene<MyContext>(
         }
         
         📌 Place on google map:
-        ${`https://www.google.com/maps/search/?api=1&query=${place.point.lat},${place.point.lon}`}
+        ${`${process.env.GOOGLE_MAPS_SEARCH_STATIC_URL}/?api=1&query=${place.point.lat},${place.point.lon}`}
         
         `,
             );
@@ -48,11 +48,9 @@ const suggestScene = new Scenes.WizardScene<MyContext>(
             }
         } catch {
             await context.deleteMessage(loadMessage.message_id);
-            await context.reply(messages.Error.base);
+            await context.reply(constants.Error.base);
         }
 
         await context.scene.leave();
     },
 );
-
-export default suggestScene;

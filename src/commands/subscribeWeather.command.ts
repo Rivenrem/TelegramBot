@@ -1,11 +1,11 @@
-import weatherTask from '../classes/weatherTask';
-import messages from '../constants/index';
-import Command from './command.class';
+import { weatherTask } from '../classes/weatherTask';
+import { constants } from '../constants/index';
+import { Command } from './command.class';
 
-export default class WeatherSubscribtion extends Command {
+export class WeatherSubscribtion extends Command {
     handle(): void {
         this.bot.command('subscribe', async context => {
-            await context.scene.enter('SUBSCRRIBE_SCENE');
+            await context.scene.enter(constants.Scenes.SUBSCRRIBE_SCENE);
         });
 
         this.bot.command('unsubscribe', async context => {
@@ -15,9 +15,9 @@ export default class WeatherSubscribtion extends Command {
             ) {
                 weatherTask.get()?.stop();
                 context.session.subscribedLocation = null;
-                await context.reply(messages.done);
+                await context.reply(constants.done);
             } else {
-                await context.reply(messages.Error.notSubscribed);
+                await context.reply(constants.Error.notSubscribed);
             }
         });
     }
