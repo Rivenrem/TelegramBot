@@ -12,10 +12,8 @@ const create = async (taskData: TaskClass): Promise<string> => {
     const task = new Task(taskData);
 
     await task.save();
-    console.log('saved');
 
-    // eslint-disable-next-line no-underscore-dangle
-    return task._id.toString();
+    return task.id as string;
 };
 
 const update = async (
