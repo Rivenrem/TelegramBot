@@ -1,23 +1,26 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
+import { ICoordinatesData } from 'src/types/types';
 
 export default async function getCityCoordinates(
     cityName: string,
 ): Promise<string[]> {
     try {
-        const coordinates = await axios.get(
+        const coordinates: AxiosResponse = await axios.get(
             `${process.env.OPENTRIP_STATIC_URL
           }/0.1/en/places/geoname?name=${cityName
-      }&apikey=${process.env.OPENTRIP_API_KEY}`, //prettier-ignore
+      }&apikey=${process.env.OPENTRIP_API_KEY}`, // prettier-ignore
         );
 
-        if (coordinates.data.status !== 'OK') {
+        const { status } = coordinates.data as ICoordinatesData;
+
+        if (status !== 'OK') {
             throw new Error();
         }
 
-        const lat = coordinates.data.lat;
-        const lon = coordinates.data.lon;
+        const { lat } = coordinates.data as ICoordinatesData;
+        const { lon } = coordinates.data as ICoordinatesData;
 
-        return [lat, lon];
+        return [lat, lon] as string[];
     } catch {
         throw new Error();
     }

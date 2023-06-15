@@ -1,21 +1,20 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
+import 'dotenv/config';
+
 import express from 'express';
 import { connect } from 'mongoose';
-import dotenv from 'dotenv';
 
 import Bot from './src/classes/bot';
 
-dotenv.config();
 const app = express();
 
 const bot = new Bot();
-const PORT = process.env.PORT;
+const { PORT } = process.env;
 
-(async function () {
-    try {
-        bot.init();
+(() => {
+    bot.init();
 
-        await connect(process.env.DB_CONN_STRING!);
+    connect(process.env.DB_CONN_STRING);
 
-        app.listen(PORT);
-    } catch (error) {}
+    app.listen(PORT);
 })();

@@ -1,10 +1,10 @@
-import Command from './command.class';
-import { Telegraf, Input } from 'telegraf';
-import { MyContext } from '../types/context';
+import { Input, Telegraf } from 'telegraf';
 
-import messages from '../constants';
 import getPhotoURL from '../api/getPhotoURL';
+import messages from '../constants';
 import processingPhotoCategory from '../helpers/processingPhotoCategory';
+import { MyContext } from '../types/context';
+import Command from './command.class';
 
 export default class PhotoCommand extends Command {
     constructor(bot: Telegraf<MyContext>, private readonly category: string) {
@@ -12,19 +12,19 @@ export default class PhotoCommand extends Command {
     }
 
     handle(): void {
-        this.bot.command(this.category, async ctx => {
-            const loadMessage = await ctx.reply(messages.loading);
+        this.bot.command(this.category, async context => {
+            const loadMessage = await context.reply(messages.loading);
 
             try {
                 const picURL = await getPhotoURL(
                     processingPhotoCategory(this.category),
                 );
 
-                await ctx.replyWithPhoto(Input.fromURL(picURL));
-                await ctx.deleteMessage(loadMessage.message_id);
+                await context.replyWithPhoto(Input.fromURL(picURL));
+                await context.deleteMessage(loadMessage.message_id);
             } catch {
-                await ctx.deleteMessage(loadMessage.message_id);
-                ctx.reply(messages.Error.base);
+                await context.deleteMessage(loadMessage.message_id);
+                await context.reply(messages.Error.base);
             }
         });
     }

@@ -1,32 +1,31 @@
-import { Message } from 'typegram';
 import { Scenes } from 'telegraf';
+import { Message } from 'typegram';
+
+import getWeather from '../api/getWeather';
+import weatherTask from '../classes/weatherTask';
+import messages from '../constants';
+import getHoursAndMinutes from '../helpers/getHoursAndMinutes';
+import scheduleWeatherTask from '../helpers/scheduledWatherTask';
 import { MyContext } from '../types/context';
 
-import scheduleWeatherTask from '../helpers/scheduleeatherTask';
-import getHoursAndMinutes from '../helpers/getHoursAndMinutes';
-import weatherTask from '../classes/weatherTask';
-
-import messages from '../constants';
-import getWeather from '../api/getWeather';
-
-export const subscribeScene = new Scenes.WizardScene<MyContext>(
+const subscribeScene = new Scenes.WizardScene<MyContext>(
     'SUBSCRRIBE_SCENE',
-    async ctx => {
-        ctx.reply(messages.Weather.subscribtion);
-        return ctx.wizard.next();
+    async context => {
+        await context.reply(messages.Weather.subscribtion);
+        return context.wizard.next();
     },
 
-    async ctx => {
+    async context => {
         if (
-            !ctx.message ||
-            !('text' in ctx.message) ||
-            ctx.message.text.match(/\d/)
+            !context.message ||
+            !('text' in context.message) ||
+            /\d/.test(context.message.text)
         ) {
-            ctx.reply(messages.Error.badWeatherRequest);
+            await context.reply(messages.Error.badWeatherRequest);
             return;
         }
 
-        const location = (ctx.message as Message.TextMessage).text;
+        const location = (context.message as Message.TextMessage).text;
 
         try {
             const weatherResponse = await getWeather(location);
@@ -35,33 +34,36 @@ export const subscribeScene = new Scenes.WizardScene<MyContext>(
                 throw new Error();
             }
         } catch {
-            ctx.reply(messages.Error.badWeatherRequest);
+            await context.reply(messages.Error.badWeatherRequest);
             return;
         }
 
-        ctx.session.chatID = ctx.chat?.id;
-        ctx.session.subscribedLocation = location;
+        context.session.chatID = context.chat?.id;
+        context.session.subscribedLocation = location;
 
-        ctx.reply(messages.Weather.subscribtionTime);
+        await context.reply(messages.Weather.subscribtionTime);
 
-        return ctx.wizard.next();
+        context.wizard.next();
     },
 
-    async ctx => {
-        const time = (ctx.message as Message.TextMessage).text;
+    async context => {
+        const time = (context.message as Message.TextMessage).text;
 
         if (getHoursAndMinutes(time)) {
             const [HH, MM] = getHoursAndMinutes(time) as RegExpMatchArray;
 
-            weatherTask.set(scheduleWeatherTask(ctx, HH, MM));
+            weatherTask.set(scheduleWeatherTask(context, HH, MM));
             weatherTask.get()!.start();
 
-            ctx.reply(
-                `You will recive weather in ${ctx.session.subscribedLocation} every day at ${HH}:${MM} !`,
+            await context.reply(
+                `You will recive weather in ${context.session
+                    .subscribedLocation!} every day at ${HH}:${MM} !`,
             );
-            ctx.scene.leave();
+            await context.scene.leave();
         } else {
-            ctx.reply(messages.Error.wrongTime);
+            await context.reply(messages.Error.wrongTime);
         }
     },
 );
+
+export default subscribeScene;

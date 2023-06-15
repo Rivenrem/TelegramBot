@@ -1,6 +1,5 @@
 {
     "name": "telegram_bot",
-
     "version": "1.0.0",
     "description": "",
     "main": "app.js",
@@ -25,8 +24,8 @@
         "node-schedule": "^2.1.1",
         "telegraf": "^4.12.2",
         "telegraf-session-local": "^2.1.1",
-        "typegram": "^5.0.0",
         "ts-node": "^10.9.1",
+        "typegram": "^5.0.0",
         "typescript": "^5.0.4"
     },
     "devDependencies": {
@@ -39,10 +38,16 @@
         "@types/node-cron": "^3.0.7",
         "@types/node-fetch": "^2.6.4",
         "@types/node-schedule": "^2.1.0",
-        "@typescript-eslint/eslint-plugin": "^5.59.7",
-        "@typescript-eslint/parser": "^5.59.7",
-        "eslint": "^8.41.0",
+        "@typescript-eslint/eslint-plugin": "^5.59.11",
+        "@typescript-eslint/parser": "^5.59.11",
+        "eslint": "^8.42.0",
+        "eslint-config-airbnb-typescript": "^17.0.0",
+        "eslint-config-prettier": "^8.8.0",
+        "eslint-plugin-import": "^2.27.5",
+        "eslint-plugin-prettier": "^4.2.1",
+        "eslint-plugin-simple-import-sort": "^10.0.0",
         "nodemon": "^2.0.22",
+        "prettier": "2.8.8",
         "ts-node": "^10.9.1",
         "typescript": "^5.0.4"
     },

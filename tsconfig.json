@@ -5,14 +5,14 @@
     "lib": [
             "es5", "es6", "dom", "dom.iterable"
         ],                                       
-
     "module": "commonjs",
-    "outDir": "./dist",                                   
+    "outDir": "./dist",
+    "baseUrl": "./",                                   
+    "rootDir": "./",
     "esModuleInterop": true,                           
     "forceConsistentCasingInFileNames": true,      
-     "rootDir": "./",
     "strict": true,                                      
     "skipLibCheck": true                                 
-    
+  
   }
 }

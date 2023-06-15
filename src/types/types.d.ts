@@ -2,26 +2,16 @@ export interface ICallback {
     text: string;
 }
 
-export interface ISuggestion {
-    xid: string;
+export interface ICoordinatesData {
+    status: string;
+    lat: string;
+    lon: string;
+}
 
-    name: string;
-
-    rate: string;
-
-    preview?: {
-        source: string;
-    };
-
-    wikipedia_extracts?: {
-        title: string;
-        text: string;
-    };
-
-    point: {
-        lon: number;
-        lat: number;
-    };
-
-    otm: string;
+export interface IPhotoData {
+    hits: [
+        {
+            webformatURL: string;
+        },
+    ];
 }

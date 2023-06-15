@@ -1,15 +1,9 @@
-import { Telegraf } from 'telegraf';
-import { MyContext } from '../types/context';
 import Command from './command.class';
 
 export default class SuggestCommand extends Command {
-    constructor(bot: Telegraf<MyContext>) {
-        super(bot);
-    }
-
     handle(): void {
-        this.bot.command('suggest', ctx => {
-            ctx.scene.enter('SUGGEST_SCENE');
+        this.bot.command('suggest', async context => {
+            await context.scene.enter('SUGGEST_SCENE');
         });
     }
 }

@@ -1,25 +1,25 @@
-import { AxiosResponse } from 'axios';
+import { IWeatherData } from 'src/types/weather';
 
 import { MyContext } from '../types/context';
-
 import uvIndexProcessing from './uvIndexProcessing';
 
 export default async function displayWeather(
-    ctx: MyContext,
-    weather: AxiosResponse,
+    context: MyContext,
+    weatherData: IWeatherData,
 ): Promise<void> {
-    await ctx.replyWithHTML(/*HTML*/ `
-    Current weather in ${weather.data.location.name}:
-    
-    <b>🌡 ${weather.data.current.temp_c}°C (${weather.data.current.temp_f}°F )
-    
-    ${weather.data.current.condition.text}</b>
-    
-    ${uvIndexProcessing(weather.data.current.uv)}
+    await context.replyWithHTML(`
+
+      Current weather in ${weatherData.location.name}:
+
+      <b>🌡 ${weatherData.current.temp_c}°C (${weatherData.current.temp_f}°F )
+
+      ${weatherData.current.condition.text}</b>
+
+      ${uvIndexProcessing(weatherData.current.uv)}
     `);
 
-    ctx.replyWithPhoto({
-        source: `./src/images/${weather.data.current.condition.icon
+    await context.replyWithPhoto({
+        source: `./src/images/${weatherData.current.condition.icon
             .split('/')
             .slice(-2)
             .join('/')}`,

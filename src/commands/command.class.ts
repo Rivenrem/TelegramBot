@@ -1,4 +1,5 @@
 import { Telegraf } from 'telegraf';
+
 import { MyContext } from '../types/context';
 
 export default abstract class Command {

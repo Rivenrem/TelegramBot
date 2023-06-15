@@ -62,6 +62,6 @@ To run this project, you will need to add the following environment variables to
 
 'OPENTRIP_STATIC_URL'
 
-'PICS_STATIC_URL'
+'PHOTO_STATIC_URL'
 
 'WEATHER_STATIC_URL'

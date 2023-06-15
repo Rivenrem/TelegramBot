@@ -1,32 +1,36 @@
-import { Message } from 'typegram';
-import displayWeather from '../helpers/displayWeather';
-import messages from '../constants';
-import { MyContext } from '../types/context';
+import { IWeatherData } from 'src/types/weather';
 import { Scenes } from 'telegraf';
+import { Message } from 'typegram';
+
 import getWeather from '../api/getWeather';
+import messages from '../constants';
+import displayWeather from '../helpers/displayWeather';
+import { MyContext } from '../types/context';
 
-export const weatherScene = new Scenes.WizardScene<MyContext>(
+const weatherScene = new Scenes.WizardScene<MyContext>(
     'WEATHER_SCENE',
-    async ctx => {
-        await ctx.reply(messages.Weather.forecast);
-        return ctx.wizard.next();
+    async context => {
+        await context.reply(messages.Weather.forecast);
+        return context.wizard.next();
     },
-    async ctx => {
-        const loadMessage = await ctx.reply(messages.loading);
 
-        const location = ctx.message as Message.TextMessage;
+    async context => {
+        const loadMessage = await context.reply(messages.loading);
+
+        const location = context.message as Message.TextMessage;
 
         try {
             const weather = await getWeather(location.text);
-            await displayWeather(ctx, weather);
-            ctx.deleteMessage(loadMessage.message_id);
+
+            await displayWeather(context, weather.data as IWeatherData);
+            await context.deleteMessage(loadMessage.message_id);
+            await context.scene.leave();
         } catch {
-            await ctx.reply(messages.Error.base);
-            await ctx.deleteMessage(loadMessage.message_id);
-
-            ctx.scene.enter('WEATHER_SCENE');
+            await context.reply(messages.Error.base);
+            await context.deleteMessage(loadMessage.message_id);
+            await context.scene.reenter();
         }
-
-        ctx.scene.leave();
     },
 );
+
+export default weatherScene;

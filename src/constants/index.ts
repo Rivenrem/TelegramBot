@@ -14,6 +14,7 @@ const loading = 'Loading...';
 
 const safeUvIndex = 3;
 const responseLimin = 500;
+const photoPerPageLimit = 200;
 
 enum Weather {
     forecast = 'Please, tell me the city you want to know the weather 🌤️',
@@ -33,9 +34,9 @@ enum Error {
     badWeatherRequest = "Sorry I don't know this place 🙈 Let's try something else !",
     wrongTime = 'Wrong time format.Try again',
     noTasks = "You don't have tasks. Lets create them ?",
-    noEnvFile = 'There is no .env file',
-    emptyEnv = '.env file is empty',
-    wrongEnvKey = 'No value for this key',
+    noEnvironmentFile = 'There is no .env file',
+    emptyEnvironment = '.env file is empty',
+    wrongEnvironmentKey = 'No value for this key',
 }
 
 enum Task {
@@ -53,4 +54,5 @@ export default {
     loading,
     safeUvIndex,
     responseLimin,
+    photoPerPageLimit,
 };
