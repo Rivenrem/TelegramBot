@@ -13,7 +13,7 @@ export default class WeatherSubscribtion extends Command {
                 weatherTask.get() &&
                 context.session.subscribedLocation !== undefined
             ) {
-                weatherTask.get()!.stop();
+                weatherTask.get()?.stop();
                 context.session.subscribedLocation = null;
                 await context.reply(messages.done);
             } else {

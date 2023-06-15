@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
 import cron, { ScheduledTask } from 'node-cron';
 import { IWeatherData } from 'src/types/weather';
 
@@ -14,6 +13,7 @@ export default function scheduleWeatherTask(
 ): ScheduledTask {
     return cron.schedule(
         `${MM} ${HH} * * *`,
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         () =>
             (async () => {
                 if (

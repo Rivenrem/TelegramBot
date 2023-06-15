@@ -53,9 +53,10 @@ const subscribeScene = new Scenes.WizardScene<MyContext>(
             const [HH, MM] = getHoursAndMinutes(time) as RegExpMatchArray;
 
             weatherTask.set(scheduleWeatherTask(context, HH, MM));
-            weatherTask.get()!.start();
+            weatherTask.get()?.start();
 
             await context.reply(
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                 `You will recive weather in ${context.session
                     .subscribedLocation!} every day at ${HH}:${MM} !`,
             );
