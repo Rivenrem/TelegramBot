@@ -1,10 +1,10 @@
-import HelpCommand from '#commands/help.command.ts';
-import PhotoCommand from '#commands/photo.command.ts';
-import StartCommand from '#commands/start.command.ts';
-import WeatherCommand from '#commands/weather.commmand.ts';
-import WeatherSubscribtion from '#commands/subscribeWeather.command.ts';
-import TaskCommand from '#commands/task.command.ts';
-import SuggestCommand from '#commands/suggestPlace.command.ts';
+import HelpCommand from './help.command';
+import PhotoCommand from './photo.command';
+import StartCommand from './start.command';
+import WeatherSubscribtion from './subscribeWeather.command';
+import SuggestCommand from './suggestPlace.command';
+import TaskCommand from './task.command';
+import WeatherCommand from './weather.commmand';
 
 export default {
     HelpCommand,

@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongodb';
 import * as mongoose from 'mongoose';
 
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 export class TaskClass {
     constructor(public tasksArray: Array<string>, public chatID: number) {}
 }

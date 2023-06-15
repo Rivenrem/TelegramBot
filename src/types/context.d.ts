@@ -1,6 +1,6 @@
 import { Context, Scenes } from 'telegraf';
 
-export interface sessionData extends Scenes.WizardSession {
+interface SessionData extends Scenes.WizardSession {
     subscribedLocation?: string | null;
     chatID?: number;
     dbObjectID?: string;
@@ -8,5 +8,5 @@ export interface sessionData extends Scenes.WizardSession {
 }
 
 export interface MyContext extends Scenes.WizardContext, Context {
-    session: sessionData;
+    session: SessionData;
 }

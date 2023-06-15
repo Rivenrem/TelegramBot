@@ -1,4 +1,4 @@
-import { Task, TaskClass } from '#models/task.ts';
+import { Task, TaskClass } from '../models/task';
 
 const findById = async (objectId: string): Promise<TaskClass> => {
     const task = await Task.findById(objectId);
@@ -8,11 +8,13 @@ const findById = async (objectId: string): Promise<TaskClass> => {
     return task;
 };
 
-const create = (taskData: TaskClass): string => {
+const create = async (taskData: TaskClass): Promise<string> => {
     const task = new Task(taskData);
 
-    task.save();
+    await task.save();
+    console.log('saved');
 
+    // eslint-disable-next-line no-underscore-dangle
     return task._id.toString();
 };
 

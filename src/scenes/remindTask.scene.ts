@@ -1,33 +1,36 @@
-import { Message } from 'typegram';
 import { Scenes } from 'telegraf';
+import { Message } from 'typegram';
 
-import { MyContext } from '#types/context.d.ts';
+import messages from '../constants';
+import reminderTask from '../helpers/createReminde';
+import getHoursAndMinutes from '../helpers/getHoursAndMinutes';
+import { MyContext } from '../types/context';
 
-import reminderTask from '#helpers/createReminde.ts';
-import getHoursAndMinutes from '#helpers/getHoursAndMinutes.ts';
-import messages from '#constants/index.ts';
-
-export const remindTaskScene = new Scenes.WizardScene<MyContext>(
+const remindTaskScene = new Scenes.WizardScene<MyContext>(
     'REMIND_TASK_SCENE',
 
-    async ctx => {
-        await ctx.reply(messages.Task.reminderTime);
-        return ctx.wizard.next();
+    async context => {
+        await context.reply(messages.Task.reminderTime);
+        return context.wizard.next();
     },
 
-    ctx => {
-        const time = (ctx.message as Message.TextMessage).text;
+    async context => {
+        const time = (context.message as Message.TextMessage).text;
 
-        if (getHoursAndMinutes(time) && ctx.session.taskToRemind) {
+        if (getHoursAndMinutes(time) && context.session.taskToRemind) {
             const [HH, MM] = getHoursAndMinutes(time) as RegExpMatchArray;
 
-            reminderTask(ctx, HH, MM, ctx.session.taskToRemind);
-            ctx.session.chatID = ctx.chat?.id;
+            reminderTask(context, HH, MM, context.session.taskToRemind);
+            context.session.chatID = context.chat?.id;
 
-            ctx.reply(`You will get a remind about your task at ${HH}:${MM} !`);
-            ctx.scene.leave();
+            await context.reply(
+                `You will get a remind about your task at ${HH}:${MM} !`,
+            );
+            await context.scene.leave();
         } else {
-            ctx.reply(messages.Error.wrongTime);
+            await context.reply(messages.Error.wrongTime);
         }
     },
 );
+
+export default remindTaskScene;

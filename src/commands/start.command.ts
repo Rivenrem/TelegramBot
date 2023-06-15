@@ -1,15 +1,11 @@
-import { Telegraf } from 'telegraf';
-import Command from '#commands/command.class.ts';
-import { MyContext } from '#types/context.d.ts';
+import Command from './command.class';
 
 export default class StartCommand extends Command {
-    constructor(bot: Telegraf<MyContext>) {
-        super(bot);
-    }
-
     handle(): void {
-        this.bot.start(ctx => {
-            ctx.reply(`Hello ${ctx.message.from.first_name || 'stranger'}!`);
+        this.bot.start(async context => {
+            await context.reply(
+                `Hello ${context.message.from.first_name || 'stranger'}!`,
+            );
         });
     }
 }

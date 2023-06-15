@@ -2,6 +2,7 @@ import { ScheduledTask } from 'node-cron';
 
 class WeatherTaskClass {
     currentTask: ScheduledTask | null = null;
+
     get() {
         return this.currentTask;
     }

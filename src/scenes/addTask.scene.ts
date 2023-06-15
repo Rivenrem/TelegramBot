@@ -1,44 +1,45 @@
-import { Message } from 'typegram';
 import { Scenes } from 'telegraf';
+import { Message } from 'typegram';
 
-import taskRepository from '#repositories/index.ts';
-import { update } from '#services/task.service.ts';
-import { MyContext } from '#types/context.d.ts';
+import messages from '../constants';
+import { TaskClass } from '../models/task';
+import taskRepository from '../repositories';
+import { update } from '../services/task.service';
+import { MyContext } from '../types/context';
 
-import messages from '#constants/index.ts';
-import { TaskClass } from '#models/task.ts';
-
-export const addTaskScene = new Scenes.WizardScene<MyContext>(
+const addTaskScene = new Scenes.WizardScene<MyContext>(
     'ADD_TASK_SCENE',
 
-    async ctx => {
-        ctx.reply(messages.Task.addTask);
-        return ctx.wizard.next();
+    async context => {
+        await context.reply(messages.Task.addTask);
+        return context.wizard.next();
     },
 
-    async ctx => {
-        const message = ctx.message as Message.TextMessage;
+    async context => {
+        const message = context.message as Message.TextMessage;
 
         try {
-            if (!ctx.session.dbObjectID && ctx.chat !== undefined) {
-                const ID = taskRepository.create(
-                    new TaskClass([message.text], ctx.chat.id),
+            if (!context.session.dbObjectID && context.chat !== undefined) {
+                const ID = await taskRepository.create(
+                    new TaskClass([message.text], context.chat.id),
                 );
 
-                ctx.session.dbObjectID = ID;
+                context.session.dbObjectID = ID;
 
-                ctx.reply(messages.done);
-            } else if (ctx.session.dbObjectID) {
-                await update(ctx.session.dbObjectID, message.text);
+                await context.reply(messages.done);
+            } else if (context.session.dbObjectID) {
+                await update(context.session.dbObjectID, message.text);
 
-                ctx.reply(messages.done);
+                await context.reply(messages.done);
             } else {
                 throw new Error();
             }
-        } catch (error) {
-            ctx.reply(messages.Error.base);
+        } catch {
+            await context.reply(messages.Error.base);
         }
 
-        ctx.scene.leave();
+        await context.scene.leave();
     },
 );
+
+export default addTaskScene;

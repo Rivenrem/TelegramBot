@@ -1,15 +1,9 @@
-import { Telegraf } from 'telegraf';
-import Command from '#commands/command.class.ts';
-import { MyContext } from '#types/context.d.ts';
+import Command from './command.class';
 
 export default class WeatherCommand extends Command {
-    constructor(bot: Telegraf<MyContext>) {
-        super(bot);
-    }
-
     handle(): void {
-        this.bot.command('weather', ctx => {
-            ctx.scene.enter('WEATHER_SCENE');
+        this.bot.command('weather', async context => {
+            await context.scene.enter('WEATHER_SCENE');
         });
     }
 }

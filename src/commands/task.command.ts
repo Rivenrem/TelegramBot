@@ -1,22 +1,15 @@
-import { Telegraf, Markup } from 'telegraf';
-import Command from '#commands/command.class.ts';
+import { Markup } from 'telegraf';
 
-import { MyContext } from '#types/context.d.ts';
-import { ICallback } from '#types/types.d.ts';
-
-import taskRepository from '#repositories/index.ts';
-import { deleteTask } from '#services/task.service.ts';
-
-import messages from '#constants/index.ts';
+import messages from '../constants/index';
+import taskRepository from '../repositories/index';
+import { deleteTask } from '../services/task.service';
+import { ICallback } from '../types/types';
+import Command from './command.class';
 
 export default class TaskCommand extends Command {
-    constructor(bot: Telegraf<MyContext>) {
-        super(bot);
-    }
-
     handle(): void {
-        this.bot.command('task', ctx => {
-            ctx.reply(messages.Task.addTask, {
+        this.bot.command('task', async context => {
+            await context.reply(messages.Task.addTask, {
                 ...Markup.inlineKeyboard([
                     Markup.button.callback(
                         'Get all my tasks 📝',
@@ -27,9 +20,9 @@ export default class TaskCommand extends Command {
             });
         });
 
-        this.bot.action('getAllTasks', async ctx => {
-            if (!ctx.session.dbObjectID) {
-                ctx.reply(messages.Error.noTasks, {
+        this.bot.action('getAllTasks', async context => {
+            if (!context.session.dbObjectID) {
+                await context.reply(messages.Error.noTasks, {
                     ...Markup.inlineKeyboard([
                         Markup.button.callback('yes', 'addNewTask'),
                     ]),
@@ -39,11 +32,11 @@ export default class TaskCommand extends Command {
             }
 
             const response = await taskRepository.findById(
-                ctx.session.dbObjectID,
+                context.session.dbObjectID,
             );
 
             if (response.tasksArray.length === 0) {
-                ctx.reply(messages.Error.noTasks, {
+                await context.reply(messages.Error.noTasks, {
                     ...Markup.inlineKeyboard([
                         Markup.button.callback('yes', 'addNewTask'),
                     ]),
@@ -52,10 +45,10 @@ export default class TaskCommand extends Command {
                 return;
             }
 
-            await ctx.reply('Your tasks:');
+            await context.reply('Your tasks:');
 
             response.tasksArray.map(async (task: string) => {
-                await ctx.reply(`📌 ${task}`, {
+                await context.reply(`📌 ${task}`, {
                     ...Markup.inlineKeyboard([
                         Markup.button.callback('Delete task ❌', 'deleteTask'),
                         Markup.button.callback(
@@ -67,27 +60,29 @@ export default class TaskCommand extends Command {
             });
         });
 
-        this.bot.action('addNewTask', ctx => {
-            ctx.scene.enter('ADD_TASK_SCENE');
+        this.bot.action('addNewTask', async context => {
+            await context.scene.enter('ADD_TASK_SCENE');
         });
 
-        this.bot.action('deleteTask', ctx => {
-            const callback = ctx.callbackQuery.message as ICallback;
+        this.bot.action('deleteTask', async context => {
+            const callback = context.callbackQuery.message as ICallback;
             const taskToDelete = callback.text;
 
-            if (ctx.session.dbObjectID) {
-                deleteTask(ctx.session.dbObjectID, taskToDelete);
-                ctx.deleteMessage(ctx.callbackQuery.message?.message_id);
+            if (context.session.dbObjectID) {
+                await deleteTask(context.session.dbObjectID, taskToDelete);
+                await context.deleteMessage(
+                    context.callbackQuery.message?.message_id,
+                );
             }
         });
 
-        this.bot.action('remindAboutTask', ctx => {
-            const callback = ctx.callbackQuery.message as ICallback;
+        this.bot.action('remindAboutTask', async context => {
+            const callback = context.callbackQuery.message as ICallback;
             const taskToRemind = callback.text;
 
-            ctx.session.taskToRemind = taskToRemind;
+            context.session.taskToRemind = taskToRemind;
 
-            ctx.scene.enter('REMIND_TASK_SCENE');
+            await context.scene.enter('REMIND_TASK_SCENE');
         });
     }
 }

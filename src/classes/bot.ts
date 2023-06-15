@@ -1,28 +1,26 @@
-import { Telegraf } from 'telegraf';
-import { Scenes } from 'telegraf';
+import { Scenes, Telegraf } from 'telegraf';
 import LocalSession from 'telegraf-session-local';
 
-import Command from '#commands/command.class.ts';
-import commands from '#commands/index.ts';
-
-import scenes from '#scenes/index.ts';
-
-import { MyContext } from '#types/context.d.ts';
+import Command from '../commands/command.class';
+import commands from '../commands/index';
+import scenes from '../scenes/index';
+import { MyContext } from '../types/context';
 
 const stage = new Scenes.Stage<MyContext>(scenes);
 const localSession = new LocalSession({ database: 'sessions.json' });
 
 export default class Bot {
     bot: Telegraf<MyContext>;
+
     commands: Command[] = [];
 
     constructor() {
-        this.bot = new Telegraf<MyContext>(process.env.BOT_TOKEN!);
+        this.bot = new Telegraf<MyContext>(process.env.BOT_TOKEN);
         this.bot.use(localSession.middleware());
         this.bot.use(stage.middleware());
     }
 
-    init() {
+    async init() {
         this.commands = [
             new commands.HelpCommand(this.bot),
             new commands.PhotoCommand(this.bot, 'cat'),
@@ -33,10 +31,11 @@ export default class Bot {
             new commands.TaskCommand(this.bot),
             new commands.SuggestCommand(this.bot),
         ];
-        for (const command of this.commands) {
-            command.handle();
-        }
 
-        this.bot.launch();
+        this.commands.forEach(command => {
+            command.handle();
+        });
+
+        await this.bot.launch();
     }
 }

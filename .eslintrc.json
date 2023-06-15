@@ -1,21 +1,38 @@
 {
+  "parser": "@typescript-eslint/parser",
+
   "plugins": [
     "@typescript-eslint",
     "prettier",
-    "unicorn" ,
+    "simple-import-sort",
     "import"
   ],
   "extends": [
+    "airbnb-base",
     "airbnb-typescript/base",
     "plugin:@typescript-eslint/recommended",
-    "plugin:unicorn/recommended",
-    "plugin:prettier/recommended",
-    "prettier",
-    "prettier/@typescript-eslint"
+    "prettier"
   ],
+
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx", "*.d.ts"], 
+
+      "extends": [
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking"
+      ],
+
+      "parserOptions": {
+        "project": ["./tsconfig.json"]
+      }
+    }
+  ],
+
   "parserOptions": {
-    "ecmaVersion": 2020,
-    "sourceType": "module"
+    "project": ["./tsconfig.json"],
+    "ecmaVersion": "latest",
+		"sourceType": "module"
   },
   "env": {
     "es6": true,
@@ -23,7 +40,13 @@
     "node": true
   },
   "rules": {
-    "no-debugger": "off",
-    "no-console": 0
+    "no-empty": 0,
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
+    "import/first": "error",
+    "import/newline-after-import": "error",
+    "import/no-duplicates": "error",
+    "prettier/prettier": "error",
+    "@typescript-eslint/no-non-null-assertion": "off" 
   }
 }

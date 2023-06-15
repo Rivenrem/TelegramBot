@@ -1,27 +1,27 @@
-import { Message } from 'typegram';
+import { IPlace } from 'src/types/suggestion';
 import { Scenes } from 'telegraf';
+import { Message } from 'typegram';
 
-import { MyContext } from '#types/context.d.ts';
+import messages from '../constants';
+import getSuggestion from '../helpers/getSuggestion';
+import { MyContext } from '../types/context';
 
-import messages from '#constants/index.ts';
-import getSuggestion from '#helpers/getSuggestion.ts';
-
-export const suggestScene = new Scenes.WizardScene<MyContext>(
+const suggestScene = new Scenes.WizardScene<MyContext>(
     'SUGGEST_SCENE',
 
-    async ctx => {
-        await ctx.reply(messages.SuggestPlace.city);
-        return ctx.wizard.next();
+    async context => {
+        await context.reply(messages.SuggestPlace.city);
+        return context.wizard.next();
     },
 
-    async ctx => {
-        const message = ctx.message as Message.TextMessage;
-        const loadMessage = await ctx.reply(messages.loading);
+    async context => {
+        const message = context.message as Message.TextMessage;
+        const loadMessage = await context.reply(messages.loading);
 
         try {
-            const place = await getSuggestion(message.text);
+            const place: IPlace = await getSuggestion(message.text);
 
-            await ctx.replyWithHTML(
+            await context.replyWithHTML(
                 `Suggestion for you: ${place.name}(Rate: ${place.rate}).
         
         
@@ -39,18 +39,20 @@ export const suggestScene = new Scenes.WizardScene<MyContext>(
         `,
             );
 
-            await ctx.deleteMessage(loadMessage.message_id);
+            await context.deleteMessage(loadMessage.message_id);
 
             if (place.preview?.source) {
-                ctx.replyWithPhoto({
+                await context.replyWithPhoto({
                     url: place.preview?.source,
                 });
             }
-        } catch (error) {
-            await ctx.deleteMessage(loadMessage.message_id);
-            ctx.reply(messages.Error.base);
+        } catch {
+            await context.deleteMessage(loadMessage.message_id);
+            await context.reply(messages.Error.base);
         }
 
-        ctx.scene.leave();
+        await context.scene.leave();
     },
 );
+
+export default suggestScene;
