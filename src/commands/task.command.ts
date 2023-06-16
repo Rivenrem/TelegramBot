@@ -3,12 +3,12 @@ import { Markup } from 'telegraf';
 import { constants } from '../constants/index';
 import { taskRepository } from '../repositories/index';
 import { deleteTask } from '../services/task.service';
-import { ICallback } from '../types/telegraf.ContextCallback';
+import { ICallback } from '../types/telegrafContextCallback';
 import { Command } from './command.class';
 
 export class TaskCommand extends Command {
     handle(): void {
-        this.bot.command('task', async context => {
+        this.bot.command(constants.Commands.TASK, async context => {
             await context.reply(constants.Task.addTask, {
                 ...Markup.inlineKeyboard([
                     Markup.button.callback(
@@ -22,7 +22,7 @@ export class TaskCommand extends Command {
 
         this.bot.action('getAllTasks', async context => {
             if (!context.session.dbObjectID) {
-                await context.reply(constants.Error.noTasks, {
+                await context.reply(constants.Errors.noTasks, {
                     ...Markup.inlineKeyboard([
                         Markup.button.callback('yes', 'addNewTask'),
                     ]),
@@ -36,7 +36,7 @@ export class TaskCommand extends Command {
             );
 
             if (response.tasksArray.length === 0) {
-                await context.reply(constants.Error.noTasks, {
+                await context.reply(constants.Errors.noTasks, {
                     ...Markup.inlineKeyboard([
                         Markup.button.callback('yes', 'addNewTask'),
                     ]),

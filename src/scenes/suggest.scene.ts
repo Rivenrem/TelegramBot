@@ -2,8 +2,8 @@ import { IPlace } from 'src/types/suggestion';
 import { Scenes } from 'telegraf';
 import { Message } from 'typegram';
 
-import { constants } from '../constants';
 import { envVariables } from '../constants/env';
+import { constants } from '../constants/index';
 import { getSuggestion } from '../helpers/getSuggestion';
 import { MyContext } from '../types/context';
 
@@ -17,7 +17,7 @@ export const suggestScene = new Scenes.WizardScene<MyContext>(
 
     async context => {
         const message = context.message as Message.TextMessage;
-        const loadMessage = await context.reply(constants.loading);
+        const loadMessage = await context.reply(constants.States.loading);
 
         try {
             const place: IPlace = await getSuggestion(message.text);
@@ -49,7 +49,7 @@ export const suggestScene = new Scenes.WizardScene<MyContext>(
             }
         } catch {
             await context.deleteMessage(loadMessage.message_id);
-            await context.reply(constants.Error.base);
+            await context.reply(constants.Errors.base);
         }
 
         await context.scene.leave();

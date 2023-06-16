@@ -3,7 +3,7 @@ import { Scenes } from 'telegraf';
 import { Message } from 'typegram';
 
 import { getWeather } from '../api/getWeather';
-import { constants } from '../constants';
+import { constants } from '../constants/index';
 import { displayWeather } from '../helpers/displayWeather';
 import { MyContext } from '../types/context';
 
@@ -15,7 +15,7 @@ export const weatherScene = new Scenes.WizardScene<MyContext>(
     },
 
     async context => {
-        const loadMessage = await context.reply(constants.loading);
+        const loadMessage = await context.reply(constants.States.loading);
 
         const location = context.message as Message.TextMessage;
 
@@ -26,7 +26,7 @@ export const weatherScene = new Scenes.WizardScene<MyContext>(
             await context.deleteMessage(loadMessage.message_id);
             await context.scene.leave();
         } catch {
-            await context.reply(constants.Error.base);
+            await context.reply(constants.Errors.base);
             await context.deleteMessage(loadMessage.message_id);
             await context.scene.reenter();
         }

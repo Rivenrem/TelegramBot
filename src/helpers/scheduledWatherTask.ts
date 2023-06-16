@@ -2,7 +2,7 @@ import cron, { ScheduledTask } from 'node-cron';
 import { IWeatherData } from 'src/types/weather';
 
 import { getWeather } from '../api/getWeather';
-import { constants } from '../constants';
+import { constants } from '../constants/index';
 import { MyContext } from '../types/context';
 import { displayWeather } from './displayWeather';
 
@@ -25,7 +25,9 @@ export function scheduleWeatherTask(
                         constants.Weather.scheduledMessage,
                     );
 
-                    const loadMessage = await context.reply(constants.loading);
+                    const loadMessage = await context.reply(
+                        constants.States.loading,
+                    );
 
                     try {
                         const weather = await getWeather(
@@ -38,7 +40,7 @@ export function scheduleWeatherTask(
                         await context.deleteMessage(loadMessage.message_id);
                     } catch {
                         await context.deleteMessage(loadMessage.message_id);
-                        await context.reply(constants.Error.base);
+                        await context.reply(constants.Errors.base);
                     }
                 }
             })(),

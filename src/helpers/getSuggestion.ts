@@ -4,7 +4,7 @@ import { getCityCoordinates } from '../api/getCityCoordinates';
 import { getInfoAboutSuggestion } from '../api/getInfoAboutSuggestion';
 import { getSuggestedPlace } from '../api/getSuggestedPlace';
 import { getSuggestionLimit } from '../api/getSuggestionLimit';
-import { constants } from '../constants';
+import { constants } from '../constants/index';
 import { IPlace, ISuggestion } from '../types/suggestion';
 import { getRandomNumber } from './getRandomNumber';
 
@@ -22,7 +22,9 @@ export async function getSuggestion(city: string): Promise<IPlace> {
 
         const currentXid: string =
             suggestedPlace.data[
-                getRandomNumber(Math.min(limit, constants.responseLimit))
+                getRandomNumber(
+                    Math.min(limit, constants.Numbers.responseLimit),
+                )
             ].xid;
 
         const suggestedPlaceInfo: AxiosResponse = await getInfoAboutSuggestion(

@@ -1,7 +1,7 @@
 import { Scenes } from 'telegraf';
 import { Message } from 'typegram';
 
-import { constants } from '../constants';
+import { constants } from '../constants/index';
 import { reminderTask } from '../helpers/createReminde';
 import { getHoursAndMinutes } from '../helpers/getHoursAndMinutes';
 import { MyContext } from '../types/context';
@@ -28,7 +28,7 @@ export const remindTaskScene = new Scenes.WizardScene<MyContext>(
             );
             await context.scene.leave();
         } else {
-            await context.reply(constants.Error.wrongTime);
+            await context.reply(constants.Errors.wrongTime);
         }
     },
 );

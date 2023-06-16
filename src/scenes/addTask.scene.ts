@@ -1,7 +1,7 @@
 import { Scenes } from 'telegraf';
 import { Message } from 'typegram';
 
-import { constants } from '../constants';
+import { constants } from '../constants/index';
 import { TaskClass } from '../models/task';
 import { taskRepository } from '../repositories';
 import { updateTasks } from '../services/task.service';
@@ -26,16 +26,16 @@ export const addTaskScene = new Scenes.WizardScene<MyContext>(
 
                 context.session.dbObjectID = ID;
 
-                await context.reply(constants.done);
+                await context.reply(constants.States.done);
             } else if (context.session.dbObjectID) {
                 await updateTasks(context.session.dbObjectID, message.text);
 
-                await context.reply(constants.done);
+                await context.reply(constants.States.done);
             } else {
                 throw new Error();
             }
         } catch {
-            await context.reply(constants.Error.base);
+            await context.reply(constants.Errors.base);
         }
 
         await context.scene.leave();

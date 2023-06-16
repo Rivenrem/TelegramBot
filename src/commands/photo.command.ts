@@ -13,7 +13,7 @@ export class PhotoCommand extends Command {
 
     handle(): void {
         this.bot.command(this.category, async context => {
-            const loadMessage = await context.reply(constants.loading);
+            const loadMessage = await context.reply(constants.States.loading);
 
             try {
                 const picURL = await getPhotoURL(
@@ -24,7 +24,7 @@ export class PhotoCommand extends Command {
                 await context.deleteMessage(loadMessage.message_id);
             } catch {
                 await context.deleteMessage(loadMessage.message_id);
-                await context.reply(constants.Error.base);
+                await context.reply(constants.Errors.base);
             }
         });
     }
