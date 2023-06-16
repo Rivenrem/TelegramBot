@@ -3,6 +3,7 @@ import { Scenes } from 'telegraf';
 import { Message } from 'typegram';
 
 import { constants } from '../constants';
+import { envVariables } from '../constants/env';
 import { getSuggestion } from '../helpers/getSuggestion';
 import { MyContext } from '../types/context';
 
@@ -34,7 +35,7 @@ export const suggestScene = new Scenes.WizardScene<MyContext>(
         }
         
         📌 Place on google map:
-        ${`${process.env.GOOGLE_MAPS_SEARCH_STATIC_URL}/?api=1&query=${place.point.lat},${place.point.lon}`}
+        ${`${envVariables.GOOGLE_MAPS_SEARCH_STATIC_URL}/?api=1&query=${place.point.lat},${place.point.lon}`}
         
         `,
             );

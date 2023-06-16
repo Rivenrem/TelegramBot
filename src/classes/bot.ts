@@ -3,6 +3,7 @@ import LocalSession from 'telegraf-session-local';
 
 import { Command } from '../commands/command.class';
 import { commands } from '../commands/index';
+import { envVariables } from '../constants/env';
 import { scenes } from '../scenes/index';
 import { MyContext } from '../types/context';
 
@@ -15,7 +16,7 @@ export class Bot {
     commands: Command[] = [];
 
     constructor() {
-        this.bot = new Telegraf<MyContext>(process.env.BOT_TOKEN);
+        this.bot = new Telegraf<MyContext>(envVariables.BOT_TOKEN);
         this.bot.use(localSession.middleware());
         this.bot.use(stage.middleware());
     }

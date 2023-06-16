@@ -5,16 +5,17 @@ import express from 'express';
 import { connect } from 'mongoose';
 
 import { Bot } from './src/classes/bot';
+import { envVariables } from './src/constants/env';
 
 const app = express();
 
 const bot = new Bot();
-const { PORT } = process.env;
+const { PORT } = envVariables;
 
 (() => {
     bot.init();
 
-    connect(process.env.DB_CONN_STRING);
+    connect(envVariables.DB_CONN_STRING);
 
     app.listen(PORT);
 })();
