@@ -4,7 +4,7 @@ import { Message } from 'typegram';
 
 import { getWeather } from '../api/getWeather';
 import { constants } from '../constants/index';
-import { displayWeather } from '../helpers/displayWeather';
+import { helpers } from '../helpers/index';
 import { MyContext } from '../types/context';
 
 export const weatherScene = new Scenes.WizardScene<MyContext>(
@@ -22,7 +22,7 @@ export const weatherScene = new Scenes.WizardScene<MyContext>(
         try {
             const weather = await getWeather(location.text);
 
-            await displayWeather(context, weather.data as IWeatherData);
+            await helpers.displayWeather(context, weather.data as IWeatherData);
             await context.deleteMessage(loadMessage.message_id);
             await context.scene.leave();
         } catch {

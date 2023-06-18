@@ -1,5 +1,5 @@
+import { Command } from '../classes/command.class';
 import { constants } from '../constants/index';
-import { Command } from './command.class';
 
 export class SuggestCommand extends Command {
     handle(): void {

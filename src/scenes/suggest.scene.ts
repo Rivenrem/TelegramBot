@@ -2,9 +2,8 @@ import { IPlace } from 'src/types/suggestion';
 import { Scenes } from 'telegraf';
 import { Message } from 'typegram';
 
-import { envVariables } from '../constants/env';
 import { constants } from '../constants/index';
-import { getSuggestion } from '../helpers/getSuggestion';
+import { helpers } from '../helpers/index';
 import { MyContext } from '../types/context';
 
 export const suggestScene = new Scenes.WizardScene<MyContext>(
@@ -20,7 +19,7 @@ export const suggestScene = new Scenes.WizardScene<MyContext>(
         const loadMessage = await context.reply(constants.States.loading);
 
         try {
-            const place: IPlace = await getSuggestion(message.text);
+            const place: IPlace = await helpers.getSuggestion(message.text);
 
             await context.replyWithHTML(
                 `Suggestion for you: ${place.name}(Rate: ${place.rate}).
@@ -35,9 +34,11 @@ export const suggestScene = new Scenes.WizardScene<MyContext>(
         }
         
         📌 Place on google map:
-        ${`${envVariables.GOOGLE_MAPS_SEARCH_STATIC_URL}/?api=1&query=${place.point.lat},${place.point.lon}`}
+        ${`${constants.envVariables.GOOGLE_MAPS_SEARCH_STATIC_URL
+                }/?api=1&query=${place.point.lat
+                },${place.point.lon}`} 
         
-        `,
+        `, // prettier-ignore
             );
 
             await context.deleteMessage(loadMessage.message_id);

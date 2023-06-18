@@ -1,3 +1,4 @@
+import { Command } from '../classes/command.class';
 import { HelpCommand } from './help.command';
 import { PhotoCommand } from './photo.command';
 import { StartCommand } from './start.command';
@@ -14,4 +15,5 @@ export const commands = {
     TaskCommand,
     WeatherCommand,
     WeatherSubscribtion,
+    Command,
 };

@@ -4,7 +4,7 @@ import { MyContext } from '../types/context';
 
 const rule = new schedule.RecurrenceRule();
 
-export function reminderTask(
+export function createReminde(
     context: MyContext,
     HH: string,
     MM: string,

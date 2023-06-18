@@ -1,4 +1,4 @@
-import { Command } from './command.class';
+import { Command } from '../classes/command.class';
 
 export class StartCommand extends Command {
     handle(): void {

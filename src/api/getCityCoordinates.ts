@@ -1,14 +1,14 @@
 import axios, { AxiosResponse } from 'axios';
 import { ICoordinatesData } from 'src/types/suggestion';
 
-import { envVariables } from '../constants/env';
+import { constants } from '../constants/index';
 
 export async function getCityCoordinates(cityName: string): Promise<string[]> {
     try {
         const coordinates: AxiosResponse = await axios.get(
-            `${envVariables.OPENTRIP_STATIC_URL
+            `${constants.envVariables.OPENTRIP_STATIC_URL
           }/0.1/en/places/geoname?name=${cityName
-      }&apikey=${envVariables.OPENTRIP_API_KEY}`, // prettier-ignore
+      }&apikey=${constants.envVariables.OPENTRIP_API_KEY}`, // prettier-ignore
         );
 
         const { status } = coordinates.data as ICoordinatesData;

@@ -4,8 +4,7 @@ import { Message } from 'typegram';
 import { getWeather } from '../api/getWeather';
 import { weatherTask } from '../classes/weatherTask';
 import { constants } from '../constants/index';
-import { getHoursAndMinutes } from '../helpers/getHoursAndMinutes';
-import { scheduleWeatherTask } from '../helpers/scheduledWatherTask';
+import { helpers } from '../helpers/index';
 import { MyContext } from '../types/context';
 
 export const subscribeScene = new Scenes.WizardScene<MyContext>(
@@ -49,10 +48,12 @@ export const subscribeScene = new Scenes.WizardScene<MyContext>(
     async context => {
         const time = (context.message as Message.TextMessage).text;
 
-        if (getHoursAndMinutes(time)) {
-            const [HH, MM] = getHoursAndMinutes(time) as RegExpMatchArray;
+        if (helpers.getHoursAndMinutes(time)) {
+            const [HH, MM] = helpers.getHoursAndMinutes(
+                time,
+            ) as RegExpMatchArray;
 
-            weatherTask.set(scheduleWeatherTask(context, HH, MM));
+            weatherTask.set(helpers.scheduleWeatherTask(context, HH, MM));
             weatherTask.get()?.start();
 
             await context.reply(

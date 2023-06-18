@@ -1,10 +1,10 @@
 import { Markup } from 'telegraf';
 
+import { Command } from '../classes/command.class';
 import { constants } from '../constants/index';
 import { taskRepository } from '../repositories/index';
 import { deleteTask } from '../services/task.service';
 import { ICallback } from '../types/telegrafContextCallback';
-import { Command } from './command.class';
 
 export class TaskCommand extends Command {
     handle(): void {
