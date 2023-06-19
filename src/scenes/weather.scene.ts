@@ -5,6 +5,7 @@ import { getWeather } from '../api/getWeather';
 import { constants } from '../constants/index';
 import { helpers } from '../helpers/index';
 import { isNewCommand } from '../middleware/isNewCommand';
+import { weatherErrorHandler } from '../middleware/weatherErrorHandler';
 import { MyContext } from '../types/context';
 import { IWeatherData } from '../types/weather';
 
@@ -36,15 +37,7 @@ export const weatherScene = new Scenes.WizardScene<MyContext>(
             await context.deleteMessage(loadMessage.message_id);
             await context.scene.leave();
         } catch (error) {
-            if (
-                error instanceof Error &&
-                error.message === constants.Weather.bagRequestMessage
-            ) {
-                await context.reply(constants.Errors.badWeatherRequest);
-                await context.scene.reenter();
-            } else {
-                await context.reply(constants.Errors.base);
-            }
+            await weatherErrorHandler(error, context);
 
             await context.deleteMessage(loadMessage.message_id);
         }

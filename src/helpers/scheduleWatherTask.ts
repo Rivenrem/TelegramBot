@@ -1,9 +1,10 @@
 import cron, { ScheduledTask } from 'node-cron';
-import { IWeatherData } from 'src/types/weather';
 
 import { getWeather } from '../api/getWeather';
 import { constants } from '../constants/index';
+import { weatherErrorHandler } from '../middleware/weatherErrorHandler';
 import { MyContext } from '../types/context';
+import { IWeatherData } from '../types/weather';
 import { displayWeather } from './displayWeather';
 
 export function scheduleWeatherTask(
@@ -39,17 +40,8 @@ export function scheduleWeatherTask(
                         );
                         await context.deleteMessage(loadMessage.message_id);
                     } catch (error) {
+                        await weatherErrorHandler(error, context);
                         await context.deleteMessage(loadMessage.message_id);
-                        if (
-                            error instanceof Error &&
-                            error.message ===
-                                constants.Weather.bagRequestMessage
-                        ) {
-                            await context.reply(
-                                constants.Errors.badWeatherRequest,
-                            );
-                        }
-                        await context.reply(constants.Errors.base);
                     }
                 }
             })(),

@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 
 import { constants } from '../constants/index';
 
@@ -10,11 +10,8 @@ export async function getWeather(location: string): Promise<AxiosResponse> {
 
         return await axios.get(URL);
     } catch (error) {
-        if (
-            error instanceof Error &&
-            error.message === constants.Weather.bagRequestMessage
-        ) {
-            throw new Error(constants.Errors.badWeatherRequest);
+        if (error instanceof AxiosError && error.response?.status === 400) {
+            throw new AxiosError(constants.Weather.bagRequestMessage, '400');
         } else {
             throw new Error();
         }

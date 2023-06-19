@@ -6,6 +6,7 @@ import { weatherTask } from '../classes/weatherTask';
 import { constants } from '../constants/index';
 import { helpers } from '../helpers/index';
 import { isNewCommand } from '../middleware/isNewCommand';
+import { weatherErrorHandler } from '../middleware/weatherErrorHandler';
 import { MyContext } from '../types/context';
 
 export const subscribeScene = new Scenes.WizardScene<MyContext>(
@@ -43,14 +44,8 @@ export const subscribeScene = new Scenes.WizardScene<MyContext>(
                 throw new Error();
             }
         } catch (error) {
-            if (
-                error instanceof Error &&
-                error.message === constants.Weather.bagRequestMessage
-            ) {
-                await context.reply(constants.Errors.badWeatherRequest);
-            } else {
-                await context.reply(constants.Errors.base);
-            }
+            await weatherErrorHandler(error, context);
+
             return;
         }
 
