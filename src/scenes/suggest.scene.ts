@@ -4,6 +4,7 @@ import { Message } from 'typegram';
 
 import { constants } from '../constants/index';
 import { helpers } from '../helpers/index';
+import { isNewCommand } from '../middleware/isNewCommand';
 import { MyContext } from '../types/context';
 
 export const suggestScene = new Scenes.WizardScene<MyContext>(
@@ -16,6 +17,16 @@ export const suggestScene = new Scenes.WizardScene<MyContext>(
 
     async context => {
         const message = context.message as Message.TextMessage;
+
+        if (isNewCommand(message.text)) {
+            await context.reply(`
+            Chose command: ${constants.help}`);
+
+            await context.scene.leave();
+
+            return;
+        }
+
         const loadMessage = await context.reply(constants.States.loading);
 
         try {

@@ -11,7 +11,7 @@ import { clientErrorHandler } from './src/middleware/clientErrorHandler';
 const { PORT } = envVariables;
 
 const app = express();
-const bot = new Bot();
+export const bot = new Bot();
 
 bot.init();
 connect(envVariables.DB_CONN_STRING);

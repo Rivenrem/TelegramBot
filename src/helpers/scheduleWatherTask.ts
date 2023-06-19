@@ -38,8 +38,17 @@ export function scheduleWeatherTask(
                             weather.data as IWeatherData,
                         );
                         await context.deleteMessage(loadMessage.message_id);
-                    } catch {
+                    } catch (error) {
                         await context.deleteMessage(loadMessage.message_id);
+                        if (
+                            error instanceof Error &&
+                            error.message ===
+                                constants.Weather.bagRequestMessage
+                        ) {
+                            await context.reply(
+                                constants.Errors.badWeatherRequest,
+                            );
+                        }
                         await context.reply(constants.Errors.base);
                     }
                 }

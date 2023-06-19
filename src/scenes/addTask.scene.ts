@@ -2,6 +2,7 @@ import { Scenes } from 'telegraf';
 import { Message } from 'typegram';
 
 import { constants } from '../constants/index';
+import { isNewCommand } from '../middleware/isNewCommand';
 import { TaskClass } from '../models/task';
 import { taskRepository } from '../repositories';
 import { updateTasks } from '../services/task.service';
@@ -17,6 +18,15 @@ export const addTaskScene = new Scenes.WizardScene<MyContext>(
 
     async context => {
         const message = context.message as Message.TextMessage;
+
+        if (isNewCommand(message.text)) {
+            await context.reply(`
+            Chose command: ${constants.help}`);
+
+            await context.scene.leave();
+
+            return;
+        }
 
         try {
             if (!context.session.dbObjectID && context.chat !== undefined) {

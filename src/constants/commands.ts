@@ -4,4 +4,8 @@ export enum Commands {
     SUGGEST = 'suggest',
     TASK = 'task',
     WEATHER = 'weather',
+    HELP = 'help',
+    START = 'start',
+    CAT = 'cat',
+    DOG = 'dog',
 }

@@ -5,6 +5,7 @@ import { getWeather } from '../api/getWeather';
 import { weatherTask } from '../classes/weatherTask';
 import { constants } from '../constants/index';
 import { helpers } from '../helpers/index';
+import { isNewCommand } from '../middleware/isNewCommand';
 import { MyContext } from '../types/context';
 
 export const subscribeScene = new Scenes.WizardScene<MyContext>(
@@ -26,14 +27,30 @@ export const subscribeScene = new Scenes.WizardScene<MyContext>(
 
         const location = (context.message as Message.TextMessage).text;
 
+        if (isNewCommand(location)) {
+            await context.reply(`
+            Chose command: ${constants.help}`);
+
+            await context.scene.leave();
+
+            return;
+        }
+
         try {
             const weatherResponse = await getWeather(location);
 
             if (weatherResponse.status !== 200) {
                 throw new Error();
             }
-        } catch {
-            await context.reply(constants.Errors.badWeatherRequest);
+        } catch (error) {
+            if (
+                error instanceof Error &&
+                error.message === constants.Weather.bagRequestMessage
+            ) {
+                await context.reply(constants.Errors.badWeatherRequest);
+            } else {
+                await context.reply(constants.Errors.base);
+            }
             return;
         }
 
@@ -47,6 +64,15 @@ export const subscribeScene = new Scenes.WizardScene<MyContext>(
 
     async context => {
         const time = (context.message as Message.TextMessage).text;
+
+        if (isNewCommand(time)) {
+            await context.reply(`
+            Chose command: ${constants.help}`);
+
+            await context.scene.leave();
+
+            return;
+        }
 
         if (helpers.getHoursAndMinutes(time)) {
             const [HH, MM] = helpers.getHoursAndMinutes(

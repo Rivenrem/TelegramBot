@@ -9,7 +9,14 @@ export async function getWeather(location: string): Promise<AxiosResponse> {
             }&q=${location}&aqi=no`; // prettier-ignore
 
         return await axios.get(URL);
-    } catch {
-        throw new Error();
+    } catch (error) {
+        if (
+            error instanceof Error &&
+            error.message === constants.Weather.bagRequestMessage
+        ) {
+            throw new Error(constants.Errors.badWeatherRequest);
+        } else {
+            throw new Error();
+        }
     }
 }
