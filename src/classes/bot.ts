@@ -1,21 +1,22 @@
 import { Scenes, Telegraf } from 'telegraf';
 import LocalSession from 'telegraf-session-local';
 
-import Command from '../commands/command.class';
-import commands from '../commands/index';
-import scenes from '../scenes/index';
+import { commands } from '../commands/index';
+import { constants } from '../constants/index';
+import { scenes } from '../scenes/index';
 import { MyContext } from '../types/context';
+import { Command } from './command.class';
 
 const stage = new Scenes.Stage<MyContext>(scenes);
 const localSession = new LocalSession({ database: 'sessions.json' });
 
-export default class Bot {
+export class Bot {
     bot: Telegraf<MyContext>;
 
     commands: Command[] = [];
 
     constructor() {
-        this.bot = new Telegraf<MyContext>(process.env.BOT_TOKEN);
+        this.bot = new Telegraf<MyContext>(constants.envVariables.BOT_TOKEN);
         this.bot.use(localSession.middleware());
         this.bot.use(stage.middleware());
     }

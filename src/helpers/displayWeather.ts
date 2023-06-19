@@ -1,9 +1,8 @@
-import { IWeatherData } from 'src/types/weather';
-
 import { MyContext } from '../types/context';
-import uvIndexProcessing from './uvIndexProcessing';
+import { IWeatherData } from '../types/weather';
+import { uvIndexProcessing } from './uvIndexProcessing';
 
-export default async function displayWeather(
+export async function displayWeather(
     context: MyContext,
     weatherData: IWeatherData,
 ): Promise<void> {

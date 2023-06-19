@@ -1,6 +1,6 @@
-import Command from './command.class';
+import { Command } from '../classes/command.class';
 
-export default class StartCommand extends Command {
+export class StartCommand extends Command {
     handle(): void {
         this.bot.start(async context => {
             await context.reply(

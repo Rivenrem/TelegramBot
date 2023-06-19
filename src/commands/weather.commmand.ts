@@ -1,9 +1,10 @@
-import Command from './command.class';
+import { Command } from '../classes/command.class';
+import { constants } from '../constants/index';
 
-export default class WeatherCommand extends Command {
+export class WeatherCommand extends Command {
     handle(): void {
-        this.bot.command('weather', async context => {
-            await context.scene.enter('WEATHER_SCENE');
+        this.bot.command(constants.Commands.WEATHER, async context => {
+            await context.scene.enter(constants.Scenes.WEATHER_SCENE);
         });
     }
 }

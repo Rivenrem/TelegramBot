@@ -1,26 +1,32 @@
 import { Scenes } from 'telegraf';
 import { Message } from 'typegram';
 
-import messages from '../constants';
-import reminderTask from '../helpers/createReminde';
-import getHoursAndMinutes from '../helpers/getHoursAndMinutes';
+import { constants } from '../constants/index';
+import { helpers } from '../helpers/index';
 import { MyContext } from '../types/context';
 
-const remindTaskScene = new Scenes.WizardScene<MyContext>(
-    'REMIND_TASK_SCENE',
+export const remindTaskScene = new Scenes.WizardScene<MyContext>(
+    constants.Scenes.REMIND_TASK_SCENE,
 
     async context => {
-        await context.reply(messages.Task.reminderTime);
+        await context.reply(constants.Task.reminderTime);
         return context.wizard.next();
     },
 
     async context => {
         const time = (context.message as Message.TextMessage).text;
 
-        if (getHoursAndMinutes(time) && context.session.taskToRemind) {
-            const [HH, MM] = getHoursAndMinutes(time) as RegExpMatchArray;
+        if (helpers.getHoursAndMinutes(time) && context.session.taskToRemind) {
+            const [HH, MM] = helpers.getHoursAndMinutes(
+                time,
+            ) as RegExpMatchArray;
 
-            reminderTask(context, HH, MM, context.session.taskToRemind);
+            helpers.createReminde(
+                context,
+                HH,
+                MM,
+                context.session.taskToRemind,
+            );
             context.session.chatID = context.chat?.id;
 
             await context.reply(
@@ -28,9 +34,7 @@ const remindTaskScene = new Scenes.WizardScene<MyContext>(
             );
             await context.scene.leave();
         } else {
-            await context.reply(messages.Error.wrongTime);
+            await context.reply(constants.Errors.wrongTime);
         }
     },
 );
-
-export default remindTaskScene;

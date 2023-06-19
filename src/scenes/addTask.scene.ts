@@ -1,17 +1,17 @@
 import { Scenes } from 'telegraf';
 import { Message } from 'typegram';
 
-import messages from '../constants';
+import { constants } from '../constants/index';
 import { TaskClass } from '../models/task';
-import taskRepository from '../repositories';
-import { update } from '../services/task.service';
+import { taskRepository } from '../repositories';
+import { updateTasks } from '../services/task.service';
 import { MyContext } from '../types/context';
 
-const addTaskScene = new Scenes.WizardScene<MyContext>(
-    'ADD_TASK_SCENE',
+export const addTaskScene = new Scenes.WizardScene<MyContext>(
+    constants.Scenes.ADD_TASK_SCENE,
 
     async context => {
-        await context.reply(messages.Task.addTask);
+        await context.reply(constants.Task.addTask);
         return context.wizard.next();
     },
 
@@ -20,26 +20,24 @@ const addTaskScene = new Scenes.WizardScene<MyContext>(
 
         try {
             if (!context.session.dbObjectID && context.chat !== undefined) {
-                const ID = await taskRepository.create(
+                const ID = await taskRepository.createTask(
                     new TaskClass([message.text], context.chat.id),
                 );
 
                 context.session.dbObjectID = ID;
 
-                await context.reply(messages.done);
+                await context.reply(constants.States.done);
             } else if (context.session.dbObjectID) {
-                await update(context.session.dbObjectID, message.text);
+                await updateTasks(context.session.dbObjectID, message.text);
 
-                await context.reply(messages.done);
+                await context.reply(constants.States.done);
             } else {
                 throw new Error();
             }
         } catch {
-            await context.reply(messages.Error.base);
+            await context.reply(constants.Errors.base);
         }
 
         await context.scene.leave();
     },
 );
-
-export default addTaskScene;

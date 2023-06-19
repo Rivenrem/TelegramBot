@@ -12,6 +12,7 @@ declare global {
             PORT: string;
             WEATHER_API_KEY: string;
             WEATHER_STATIC_URL: string;
+            GOOGLE_MAPS_SEARCH_STATIC_URL: string;
         }
     }
 }

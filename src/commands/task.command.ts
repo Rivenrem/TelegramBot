@@ -1,15 +1,15 @@
 import { Markup } from 'telegraf';
 
-import messages from '../constants/index';
-import taskRepository from '../repositories/index';
+import { Command } from '../classes/command.class';
+import { constants } from '../constants/index';
+import { taskRepository } from '../repositories/index';
 import { deleteTask } from '../services/task.service';
-import { ICallback } from '../types/types';
-import Command from './command.class';
+import { ICallback } from '../types/telegrafContextCallback';
 
-export default class TaskCommand extends Command {
+export class TaskCommand extends Command {
     handle(): void {
-        this.bot.command('task', async context => {
-            await context.reply(messages.Task.addTask, {
+        this.bot.command(constants.Commands.TASK, async context => {
+            await context.reply(constants.Task.addTask, {
                 ...Markup.inlineKeyboard([
                     Markup.button.callback(
                         'Get all my tasks 📝',
@@ -22,7 +22,7 @@ export default class TaskCommand extends Command {
 
         this.bot.action('getAllTasks', async context => {
             if (!context.session.dbObjectID) {
-                await context.reply(messages.Error.noTasks, {
+                await context.reply(constants.Errors.noTasks, {
                     ...Markup.inlineKeyboard([
                         Markup.button.callback('yes', 'addNewTask'),
                     ]),
@@ -31,12 +31,12 @@ export default class TaskCommand extends Command {
                 return;
             }
 
-            const response = await taskRepository.findById(
+            const response = await taskRepository.findTasksById(
                 context.session.dbObjectID,
             );
 
             if (response.tasksArray.length === 0) {
-                await context.reply(messages.Error.noTasks, {
+                await context.reply(constants.Errors.noTasks, {
                     ...Markup.inlineKeyboard([
                         Markup.button.callback('yes', 'addNewTask'),
                     ]),
@@ -61,7 +61,7 @@ export default class TaskCommand extends Command {
         });
 
         this.bot.action('addNewTask', async context => {
-            await context.scene.enter('ADD_TASK_SCENE');
+            await context.scene.enter(constants.Scenes.ADD_TASK_SCENE);
         });
 
         this.bot.action('deleteTask', async context => {
@@ -82,7 +82,7 @@ export default class TaskCommand extends Command {
 
             context.session.taskToRemind = taskToRemind;
 
-            await context.scene.enter('REMIND_TASK_SCENE');
+            await context.scene.enter(constants.Scenes.REMIND_TASK_SCENE);
         });
     }
 }
