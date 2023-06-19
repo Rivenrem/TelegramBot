@@ -14,11 +14,25 @@ export function createReminde(
     rule.minute = MM;
     rule.hour = HH;
     return schedule.scheduleJob(rule, async () => {
-        if (context.session.chatID) {
+        if (
+            context.session.chatID &&
+            context.session.tasksToRemind?.includes(task)
+        ) {
             await context.telegram.sendMessage(
                 context.session.chatID,
                 `Reminder: ${task}`,
             );
+
+            const indexOfTask = context.session.tasksToRemind.findIndex(
+                e => e === task,
+            );
+
+            const newTasksToRemind = context.session.tasksToRemind.splice(
+                indexOfTask + 1,
+                1,
+            );
+
+            context.session.tasksToRemind = [...newTasksToRemind];
         }
     });
 }

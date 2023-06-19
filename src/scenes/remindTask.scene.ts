@@ -26,23 +26,29 @@ export const remindTaskScene = new Scenes.WizardScene<MyContext>(
             return;
         }
 
-        if (helpers.getHoursAndMinutes(time) && context.session.taskToRemind) {
+        if (helpers.getHoursAndMinutes(time)) {
             const [HH, MM] = helpers.getHoursAndMinutes(
                 time,
             ) as RegExpMatchArray;
 
-            helpers.createReminde(
-                context,
-                HH,
-                MM,
-                context.session.taskToRemind,
-            );
-            context.session.chatID = context.chat?.id;
+            if (context.session.tasksToRemind) {
+                helpers.createReminde(
+                    context,
+                    HH,
+                    MM,
+                    context.session.tasksToRemind[
+                        context.session.tasksToRemind.length - 1
+                    ],
+                );
 
-            await context.reply(
-                `You will get a remind about your task at ${HH}:${MM} !`,
-            );
-            await context.scene.leave();
+                context.session.chatID = context.chat?.id;
+                await context.reply(
+                    `You will get a remind about your task at ${HH}:${MM} !`,
+                );
+                await context.scene.leave();
+            } else {
+                await context.reply(constants.Errors.base);
+            }
         } else {
             await context.reply(constants.Errors.wrongTime);
         }

@@ -13,7 +13,11 @@ export const deleteTask = async (objectId: string, taskToDelete: string) => {
         const task = await taskRepository.findTasksById(objectId);
         const { tasksArray } = task;
 
-        tasksArray.splice(tasksArray.indexOf(taskToDelete), 1);
+        tasksArray.splice(
+            tasksArray.indexOf(taskToDelete.substring(3).toString()),
+            1,
+        );
+
         await taskRepository.updateTasks(objectId, tasksArray);
     } catch {}
 };
