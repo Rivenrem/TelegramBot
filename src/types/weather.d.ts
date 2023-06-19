@@ -9,6 +9,9 @@ export interface IWeatherData {
             text: string;
             icon: string;
         };
+        wind_kph: number;
+        humidity: number;
+        feelslike_c: number;
         uv: number;
     };
 }
