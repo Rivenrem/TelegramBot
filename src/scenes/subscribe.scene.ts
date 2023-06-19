@@ -40,7 +40,7 @@ export const subscribeScene = new Scenes.WizardScene<MyContext>(
         try {
             const weatherResponse = await getWeather(location);
 
-            if (weatherResponse.status !== 200) {
+            if (weatherResponse.status !== constants.Numbers.responseStatusOK) {
                 throw new Error();
             }
         } catch (error) {

@@ -10,8 +10,12 @@ export async function getWeather(location: string): Promise<AxiosResponse> {
 
         return await axios.get(URL);
     } catch (error) {
-        if (error instanceof AxiosError && error.response?.status === 400) {
-            throw new AxiosError(constants.Weather.bagRequestMessage, '400');
+        if (
+            error instanceof AxiosError &&
+            error.response?.status ===
+                constants.Numbers.responseStatusBadRequest
+        ) {
+            throw new AxiosError(constants.Weather.bagRequestMessage);
         } else {
             throw new Error();
         }
