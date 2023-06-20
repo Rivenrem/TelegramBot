@@ -1,16 +1,23 @@
 const path = require('path');
 
-const isProduction = process.env.NODE_ENV === 'production';
-
 const DIR_NAME = path.resolve('./');
 const source = path.resolve('./');
 
-const config = {
+const mode = 'development';
+
+module.exports = {
+    mode,
     context: path.resolve(DIR_NAME),
     entry: './app.ts',
     output: {
         path: path.resolve(DIR_NAME, 'dist'),
         filename: 'app.js',
+        clean: true,
+        publicPath: '/',
+    },
+    devServer: {
+        hot: true,
+        historyApiFallback: true,
     },
     plugins: [],
     module: {
@@ -22,9 +29,8 @@ const config = {
                 exclude: '/node_modules',
             },
             {
-                test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
-                type: 'asset',
-                exclude: '/node_modules',
+                test: /\.(png|jpe?g|gif|svg|webp|ico)$/i,
+                type: mode === 'production' ? 'asset' : 'asset/resource',
             },
             {
                 test: /\.mjs$/,
@@ -81,13 +87,4 @@ const config = {
         __filename: false,
         __dirname: false,
     },
-};
-
-module.exports = () => {
-    if (isProduction) {
-        config.mode = 'production';
-    } else {
-        config.mode = 'development';
-    }
-    return config;
 };

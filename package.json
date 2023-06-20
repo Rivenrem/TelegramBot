@@ -1,16 +1,16 @@
 {
     "version": "1.0.0",
-    "main": "app.js",
+    "private": true,
     "scripts": {
         "eslint": "eslint",
-        "build": "webpack --config webpack.config.js",
+        "build": "webpack --mode=development",
         "tsc": "tsc",
         "start": "node ./dist/app.js",
+        "startProd": "NODE_ENV=development node ./dist/app.js",
         "dev": "nodemon ./app.ts",
         "test": "echo \"Error: no test specified\" && exit 1",
         "build:dev": "webpack --mode=development",
-        "build:prod": "webpack --mode=development",
-        "watch": "webpack --watch"
+        "build:prod": "webpack --mode=development"
     },
     "license": "ISC",
     "dependencies": {
