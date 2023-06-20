@@ -1,4 +1,4 @@
-import { constants } from '../constants/index';
+import { constants } from 'Constants/index';
 
 export function uvIndexProcessing(uvIndex: number) {
     return uvIndex <= constants.Numbers.safeUvIndex

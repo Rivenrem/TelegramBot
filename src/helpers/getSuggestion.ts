@@ -1,12 +1,11 @@
+import { getCityCoordinates } from 'Api/getCityCoordinates';
+import { getInfoAboutSuggestion } from 'Api/getInfoAboutSuggestion';
+import { getSuggestedPlace } from 'Api/getSuggestedPlace';
+import { getSuggestionLimit } from 'Api/getSuggestionLimit';
 import { AxiosResponse } from 'axios';
-
-import { getCityCoordinates } from '../api/getCityCoordinates';
-import { getInfoAboutSuggestion } from '../api/getInfoAboutSuggestion';
-import { getSuggestedPlace } from '../api/getSuggestedPlace';
-import { getSuggestionLimit } from '../api/getSuggestionLimit';
-import { constants } from '../constants/index';
-import { IPlace, ISuggestion } from '../types/suggestion';
-import { getRandomNumber } from './getRandomNumber';
+import { constants } from 'Constants/index';
+import { getRandomNumber } from 'Helpers/getRandomNumber';
+import { IPlace, ISuggestion } from 'Types/suggestion';
 
 export async function getSuggestion(city: string): Promise<IPlace> {
     try {

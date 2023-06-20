@@ -1,10 +1,9 @@
+import { constants } from 'Constants/index';
+import { helpers } from 'Helpers/index';
+import { isNewCommand } from 'Middleware/isNewCommand';
 import { Scenes } from 'telegraf';
 import { Message } from 'typegram';
-
-import { constants } from '../constants/index';
-import { helpers } from '../helpers/index';
-import { isNewCommand } from '../middleware/isNewCommand';
-import { MyContext } from '../types/context';
+import { MyContext } from 'Types/context';
 
 export const remindTaskScene = new Scenes.WizardScene<MyContext>(
     constants.Scenes.REMIND_TASK_SCENE,

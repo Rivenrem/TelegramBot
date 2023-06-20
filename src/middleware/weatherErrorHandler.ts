@@ -1,7 +1,6 @@
 import { AxiosError } from 'axios';
-import { MyContext } from 'src/types/context';
-
-import { constants } from '../constants/index';
+import { constants } from 'Constants/index';
+import { MyContext } from 'Types/context';
 
 export async function weatherErrorHandler(
     error: unknown,

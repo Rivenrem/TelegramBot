@@ -1,13 +1,12 @@
+import { getWeather } from 'Api/getWeather';
+import { weatherTask } from 'Classes/weatherTask';
+import { constants } from 'Constants/index';
+import { helpers } from 'Helpers/index';
+import { isNewCommand } from 'Middleware/isNewCommand';
+import { weatherErrorHandler } from 'Middleware/weatherErrorHandler';
 import { Scenes } from 'telegraf';
 import { Message } from 'typegram';
-
-import { getWeather } from '../api/getWeather';
-import { weatherTask } from '../classes/weatherTask';
-import { constants } from '../constants/index';
-import { helpers } from '../helpers/index';
-import { isNewCommand } from '../middleware/isNewCommand';
-import { weatherErrorHandler } from '../middleware/weatherErrorHandler';
-import { MyContext } from '../types/context';
+import { MyContext } from 'Types/context';
 
 export const subscribeScene = new Scenes.WizardScene<MyContext>(
     constants.Scenes.SUBSCRRIBE_SCENE,

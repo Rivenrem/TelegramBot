@@ -1,6 +1,5 @@
 import schedule, { Job } from 'node-schedule';
-
-import { MyContext } from '../types/context';
+import { MyContext } from 'Types/context';
 
 const rule = new schedule.RecurrenceRule();
 

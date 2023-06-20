@@ -1,11 +1,10 @@
+import { Command } from 'Classes/command.class';
+import { commands } from 'Commands/index';
+import { constants } from 'Constants/index';
+import { scenes } from 'Scenes/index';
 import { Scenes, Telegraf } from 'telegraf';
 import LocalSession from 'telegraf-session-local';
-
-import { commands } from '../commands/index';
-import { constants } from '../constants/index';
-import { scenes } from '../scenes/index';
-import { MyContext } from '../types/context';
-import { Command } from './command.class';
+import { MyContext } from 'Types/context';
 
 const stage = new Scenes.Stage<MyContext>(scenes);
 const localSession = new LocalSession({ database: 'sessions.json' });

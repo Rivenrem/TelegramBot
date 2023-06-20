@@ -1,12 +1,11 @@
+import { constants } from 'Constants/index';
+import { isNewCommand } from 'Middleware/isNewCommand';
+import { TaskClass } from 'Models/task';
+import { taskRepository } from 'Repositories/index';
+import { updateTasks } from 'Services/task.service';
 import { Scenes } from 'telegraf';
 import { Message } from 'typegram';
-
-import { constants } from '../constants/index';
-import { isNewCommand } from '../middleware/isNewCommand';
-import { TaskClass } from '../models/task';
-import { taskRepository } from '../repositories';
-import { updateTasks } from '../services/task.service';
-import { MyContext } from '../types/context';
+import { MyContext } from 'Types/context';
 
 export const addTaskScene = new Scenes.WizardScene<MyContext>(
     constants.Scenes.ADD_TASK_SCENE,

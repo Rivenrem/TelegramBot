@@ -1,11 +1,11 @@
-import { createReminde } from './createReminde';
-import { displayWeather } from './displayWeather';
-import { getHoursAndMinutes } from './getHoursAndMinutes';
-import { getRandomNumber } from './getRandomNumber';
-import { getSuggestion } from './getSuggestion';
-import { processingPhotoCategory } from './processingPhotoCategory';
-import { scheduleWeatherTask } from './scheduleWatherTask';
-import { uvIndexProcessing } from './uvIndexProcessing';
+import { createReminde } from 'Helpers/createReminde';
+import { displayWeather } from 'Helpers/displayWeather';
+import { getHoursAndMinutes } from 'Helpers/getHoursAndMinutes';
+import { getRandomNumber } from 'Helpers/getRandomNumber';
+import { getSuggestion } from 'Helpers/getSuggestion';
+import { processingPhotoCategory } from 'Helpers/processingPhotoCategory';
+import { scheduleWeatherTask } from 'Helpers/scheduleWatherTask';
+import { uvIndexProcessing } from 'Helpers/uvIndexProcessing';
 
 export const helpers = {
     createReminde,

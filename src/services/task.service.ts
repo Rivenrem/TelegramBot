@@ -1,4 +1,4 @@
-import { taskRepository } from '../repositories';
+import { taskRepository } from 'Repositories/index';
 
 export const updateTasks = async (objectId: string, newTask: string) => {
     try {

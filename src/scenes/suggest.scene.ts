@@ -1,11 +1,10 @@
+import { constants } from 'Constants/index';
+import { helpers } from 'Helpers/index';
+import { isNewCommand } from 'Middleware/isNewCommand';
 import { IPlace } from 'src/types/suggestion';
 import { Scenes } from 'telegraf';
 import { Message } from 'typegram';
-
-import { constants } from '../constants/index';
-import { helpers } from '../helpers/index';
-import { isNewCommand } from '../middleware/isNewCommand';
-import { MyContext } from '../types/context';
+import { MyContext } from 'Types/context';
 
 export const suggestScene = new Scenes.WizardScene<MyContext>(
     constants.Scenes.SUGGEST_SCENE,

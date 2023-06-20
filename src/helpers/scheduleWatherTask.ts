@@ -1,11 +1,10 @@
+import { getWeather } from 'Api/getWeather';
+import { constants } from 'Constants/index';
+import { displayWeather } from 'Helpers/displayWeather';
+import { weatherErrorHandler } from 'Middleware/weatherErrorHandler';
 import cron, { ScheduledTask } from 'node-cron';
-
-import { getWeather } from '../api/getWeather';
-import { constants } from '../constants/index';
-import { weatherErrorHandler } from '../middleware/weatherErrorHandler';
-import { MyContext } from '../types/context';
-import { IWeatherData } from '../types/weather';
-import { displayWeather } from './displayWeather';
+import { MyContext } from 'Types/context';
+import { IWeatherData } from 'Types/weather';
 
 export function scheduleWeatherTask(
     context: MyContext,

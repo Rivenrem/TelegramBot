@@ -1,10 +1,9 @@
+import { Command } from 'Classes/command.class';
+import { constants } from 'Constants/index';
+import { taskRepository } from 'Repositories/index';
+import { deleteTask } from 'Services/task.service';
 import { Markup } from 'telegraf';
-
-import { Command } from '../classes/command.class';
-import { constants } from '../constants/index';
-import { taskRepository } from '../repositories/index';
-import { deleteTask } from '../services/task.service';
-import { ICallback } from '../types/telegrafContextCallback';
+import { ICallback } from 'Types/telegrafContextCallback';
 
 export class TaskCommand extends Command {
     handle(): void {

@@ -1,9 +1,8 @@
+import { getPhotoURL } from 'Api/getPhotoURL';
+import { Command } from 'Classes/command.class';
+import { constants } from 'Constants/index';
 import { Input, Telegraf } from 'telegraf';
-
-import { getPhotoURL } from '../api/getPhotoURL';
-import { Command } from '../classes/command.class';
-import { constants } from '../constants/index';
-import { MyContext } from '../types/context';
+import { MyContext } from 'Types/context';
 
 export class PhotoCommand extends Command {
     constructor(bot: Telegraf<MyContext>, private readonly category: string) {

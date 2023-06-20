@@ -1,6 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
-
-import { constants } from '../constants/index';
+import { constants } from 'Constants/index';
 
 export async function getWeather(location: string): Promise<AxiosResponse> {
     try {

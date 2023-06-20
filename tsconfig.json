@@ -16,7 +16,21 @@
     "esModuleInterop": true,                           
     "forceConsistentCasingInFileNames": true,      
     "strict": true,                                      
-    "skipLibCheck": true      
+    "skipLibCheck": true,
+    "paths": {
+            "Api/*": ["src/api/*"],
+            "Commands/*": ["src/commands/*"],
+            "Classes/*": ["src/classes/*"],
+            "Constants/*": ["src/constants/*"],
+            "Helpers/*": ["src/helpers/*"],
+            "Images/*": ["src/images/*"],
+            "Middleware/*": ["src/middleware/*"],
+            "Models/*": ["src/models/*"],
+            "Repositories/*": ["src/repositories/*"],
+            "Scenes/*": ["src/scenes/*"],
+            "Services/*": ["src/services/*"],
+            "Types/*": ["src/types/*"],
+    }     
   },
   "browser":{
   "child_process": false

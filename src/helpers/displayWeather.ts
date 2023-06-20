@@ -1,6 +1,6 @@
-import { MyContext } from '../types/context';
-import { IWeatherData } from '../types/weather';
-import { uvIndexProcessing } from './uvIndexProcessing';
+import { uvIndexProcessing } from 'Helpers/uvIndexProcessing';
+import { MyContext } from 'Types/context';
+import { IWeatherData } from 'Types/weather';
 
 export async function displayWeather(
     context: MyContext,

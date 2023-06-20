@@ -38,6 +38,7 @@ const config = {
         extensions: ['.js', '.ts', '.d.ts', '.jsx', '.tsx'],
         alias: {
             Api: path.resolve(DIR_NAME, 'src/api/'),
+            Commands: path.resolve(DIR_NAME, 'src/commands/'),
             Classes: path.resolve(DIR_NAME, 'src/classes/'),
             Constants: path.resolve(DIR_NAME, 'src/constants/'),
             Helpers: path.resolve(DIR_NAME, 'src/helpers/'),
