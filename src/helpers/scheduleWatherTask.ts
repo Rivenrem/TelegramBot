@@ -1,4 +1,4 @@
-import { getWeather } from 'Api/getWeather';
+import { api } from 'Api/index';
 import { constants } from 'Constants/index';
 import { displayWeather } from 'Helpers/displayWeather';
 import { weatherErrorHandler } from 'Middleware/weatherErrorHandler';
@@ -30,7 +30,7 @@ export function scheduleWeatherTask(
                     );
 
                     try {
-                        const weather = await getWeather(
+                        const weather = await api.getWeather(
                             context.session.subscribedLocation,
                         );
                         await displayWeather(

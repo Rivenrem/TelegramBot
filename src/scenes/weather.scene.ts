@@ -1,4 +1,4 @@
-import { getWeather } from 'Api/getWeather';
+import { api } from 'Api/index';
 import { constants } from 'Constants/index';
 import { helpers } from 'Helpers/index';
 import { isNewCommand } from 'Middleware/isNewCommand';
@@ -30,7 +30,7 @@ export const weatherScene = new Scenes.WizardScene<MyContext>(
         const loadMessage = await context.reply(constants.States.loading);
 
         try {
-            const weather = await getWeather(location.text);
+            const weather = await api.getWeather(location.text);
 
             await helpers.displayWeather(context, weather.data as IWeatherData);
             await context.deleteMessage(loadMessage.message_id);

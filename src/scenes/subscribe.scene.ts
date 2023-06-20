@@ -1,4 +1,4 @@
-import { getWeather } from 'Api/getWeather';
+import { api } from 'Api/index';
 import { weatherTask } from 'Classes/weatherTask';
 import { constants } from 'Constants/index';
 import { helpers } from 'Helpers/index';
@@ -37,7 +37,7 @@ export const subscribeScene = new Scenes.WizardScene<MyContext>(
         }
 
         try {
-            const weatherResponse = await getWeather(location);
+            const weatherResponse = await api.getWeather(location);
 
             if (weatherResponse.status !== constants.Numbers.responseStatusOK) {
                 throw new Error();
