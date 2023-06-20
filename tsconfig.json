@@ -1,18 +1,24 @@
 {
   "compilerOptions": {
-
-    "target": "es2016",                                
+    "sourceMap": true,
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": true,
+    "module": "commonjs",
+    "target": "ES6",
+    "allowJs": true,
+    "moduleResolution":"node",
     "lib": [
             "es5", "es6", "dom", "dom.iterable"
-        ],                                       
-    "module": "commonjs",
+        ],    
     "outDir": "./dist",
     "baseUrl": "./",                                   
     "rootDir": "./",
     "esModuleInterop": true,                           
     "forceConsistentCasingInFileNames": true,      
     "strict": true,                                      
-    "skipLibCheck": true                                 
-  
-  }
+    "skipLibCheck": true      
+  },
+  "browser":{
+  "child_process": false
+  } 
 }

@@ -1,75 +1,89 @@
 {
-    "name": "telegram_bot",
     "version": "1.0.0",
-    "description": "",
     "main": "app.js",
     "scripts": {
         "eslint": "eslint",
-        "build": "tsc",
+        "build": "webpack --config webpack.config.js",
         "tsc": "tsc",
         "start": "node ./dist/app.js",
         "dev": "nodemon ./app.ts",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build:dev": "webpack --mode=development",
+        "build:prod": "webpack --mode=production --node-env=production",
+        "watch": "webpack --watch"
     },
-    "keywords": [],
-    "author": "",
     "license": "ISC",
     "dependencies": {
-        "@types/signals": "^1.0.1",
         "axios": "^1.4.0",
         "dotenv": "^16.1.4",
-        "express": "^4.18.2",
-        "mongodb": "^5.6.0",
-        "mongoose": "^7.2.2",
+        "net": "^1.0.2",
         "node-cron": "^3.0.2",
-        "node-schedule": "^2.1.1",
-        "telegraf": "^4.12.2",
-        "telegraf-session-local": "^2.1.1",
-        "ts-node": "^10.9.1",
-        "typegram": "^5.0.0",
-        "typescript": "^5.0.4"
+        "node-schedule": "^2.1.1"
     },
     "devDependencies": {
+        "typegram": "^5.0.0",
         "@babel/core": "^7.22.1",
         "@babel/helper-compilation-targets": "^7.22.1",
+        "@babel/plugin-transform-runtime": "^7.22.5",
         "@types/debug": "^4.1.8",
         "@types/dotenv": "^8.2.0",
         "@types/express": "^4.17.17",
-        "@types/node": "^20.2.5",
+        "@types/node": "^20.3.1",
         "@types/node-cron": "^3.0.7",
         "@types/node-fetch": "^2.6.4",
         "@types/node-schedule": "^2.1.0",
+        "@types/signals": "^1.0.1",
+        "@types/webpack": "^5.28.1",
         "@typescript-eslint/eslint-plugin": "^5.59.11",
         "@typescript-eslint/parser": "^5.59.11",
+        "@webpack-cli/generators": "^3.0.7",
+        "babel-plugin-macros": "^3.1.0",
+        "clean-webpack-plugin": "^4.0.0",
+        "copy-webpack-plugin": "^11.0.0",
+        "declaration-bundler-webpack-plugin": "^1.0.3",
         "eslint": "^8.42.0",
         "eslint-config-airbnb-typescript": "^17.0.0",
         "eslint-config-prettier": "^8.8.0",
         "eslint-plugin-import": "^2.27.5",
         "eslint-plugin-prettier": "^4.2.1",
         "eslint-plugin-simple-import-sort": "^10.0.0",
+        "express": "^4.18.2",
+        "mongodb": "^5.6.0",
+        "mongoose": "^7.2.2",
         "nodemon": "^2.0.22",
         "prettier": "2.8.8",
+        "telegraf": "^4.12.2",
+        "telegraf-session-local": "^2.1.1",
+        "ts-loader": "^9.4.3",
         "ts-node": "^10.9.1",
-        "typescript": "^5.0.4"
+        "typescript": "^5.1.3",
+        "webpack": "^5.87.0",
+        "webpack-cli": "^5.1.4",
+        "wepack-cli": "^0.0.1-security"
     },
     "compilerOptions": {
         "module": "ESNext",
         "esModuleInterop": true,
         "target": "ESNext",
         "moduleResolution": "Node",
-        "outDir": "dist",
+        "outDir": "./dist",
         "forceConsistentCasingInFileNames": true,
         "noFallthroughCasesInSwitch": true,
         "isolatedModules": false,
         "strict": true,
         "noImplicitAny": true,
         "useUnknownInCatchVariables": false,
-        "inlineSourceMap": true
+        "inlineSourceMap": true,
+        "baseUrl": "./",
+        "rootDir": "./"
     },
     "ts-node": {
         "esm": true
     },
     "lib": [
         "esnext"
-    ]
+    ],
+    "browser": {
+        "[module-name]": false
+    }
 }

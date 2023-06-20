@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import 'dotenv/config';
 
+import { Bot } from 'Classes/bot';
 import express from 'express';
 import { connect, disconnect } from 'mongoose';
 
-import { Bot } from './src/classes/bot';
 import { envVariables } from './src/constants/env';
 import { clientErrorHandler } from './src/middleware/clientErrorHandler';
 
