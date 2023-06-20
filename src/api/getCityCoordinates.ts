@@ -1,7 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
-import { ICoordinatesData } from 'src/types/suggestion';
-
-import { constants } from '../constants/index';
+import { constants } from 'Constants/index';
+import { ICoordinatesData } from 'Types/suggestion';
 
 export async function getCityCoordinates(cityName: string): Promise<string[]> {
     try {

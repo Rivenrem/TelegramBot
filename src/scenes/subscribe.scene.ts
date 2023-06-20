@@ -1,11 +1,12 @@
+import { api } from 'Api/index';
+import { weatherTask } from 'Classes/weatherTask';
+import { constants } from 'Constants/index';
+import { helpers } from 'Helpers/index';
+import { isNewCommand } from 'Middleware/isNewCommand';
+import { weatherErrorHandler } from 'Middleware/weatherErrorHandler';
 import { Scenes } from 'telegraf';
 import { Message } from 'typegram';
-
-import { getWeather } from '../api/getWeather';
-import { weatherTask } from '../classes/weatherTask';
-import { constants } from '../constants/index';
-import { helpers } from '../helpers/index';
-import { MyContext } from '../types/context';
+import { MyContext } from 'Types/context';
 
 export const subscribeScene = new Scenes.WizardScene<MyContext>(
     constants.Scenes.SUBSCRRIBE_SCENE,
@@ -26,14 +27,24 @@ export const subscribeScene = new Scenes.WizardScene<MyContext>(
 
         const location = (context.message as Message.TextMessage).text;
 
-        try {
-            const weatherResponse = await getWeather(location);
+        if (isNewCommand(location)) {
+            await context.reply(`
+            Chose command: ${constants.help}`);
 
-            if (weatherResponse.status !== 200) {
+            await context.scene.leave();
+
+            return;
+        }
+
+        try {
+            const weatherResponse = await api.getWeather(location);
+
+            if (weatherResponse.status !== constants.Numbers.responseStatusOK) {
                 throw new Error();
             }
-        } catch {
-            await context.reply(constants.Errors.badWeatherRequest);
+        } catch (error) {
+            await weatherErrorHandler(error, context);
+
             return;
         }
 
@@ -47,6 +58,15 @@ export const subscribeScene = new Scenes.WizardScene<MyContext>(
 
     async context => {
         const time = (context.message as Message.TextMessage).text;
+
+        if (isNewCommand(time)) {
+            await context.reply(`
+            Chose command: ${constants.help}`);
+
+            await context.scene.leave();
+
+            return;
+        }
 
         if (helpers.getHoursAndMinutes(time)) {
             const [HH, MM] = helpers.getHoursAndMinutes(

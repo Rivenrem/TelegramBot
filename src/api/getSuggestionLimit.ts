@@ -1,7 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
-import { ISuggestionLimitData } from 'src/types/suggestion';
-
-import { constants } from '../constants/index';
+import { constants } from 'Constants/index';
+import { ISuggestionLimitData } from 'Types/suggestion';
 
 export async function getSuggestionLimit(
     lat: string,

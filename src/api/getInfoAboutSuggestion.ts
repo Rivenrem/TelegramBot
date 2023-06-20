@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-
-import { constants } from '../constants/index';
+import { constants } from 'Constants/index';
 
 export async function getInfoAboutSuggestion(
     xid: string,

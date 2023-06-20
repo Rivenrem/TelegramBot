@@ -1,9 +1,9 @@
+import { constants } from 'Constants/index';
+import { helpers } from 'Helpers/index';
+import { isNewCommand } from 'Middleware/isNewCommand';
 import { Scenes } from 'telegraf';
 import { Message } from 'typegram';
-
-import { constants } from '../constants/index';
-import { helpers } from '../helpers/index';
-import { MyContext } from '../types/context';
+import { MyContext } from 'Types/context';
 
 export const remindTaskScene = new Scenes.WizardScene<MyContext>(
     constants.Scenes.REMIND_TASK_SCENE,
@@ -16,23 +16,38 @@ export const remindTaskScene = new Scenes.WizardScene<MyContext>(
     async context => {
         const time = (context.message as Message.TextMessage).text;
 
-        if (helpers.getHoursAndMinutes(time) && context.session.taskToRemind) {
+        if (isNewCommand(time)) {
+            await context.reply(`
+            Chose command: ${constants.help}`);
+
+            await context.scene.leave();
+
+            return;
+        }
+
+        if (helpers.getHoursAndMinutes(time)) {
             const [HH, MM] = helpers.getHoursAndMinutes(
                 time,
             ) as RegExpMatchArray;
 
-            helpers.createReminde(
-                context,
-                HH,
-                MM,
-                context.session.taskToRemind,
-            );
-            context.session.chatID = context.chat?.id;
+            if (context.session.tasksToRemind) {
+                helpers.createReminde(
+                    context,
+                    HH,
+                    MM,
+                    context.session.tasksToRemind[
+                        context.session.tasksToRemind.length - 1
+                    ],
+                );
 
-            await context.reply(
-                `You will get a remind about your task at ${HH}:${MM} !`,
-            );
-            await context.scene.leave();
+                context.session.chatID = context.chat?.id;
+                await context.reply(
+                    `You will get a remind about your task at ${HH}:${MM} !`,
+                );
+                await context.scene.leave();
+            } else {
+                await context.reply(constants.Errors.base);
+            }
         } else {
             await context.reply(constants.Errors.wrongTime);
         }

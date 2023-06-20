@@ -1,9 +1,8 @@
+import { api } from 'Api/index';
+import { Command } from 'Classes/command.class';
+import { constants } from 'Constants/index';
 import { Input, Telegraf } from 'telegraf';
-
-import { getPhotoURL } from '../api/getPhotoURL';
-import { Command } from '../classes/command.class';
-import { constants } from '../constants/index';
-import { MyContext } from '../types/context';
+import { MyContext } from 'Types/context';
 
 export class PhotoCommand extends Command {
     constructor(bot: Telegraf<MyContext>, private readonly category: string) {
@@ -15,7 +14,7 @@ export class PhotoCommand extends Command {
             const loadMessage = await context.reply(constants.States.loading);
 
             try {
-                const picURL = await getPhotoURL(this.category);
+                const picURL = await api.getPhotoURL(this.category);
 
                 await context.replyWithPhoto(Input.fromURL(picURL));
                 await context.deleteMessage(loadMessage.message_id);

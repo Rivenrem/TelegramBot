@@ -1,17 +1,16 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import 'dotenv/config';
 
+import { Bot } from 'Classes/bot';
+import { envVariables } from 'Constants/env';
 import express from 'express';
+import { clientErrorHandler } from 'Middleware/clientErrorHandler';
 import { connect, disconnect } from 'mongoose';
-
-import { Bot } from './src/classes/bot';
-import { envVariables } from './src/constants/env';
-import { clientErrorHandler } from './src/middleware/clientErrorHandler';
 
 const { PORT } = envVariables;
 
 const app = express();
-const bot = new Bot();
+export const bot = new Bot();
 
 bot.init();
 connect(envVariables.DB_CONN_STRING);

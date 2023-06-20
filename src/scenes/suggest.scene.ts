@@ -1,10 +1,10 @@
+import { constants } from 'Constants/index';
+import { helpers } from 'Helpers/index';
+import { isNewCommand } from 'Middleware/isNewCommand';
 import { IPlace } from 'src/types/suggestion';
 import { Scenes } from 'telegraf';
 import { Message } from 'typegram';
-
-import { constants } from '../constants/index';
-import { helpers } from '../helpers/index';
-import { MyContext } from '../types/context';
+import { MyContext } from 'Types/context';
 
 export const suggestScene = new Scenes.WizardScene<MyContext>(
     constants.Scenes.SUGGEST_SCENE,
@@ -16,6 +16,16 @@ export const suggestScene = new Scenes.WizardScene<MyContext>(
 
     async context => {
         const message = context.message as Message.TextMessage;
+
+        if (isNewCommand(message.text)) {
+            await context.reply(`
+            Chose command: ${constants.help}`);
+
+            await context.scene.leave();
+
+            return;
+        }
+
         const loadMessage = await context.reply(constants.States.loading);
 
         try {

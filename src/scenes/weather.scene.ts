@@ -1,11 +1,12 @@
-import { IWeatherData } from 'src/types/weather';
+import { api } from 'Api/index';
+import { constants } from 'Constants/index';
+import { helpers } from 'Helpers/index';
+import { isNewCommand } from 'Middleware/isNewCommand';
+import { weatherErrorHandler } from 'Middleware/weatherErrorHandler';
 import { Scenes } from 'telegraf';
 import { Message } from 'typegram';
-
-import { getWeather } from '../api/getWeather';
-import { constants } from '../constants/index';
-import { helpers } from '../helpers/index';
-import { MyContext } from '../types/context';
+import { MyContext } from 'Types/context';
+import { IWeatherData } from 'Types/weather';
 
 export const weatherScene = new Scenes.WizardScene<MyContext>(
     constants.Scenes.WEATHER_SCENE,
@@ -15,20 +16,29 @@ export const weatherScene = new Scenes.WizardScene<MyContext>(
     },
 
     async context => {
-        const loadMessage = await context.reply(constants.States.loading);
-
         const location = context.message as Message.TextMessage;
 
+        if (isNewCommand(location.text)) {
+            await context.reply(`
+            Chose command: ${constants.help}`);
+
+            await context.scene.leave();
+
+            return;
+        }
+
+        const loadMessage = await context.reply(constants.States.loading);
+
         try {
-            const weather = await getWeather(location.text);
+            const weather = await api.getWeather(location.text);
 
             await helpers.displayWeather(context, weather.data as IWeatherData);
             await context.deleteMessage(loadMessage.message_id);
             await context.scene.leave();
-        } catch {
-            await context.reply(constants.Errors.base);
+        } catch (error) {
+            await weatherErrorHandler(error, context);
+
             await context.deleteMessage(loadMessage.message_id);
-            await context.scene.reenter();
         }
     },
 );

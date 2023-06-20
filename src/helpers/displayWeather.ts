@@ -1,6 +1,6 @@
-import { MyContext } from '../types/context';
-import { IWeatherData } from '../types/weather';
-import { uvIndexProcessing } from './uvIndexProcessing';
+import { uvIndexProcessing } from 'Helpers/uvIndexProcessing';
+import { MyContext } from 'Types/context';
+import { IWeatherData } from 'Types/weather';
 
 export async function displayWeather(
     context: MyContext,
@@ -8,13 +8,19 @@ export async function displayWeather(
 ): Promise<void> {
     await context.replyWithHTML(`
 
-      Current weather in ${weatherData.location.name}:
+      Current weather in ${weatherData.location.name}: <b>${
+        weatherData.current.condition.text
+    }</b>
 
-      <b>🌡 ${weatherData.current.temp_c}°C (${weatherData.current.temp_f}°F )
+      🌡 ${weatherData.current.temp_c}°C (Feels like:${
+        weatherData.current.feelslike_c
+    }°C)
 
-      ${weatherData.current.condition.text}</b>
+      🌬 Wind speed: ${weatherData.current.wind_kph} km/h
 
-      ${uvIndexProcessing(weatherData.current.uv)}
+      💧Humidity: ${weatherData.current.humidity}
+
+      🌤${uvIndexProcessing(weatherData.current.uv)}
     `);
 
     await context.replyWithPhoto({

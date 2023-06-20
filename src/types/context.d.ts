@@ -4,7 +4,7 @@ interface SessionData extends Scenes.WizardSession {
     subscribedLocation?: string | null;
     chatID?: number;
     dbObjectID?: string;
-    taskToRemind?: string;
+    tasksToRemind?: Array<string>;
 }
 
 export interface MyContext extends Scenes.WizardContext, Context {

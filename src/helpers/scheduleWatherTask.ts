@@ -1,10 +1,10 @@
+import { api } from 'Api/index';
+import { constants } from 'Constants/index';
+import { displayWeather } from 'Helpers/displayWeather';
+import { weatherErrorHandler } from 'Middleware/weatherErrorHandler';
 import cron, { ScheduledTask } from 'node-cron';
-import { IWeatherData } from 'src/types/weather';
-
-import { getWeather } from '../api/getWeather';
-import { constants } from '../constants/index';
-import { MyContext } from '../types/context';
-import { displayWeather } from './displayWeather';
+import { MyContext } from 'Types/context';
+import { IWeatherData } from 'Types/weather';
 
 export function scheduleWeatherTask(
     context: MyContext,
@@ -30,7 +30,7 @@ export function scheduleWeatherTask(
                     );
 
                     try {
-                        const weather = await getWeather(
+                        const weather = await api.getWeather(
                             context.session.subscribedLocation,
                         );
                         await displayWeather(
@@ -38,9 +38,9 @@ export function scheduleWeatherTask(
                             weather.data as IWeatherData,
                         );
                         await context.deleteMessage(loadMessage.message_id);
-                    } catch {
+                    } catch (error) {
+                        await weatherErrorHandler(error, context);
                         await context.deleteMessage(loadMessage.message_id);
-                        await context.reply(constants.Errors.base);
                     }
                 }
             })(),

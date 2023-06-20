@@ -1,10 +1,9 @@
+import { Command } from 'Classes/command.class';
+import { constants } from 'Constants/index';
+import { taskRepository } from 'Repositories/index';
+import { deleteTask } from 'Services/task.service';
 import { Markup } from 'telegraf';
-
-import { Command } from '../classes/command.class';
-import { constants } from '../constants/index';
-import { taskRepository } from '../repositories/index';
-import { deleteTask } from '../services/task.service';
-import { ICallback } from '../types/telegrafContextCallback';
+import { ICallback } from 'Types/telegrafContextCallback';
 
 export class TaskCommand extends Command {
     handle(): void {
@@ -70,6 +69,18 @@ export class TaskCommand extends Command {
 
             if (context.session.dbObjectID) {
                 await deleteTask(context.session.dbObjectID, taskToDelete);
+
+                if (context.session.tasksToRemind?.includes(taskToDelete)) {
+                    const index = context.session.tasksToRemind.findIndex(
+                        e => e === taskToDelete,
+                    );
+                    const newTasksToRemind = context.session.tasksToRemind
+                        .slice(0, index)
+                        .concat(context.session.tasksToRemind.slice(index + 1));
+
+                    context.session.tasksToRemind = [...newTasksToRemind];
+                }
+
                 await context.deleteMessage(
                     context.callbackQuery.message?.message_id,
                 );
@@ -80,7 +91,9 @@ export class TaskCommand extends Command {
             const callback = context.callbackQuery.message as ICallback;
             const taskToRemind = callback.text;
 
-            context.session.taskToRemind = taskToRemind;
+            context.session.tasksToRemind = context.session.tasksToRemind
+                ? [...context.session.tasksToRemind, taskToRemind]
+                : [taskToRemind];
 
             await context.scene.enter(constants.Scenes.REMIND_TASK_SCENE);
         });

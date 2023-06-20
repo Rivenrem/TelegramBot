@@ -1,6 +1,6 @@
-import { Command } from '../classes/command.class';
-import { weatherTask } from '../classes/weatherTask';
-import { constants } from '../constants/index';
+import { Command } from 'Classes/command.class';
+import { weatherTask } from 'Classes/weatherTask';
+import { constants } from 'Constants/index';
 
 export class WeatherSubscribtion extends Command {
     handle(): void {

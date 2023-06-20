@@ -1,13 +1,13 @@
-import { Commands } from './commands';
-import { envVariables } from './env';
-import { Errors } from './error';
-import { help } from './help';
-import { Numbers } from './magicNumbers';
-import { Scenes } from './scenes';
-import { States } from './states';
-import { SuggestPlace } from './suggest';
-import { Task } from './task';
-import { Weather } from './weather';
+import { Commands } from 'Constants/commands';
+import { envVariables } from 'Constants/env';
+import { Errors } from 'Constants/error';
+import { help } from 'Constants/help';
+import { Numbers } from 'Constants/magicNumbers';
+import { Scenes } from 'Constants/scenes';
+import { States } from 'Constants/states';
+import { SuggestPlace } from 'Constants/suggest';
+import { Task } from 'Constants/task';
+import { Weather } from 'Constants/weather';
 
 export const constants = {
     Commands,

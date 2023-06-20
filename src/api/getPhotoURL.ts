@@ -1,8 +1,7 @@
 import axios from 'axios';
-import { IPhotoData } from 'src/types/photo';
-
-import { constants } from '../constants/index';
-import { helpers } from '../helpers/index';
+import { constants } from 'Constants/index';
+import { helpers } from 'Helpers/index';
+import { IPhotoData } from 'Types/photo';
 
 export async function getPhotoURL(category: string): Promise<string> {
     const categoryX = helpers.processingPhotoCategory(category);
