@@ -10,14 +10,7 @@ export async function getCityCoordinates(cityName: string): Promise<string[]> {
       }&apikey=${constants.envVariables.OPENTRIP_API_KEY}`, // prettier-ignore
         );
 
-        const { status } = coordinates.data as ICoordinatesData;
-
-        if (status !== 'OK') {
-            throw new Error();
-        }
-
-        const { lat } = coordinates.data as ICoordinatesData;
-        const { lon } = coordinates.data as ICoordinatesData;
+        const { lat, lon } = coordinates.data as ICoordinatesData;
 
         return [lat, lon] as string[];
     } catch {

@@ -1,28 +1,41 @@
+import { constants } from 'Constants/index';
 import { Task, TaskClass } from 'Models/task';
 
 const findTasksById = async (objectId: string): Promise<TaskClass> => {
-    const task = await Task.findById(objectId);
+    try {
+        const task = await Task.findById(objectId);
 
-    if (!task) throw new Error('Task is not found');
+        if (!task) throw new Error(constants.Errors.taskNotFound);
 
-    return task;
+        return task;
+    } catch {
+        throw new Error();
+    }
 };
 
 const createTask = async (taskData: TaskClass): Promise<string> => {
-    const task = new Task(taskData);
+    try {
+        const task = new Task(taskData);
 
-    await task.save();
+        await task.save();
 
-    return task.id as string;
+        return task.id as string;
+    } catch {
+        throw new Error();
+    }
 };
 
 const updateTasks = async (
     objectId: string,
     newTasks: Array<string>,
 ): Promise<void> => {
-    await Task.findByIdAndUpdate(objectId, {
-        tasksArray: newTasks,
-    });
+    try {
+        await Task.findByIdAndUpdate(objectId, {
+            tasksArray: newTasks,
+        });
+    } catch {
+        throw new Error();
+    }
 };
 
 export const taskRepository = { createTask, findTasksById, updateTasks };

@@ -2,8 +2,8 @@ import { api } from 'Api/index';
 import { weatherTask } from 'Classes/weatherTask';
 import { constants } from 'Constants/index';
 import { helpers } from 'Helpers/index';
-import { isNewCommand } from 'Middleware/isNewCommand';
-import { weatherErrorHandler } from 'Middleware/weatherErrorHandler';
+import { isNewCommand } from 'Helpers/isNewCommand';
+import { weatherErrorHandler } from 'Helpers/weatherErrorHandler';
 import { Scenes } from 'telegraf';
 import { Message } from 'typegram';
 import { MyContext } from 'Types/context';
@@ -21,20 +21,13 @@ export const subscribeScene = new Scenes.WizardScene<MyContext>(
             !('text' in context.message) ||
             /\d/.test(context.message.text)
         ) {
-            await context.reply(constants.Errors.badWeatherRequest);
+            await context.reply(constants.Errors.unknownPlace);
             return;
         }
 
         const location = (context.message as Message.TextMessage).text;
 
-        if (isNewCommand(location)) {
-            await context.reply(`
-            Chose command: ${constants.help}`);
-
-            await context.scene.leave();
-
-            return;
-        }
+        if (await isNewCommand(location, context)) return;
 
         try {
             const weatherResponse = await api.getWeather(location);
@@ -59,14 +52,7 @@ export const subscribeScene = new Scenes.WizardScene<MyContext>(
     async context => {
         const time = (context.message as Message.TextMessage).text;
 
-        if (isNewCommand(time)) {
-            await context.reply(`
-            Chose command: ${constants.help}`);
-
-            await context.scene.leave();
-
-            return;
-        }
+        if (await isNewCommand(time, context)) return;
 
         if (helpers.getHoursAndMinutes(time)) {
             const [HH, MM] = helpers.getHoursAndMinutes(

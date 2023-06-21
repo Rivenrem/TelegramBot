@@ -1,5 +1,5 @@
 import { constants } from 'Constants/index';
-import { isNewCommand } from 'Middleware/isNewCommand';
+import { isNewCommand } from 'Helpers/isNewCommand';
 import { TaskClass } from 'Models/task';
 import { taskRepository } from 'Repositories/index';
 import { updateTasks } from 'Services/task.service';
@@ -16,19 +16,12 @@ export const addTaskScene = new Scenes.WizardScene<MyContext>(
     },
 
     async context => {
-        const message = context.message as Message.TextMessage;
-
-        if (isNewCommand(message.text)) {
-            await context.reply(`
-            Chose command: ${constants.help}`);
-
-            await context.scene.leave();
-
-            return;
-        }
-
         try {
-            if (!context.session.dbObjectID && context.chat !== undefined) {
+            const message = context.message as Message.TextMessage;
+
+            if (await isNewCommand(message.text, context)) return;
+
+            if (!context.session.dbObjectID && context.chat) {
                 const ID = await taskRepository.createTask(
                     new TaskClass([message.text], context.chat.id),
                 );

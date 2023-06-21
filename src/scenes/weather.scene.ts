@@ -1,8 +1,8 @@
 import { api } from 'Api/index';
 import { constants } from 'Constants/index';
 import { helpers } from 'Helpers/index';
-import { isNewCommand } from 'Middleware/isNewCommand';
-import { weatherErrorHandler } from 'Middleware/weatherErrorHandler';
+import { isNewCommand } from 'Helpers/isNewCommand';
+import { weatherErrorHandler } from 'Helpers/weatherErrorHandler';
 import { Scenes } from 'telegraf';
 import { Message } from 'typegram';
 import { MyContext } from 'Types/context';
@@ -18,14 +18,7 @@ export const weatherScene = new Scenes.WizardScene<MyContext>(
     async context => {
         const location = context.message as Message.TextMessage;
 
-        if (isNewCommand(location.text)) {
-            await context.reply(`
-            Chose command: ${constants.help}`);
-
-            await context.scene.leave();
-
-            return;
-        }
+        if (await isNewCommand(location.text, context)) return;
 
         const loadMessage = await context.reply(constants.States.loading);
 

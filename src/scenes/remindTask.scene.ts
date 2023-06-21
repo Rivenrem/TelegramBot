@@ -1,6 +1,6 @@
 import { constants } from 'Constants/index';
 import { helpers } from 'Helpers/index';
-import { isNewCommand } from 'Middleware/isNewCommand';
+import { isNewCommand } from 'Helpers/isNewCommand';
 import { Scenes } from 'telegraf';
 import { Message } from 'typegram';
 import { MyContext } from 'Types/context';
@@ -16,14 +16,7 @@ export const remindTaskScene = new Scenes.WizardScene<MyContext>(
     async context => {
         const time = (context.message as Message.TextMessage).text;
 
-        if (isNewCommand(time)) {
-            await context.reply(`
-            Chose command: ${constants.help}`);
-
-            await context.scene.leave();
-
-            return;
-        }
+        if (await isNewCommand(time, context)) return;
 
         if (helpers.getHoursAndMinutes(time)) {
             const [HH, MM] = helpers.getHoursAndMinutes(

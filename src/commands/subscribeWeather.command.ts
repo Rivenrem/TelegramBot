@@ -9,12 +9,11 @@ export class WeatherSubscribtion extends Command {
         });
 
         this.bot.command(constants.Commands.UNSUBSCRIBE, async context => {
-            if (
-                weatherTask.get() &&
-                context.session.subscribedLocation !== null
-            ) {
+            if (weatherTask.get() && context.session.subscribedLocation) {
                 weatherTask.get()?.stop();
+
                 context.session.subscribedLocation = null;
+
                 await context.reply(constants.States.done);
             } else {
                 await context.reply(constants.Errors.notSubscribed);
