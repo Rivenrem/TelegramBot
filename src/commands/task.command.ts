@@ -36,66 +36,79 @@ export class TaskCommand extends Command {
                 return;
             }
 
-            const response = await taskRepository.findTasksById(
-                context.session.dbObjectID,
-            );
+            try {
+                const response = await taskRepository.findTasksById(
+                    context.session.dbObjectID,
+                );
 
-            if (response.tasksArray.length === 0) {
-                await context.reply(constants.Errors.noTasks, {
-                    ...Markup.inlineKeyboard([
-                        Markup.button.callback(
-                            constants.Task.yesButton,
-                            'addNewTask',
-                        ),
-                    ]),
+                if (response.tasksArray.length === 0) {
+                    await context.reply(constants.Errors.noTasks, {
+                        ...Markup.inlineKeyboard([
+                            Markup.button.callback(
+                                constants.Task.yesButton,
+                                'addNewTask',
+                            ),
+                        ]),
+                    });
+
+                    return;
+                }
+
+                await context.reply('Your tasks:');
+
+                response.tasksArray.map(async (task: string) => {
+                    await context.reply(`📌 ${task}`, {
+                        ...Markup.inlineKeyboard([
+                            Markup.button.callback(
+                                constants.Task.deleteButton,
+                                'deleteTask',
+                            ),
+                            Markup.button.callback(
+                                constants.Task.remindButton,
+                                'remindAboutTask',
+                            ),
+                        ]),
+                    });
                 });
-
-                return;
+            } catch {
+                await context.reply(constants.Errors.base);
             }
-
-            await context.reply('Your tasks:');
-
-            response.tasksArray.map(async (task: string) => {
-                await context.reply(`📌 ${task}`, {
-                    ...Markup.inlineKeyboard([
-                        Markup.button.callback(
-                            constants.Task.deleteButton,
-                            'deleteTask',
-                        ),
-                        Markup.button.callback(
-                            constants.Task.remindButton,
-                            'remindAboutTask',
-                        ),
-                    ]),
-                });
-            });
         });
 
         this.bot.action('addNewTask', async context => {
-            await context.scene.enter(constants.Scenes.ADD_TASK_SCENE);
+            try {
+                await context.scene.enter(constants.Scenes.ADD_TASK_SCENE);
+            } catch {
+                await context.reply(constants.Errors.base);
+            }
         });
 
         this.bot.action('deleteTask', async context => {
             const callback = context.callbackQuery.message as ICallback;
             const taskToDelete = callback.text;
+            try {
+                if (context.session.dbObjectID) {
+                    await deleteTask(context.session.dbObjectID, taskToDelete);
 
-            if (context.session.dbObjectID) {
-                await deleteTask(context.session.dbObjectID, taskToDelete);
+                    if (context.session.tasksToRemind?.includes(taskToDelete)) {
+                        const index = context.session.tasksToRemind.findIndex(
+                            e => e === taskToDelete,
+                        );
+                        const newTasksToRemind = context.session.tasksToRemind
+                            .slice(0, index)
+                            .concat(
+                                context.session.tasksToRemind.slice(index + 1),
+                            );
 
-                if (context.session.tasksToRemind?.includes(taskToDelete)) {
-                    const index = context.session.tasksToRemind.findIndex(
-                        e => e === taskToDelete,
+                        context.session.tasksToRemind = [...newTasksToRemind];
+                    }
+
+                    await context.deleteMessage(
+                        context.callbackQuery.message?.message_id,
                     );
-                    const newTasksToRemind = context.session.tasksToRemind
-                        .slice(0, index)
-                        .concat(context.session.tasksToRemind.slice(index + 1));
-
-                    context.session.tasksToRemind = [...newTasksToRemind];
                 }
-
-                await context.deleteMessage(
-                    context.callbackQuery.message?.message_id,
-                );
+            } catch {
+                await context.reply(constants.Errors.base);
             }
         });
 
@@ -107,7 +120,11 @@ export class TaskCommand extends Command {
                 ? [...context.session.tasksToRemind, taskToRemind]
                 : [taskToRemind];
 
-            await context.scene.enter(constants.Scenes.REMIND_TASK_SCENE);
+            try {
+                await context.scene.enter(constants.Scenes.REMIND_TASK_SCENE);
+            } catch {
+                await context.reply(constants.Errors.base);
+            }
         });
     }
 }

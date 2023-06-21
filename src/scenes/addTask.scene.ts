@@ -16,11 +16,11 @@ export const addTaskScene = new Scenes.WizardScene<MyContext>(
     },
 
     async context => {
-        const message = context.message as Message.TextMessage;
-
-        if (await isNewCommand(message.text, context)) return;
-
         try {
+            const message = context.message as Message.TextMessage;
+
+            if (await isNewCommand(message.text, context)) return;
+
             if (!context.session.dbObjectID && context.chat) {
                 const ID = await taskRepository.createTask(
                     new TaskClass([message.text], context.chat.id),

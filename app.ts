@@ -12,9 +12,9 @@ const { PORT } = envVariables;
 export const bot = new Bot();
 
 const app = express();
-const server = app.listen(PORT);
 app.use(clientErrorHandler);
 
+const server = app.listen(PORT);
 bot.init();
 
 connectToDB(envVariables.DB_CONN_STRING);
