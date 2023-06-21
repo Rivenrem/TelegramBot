@@ -11,10 +11,13 @@ export class TaskCommand extends Command {
             await context.reply(constants.Task.addTask, {
                 ...Markup.inlineKeyboard([
                     Markup.button.callback(
-                        'Get all my tasks 📝',
+                        constants.Task.getButton,
                         'getAllTasks',
                     ),
-                    Markup.button.callback('Add new task ✏️', 'addNewTask'),
+                    Markup.button.callback(
+                        constants.Task.addButton,
+                        'addNewTask',
+                    ),
                 ]),
             });
         });
@@ -23,7 +26,10 @@ export class TaskCommand extends Command {
             if (!context.session.dbObjectID) {
                 await context.reply(constants.Errors.noTasks, {
                     ...Markup.inlineKeyboard([
-                        Markup.button.callback('yes', 'addNewTask'),
+                        Markup.button.callback(
+                            constants.Task.yesButton,
+                            'addNewTask',
+                        ),
                     ]),
                 });
 
@@ -37,7 +43,10 @@ export class TaskCommand extends Command {
             if (response.tasksArray.length === 0) {
                 await context.reply(constants.Errors.noTasks, {
                     ...Markup.inlineKeyboard([
-                        Markup.button.callback('yes', 'addNewTask'),
+                        Markup.button.callback(
+                            constants.Task.yesButton,
+                            'addNewTask',
+                        ),
                     ]),
                 });
 
@@ -49,9 +58,12 @@ export class TaskCommand extends Command {
             response.tasksArray.map(async (task: string) => {
                 await context.reply(`📌 ${task}`, {
                     ...Markup.inlineKeyboard([
-                        Markup.button.callback('Delete task ❌', 'deleteTask'),
                         Markup.button.callback(
-                            'Add reminder ⏰',
+                            constants.Task.deleteButton,
+                            'deleteTask',
+                        ),
+                        Markup.button.callback(
+                            constants.Task.remindButton,
                             'remindAboutTask',
                         ),
                     ]),

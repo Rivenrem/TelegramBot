@@ -7,4 +7,5 @@ export enum Errors {
     noEnvironmentFile = 'There is no .env file',
     emptyEnvironment = '.env file is empty',
     wrongEnvironmentKey = 'No value for this key',
+    taskNotFound = 'Task is not found',
 }

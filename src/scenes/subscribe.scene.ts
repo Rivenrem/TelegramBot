@@ -61,7 +61,9 @@ export const subscribeScene = new Scenes.WizardScene<MyContext>(
 
         if (isNewCommand(time)) {
             await context.reply(`
-            Chose command: ${constants.help}`);
+            Chose new command:
+            
+            ${constants.help}`);
 
             await context.scene.leave();
 

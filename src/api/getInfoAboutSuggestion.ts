@@ -9,5 +9,6 @@ export async function getInfoAboutSuggestion(
         }/0.1/en/places/xid/${xid
         }?apikey=${constants.envVariables.OPENTRIP_API_KEY}`, // prettier-ignore
     );
+
     return placeDescription;
 }

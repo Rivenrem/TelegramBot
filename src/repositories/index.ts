@@ -1,9 +1,10 @@
+import { constants } from 'Constants/index';
 import { Task, TaskClass } from 'Models/task';
 
 const findTasksById = async (objectId: string): Promise<TaskClass> => {
     const task = await Task.findById(objectId);
 
-    if (!task) throw new Error('Task is not found');
+    if (!task) throw new Error(constants.Errors.taskNotFound);
 
     return task;
 };

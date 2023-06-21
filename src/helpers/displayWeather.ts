@@ -1,3 +1,4 @@
+import { constants } from 'Constants/index';
 import { uvIndexProcessing } from 'Helpers/uvIndexProcessing';
 import { MyContext } from 'Types/context';
 import { IWeatherData } from 'Types/weather';
@@ -24,9 +25,8 @@ export async function displayWeather(
     `);
 
     await context.replyWithPhoto({
-        source: `./src/images/${weatherData.current.condition.icon
-            .split('/')
-            .slice(-2)
-            .join('/')}`,
+        source: `${
+            constants.Weather.staticSourceURL
+        }${weatherData.current.condition.icon.split('/').slice(-2).join('/')}`,
     });
 }
