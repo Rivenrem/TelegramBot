@@ -16,20 +16,16 @@ export function scheduleWeatherTask(
         // eslint-disable-next-line @typescript-eslint/no-misused-promises
         () =>
             (async () => {
-                if (
-                    context.session.chatID &&
-                    context.session.subscribedLocation
-                ) {
-                    await context.telegram.sendMessage(
-                        context.session.chatID,
-                        constants.Weather.scheduledMessage,
-                    );
+                try {
+                    if (
+                        context.session.chatID &&
+                        context.session.subscribedLocation
+                    ) {
+                        await context.telegram.sendMessage(
+                            context.session.chatID,
+                            constants.Weather.scheduledMessage,
+                        );
 
-                    const loadMessage = await context.reply(
-                        constants.States.loading,
-                    );
-
-                    try {
                         const weather = await api.getWeather(
                             context.session.subscribedLocation,
                         );
@@ -37,11 +33,9 @@ export function scheduleWeatherTask(
                             context,
                             weather.data as IWeatherData,
                         );
-                        await context.deleteMessage(loadMessage.message_id);
-                    } catch (error) {
-                        await weatherErrorHandler(error, context);
-                        await context.deleteMessage(loadMessage.message_id);
                     }
+                } catch (error) {
+                    await weatherErrorHandler(error, context);
                 }
             })(),
         {

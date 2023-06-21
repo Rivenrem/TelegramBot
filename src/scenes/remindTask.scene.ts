@@ -14,35 +14,39 @@ export const remindTaskScene = new Scenes.WizardScene<MyContext>(
     },
 
     async context => {
-        const time = (context.message as Message.TextMessage).text;
+        try {
+            const time = (context.message as Message.TextMessage).text;
 
-        if (await isNewCommand(time, context)) return;
+            if (await isNewCommand(time, context)) return;
 
-        if (helpers.getHoursAndMinutes(time)) {
-            const [HH, MM] = helpers.getHoursAndMinutes(
-                time,
-            ) as RegExpMatchArray;
+            if (helpers.getHoursAndMinutes(time)) {
+                const [HH, MM] = helpers.getHoursAndMinutes(
+                    time,
+                ) as RegExpMatchArray;
 
-            if (context.session.tasksToRemind) {
-                helpers.createReminde(
-                    context,
-                    HH,
-                    MM,
-                    context.session.tasksToRemind[
-                        context.session.tasksToRemind.length - 1
-                    ],
-                );
+                if (context.session.tasksToRemind) {
+                    helpers.createReminde(
+                        context,
+                        HH,
+                        MM,
+                        context.session.tasksToRemind[
+                            context.session.tasksToRemind.length - 1
+                        ],
+                    );
 
-                context.session.chatID = context.chat?.id;
-                await context.reply(
-                    `You will get a remind about your task at ${HH}:${MM} !`,
-                );
-                await context.scene.leave();
+                    context.session.chatID = context.chat?.id;
+                    await context.reply(
+                        `You will get a remind about your task at ${HH}:${MM} !`,
+                    );
+                    await context.scene.leave();
+                } else {
+                    await context.reply(constants.Errors.base);
+                }
             } else {
-                await context.reply(constants.Errors.base);
+                await context.reply(constants.Errors.wrongTime);
             }
-        } else {
-            await context.reply(constants.Errors.wrongTime);
+        } catch {
+            await context.reply(constants.Errors.base);
         }
     },
 );

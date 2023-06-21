@@ -16,60 +16,62 @@ export const subscribeScene = new Scenes.WizardScene<MyContext>(
     },
 
     async context => {
-        if (
-            !context.message ||
-            !('text' in context.message) ||
-            /\d/.test(context.message.text)
-        ) {
-            await context.reply(constants.Errors.unknownPlace);
-            return;
-        }
-
-        const location = (context.message as Message.TextMessage).text;
-
-        if (await isNewCommand(location, context)) return;
-
         try {
+            if (
+                !context.message ||
+                !('text' in context.message) ||
+                /\d/.test(context.message.text)
+            ) {
+                await context.reply(constants.Errors.unknownPlace);
+                return;
+            }
+
+            const location = (context.message as Message.TextMessage).text;
+
+            if (await isNewCommand(location, context)) return;
+
             const weatherResponse = await api.getWeather(location);
 
             if (weatherResponse.status !== constants.Numbers.responseStatusOK) {
                 throw new Error();
             }
+
+            context.session.chatID = context.chat?.id;
+            context.session.subscribedLocation = location;
+
+            await context.reply(constants.Weather.subscribtionTime);
+
+            context.wizard.next();
         } catch (error) {
             await weatherErrorHandler(error, context);
-
-            return;
         }
-
-        context.session.chatID = context.chat?.id;
-        context.session.subscribedLocation = location;
-
-        await context.reply(constants.Weather.subscribtionTime);
-
-        context.wizard.next();
     },
 
     async context => {
-        const time = (context.message as Message.TextMessage).text;
+        try {
+            const time = (context.message as Message.TextMessage).text;
 
-        if (await isNewCommand(time, context)) return;
+            if (await isNewCommand(time, context)) return;
 
-        if (helpers.getHoursAndMinutes(time)) {
-            const [HH, MM] = helpers.getHoursAndMinutes(
-                time,
-            ) as RegExpMatchArray;
+            if (helpers.getHoursAndMinutes(time)) {
+                const [HH, MM] = helpers.getHoursAndMinutes(
+                    time,
+                ) as RegExpMatchArray;
 
-            weatherTask.set(helpers.scheduleWeatherTask(context, HH, MM));
-            weatherTask.get()?.start();
+                weatherTask.set(helpers.scheduleWeatherTask(context, HH, MM));
+                weatherTask.get()?.start();
 
-            await context.reply(
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                `You will recive weather in ${context.session
-                    .subscribedLocation!} every day at ${HH}:${MM} !`,
-            );
-            await context.scene.leave();
-        } else {
-            await context.reply(constants.Errors.wrongTime);
+                await context.reply(
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                    `You will recive weather in ${context.session
+                        .subscribedLocation!} every day at ${HH}:${MM} !`,
+                );
+                await context.scene.leave();
+            } else {
+                await context.reply(constants.Errors.wrongTime);
+            }
+        } catch {
+            await context.reply(constants.Errors.base);
         }
     },
 );
