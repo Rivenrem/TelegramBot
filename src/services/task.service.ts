@@ -13,7 +13,7 @@ export const deleteTask = async (objectId: string, taskToDelete: string) => {
         const task = await taskRepository.findTasksById(objectId);
         const { tasksArray } = task;
 
-        if (tasksArray.includes(taskToDelete)) {
+        if (tasksArray.includes(taskToDelete.substring(3).toString())) {
             tasksArray.splice(
                 tasksArray.indexOf(taskToDelete.substring(3).toString()),
                 1,
