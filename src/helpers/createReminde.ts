@@ -1,4 +1,3 @@
-import { constants } from 'Constants/index';
 import schedule, { Job } from 'node-schedule';
 import { MyContext } from 'Types/context';
 
