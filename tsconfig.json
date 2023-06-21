@@ -30,6 +30,7 @@
             "Scenes/*": ["src/scenes/*"],
             "Services/*": ["src/services/*"],
             "Types/*": ["src/types/*"],
+            "Config/*": ["src/config/*"],
     }     
   },
   "browser":{

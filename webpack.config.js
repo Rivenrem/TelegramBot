@@ -55,6 +55,7 @@ module.exports = {
             Scenes: path.resolve(DIR_NAME, 'src/scenes/'),
             Services: path.resolve(DIR_NAME, 'src/services/'),
             Types: path.resolve(DIR_NAME, 'src/types/'),
+            Config: path.resolve(DIR_NAME, 'src/config/'),
         },
         fallback: {
             crypto: false,

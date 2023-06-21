@@ -1,5 +1,5 @@
 import { constants } from 'Constants/index';
-import { isNewCommand } from 'Middleware/isNewCommand';
+import { isNewCommand } from 'Helpers/isNewCommand';
 import { TaskClass } from 'Models/task';
 import { taskRepository } from 'Repositories/index';
 import { updateTasks } from 'Services/task.service';
@@ -28,7 +28,7 @@ export const addTaskScene = new Scenes.WizardScene<MyContext>(
         }
 
         try {
-            if (!context.session.dbObjectID && context.chat !== undefined) {
+            if (!context.session.dbObjectID && context.chat) {
                 const ID = await taskRepository.createTask(
                     new TaskClass([message.text], context.chat.id),
                 );

@@ -1,6 +1,6 @@
 import { constants } from 'Constants/index';
 import { helpers } from 'Helpers/index';
-import { isNewCommand } from 'Middleware/isNewCommand';
+import { isNewCommand } from 'Helpers/isNewCommand';
 import { IPlace } from 'src/types/suggestion';
 import { Scenes } from 'telegraf';
 import { Message } from 'typegram';

@@ -2,20 +2,23 @@
 import 'dotenv/config';
 
 import { Bot } from 'Classes/bot';
+import { connectToDB } from 'Config/db.config';
 import { envVariables } from 'Constants/env';
 import express from 'express';
 import { clientErrorHandler } from 'Middleware/clientErrorHandler';
-import { connect, disconnect } from 'mongoose';
+import { disconnect } from 'mongoose';
 
 const { PORT } = envVariables;
 
-const app = express();
 export const bot = new Bot();
 
-bot.init();
-connect(envVariables.DB_CONN_STRING);
+const app = express();
 const server = app.listen(PORT);
 app.use(clientErrorHandler);
+
+bot.init();
+
+connectToDB(envVariables.DB_CONN_STRING);
 
 const unhandledRejections = new Map();
 
@@ -27,7 +30,6 @@ process.on('rejectionHandled', promise => {
 });
 
 process.stdin.resume();
-
 process.on('SIGTERM', () => {
     disconnect();
     server.close();

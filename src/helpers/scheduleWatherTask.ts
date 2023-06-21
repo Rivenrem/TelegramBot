@@ -1,7 +1,7 @@
 import { api } from 'Api/index';
 import { constants } from 'Constants/index';
 import { displayWeather } from 'Helpers/displayWeather';
-import { weatherErrorHandler } from 'Middleware/weatherErrorHandler';
+import { weatherErrorHandler } from 'Helpers/weatherErrorHandler';
 import cron, { ScheduledTask } from 'node-cron';
 import { MyContext } from 'Types/context';
 import { IWeatherData } from 'Types/weather';
