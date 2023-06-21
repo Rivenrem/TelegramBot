@@ -5,7 +5,6 @@ import { connectToDB } from 'Config/db.config';
 import { envVariables } from 'Constants/envVariables';
 import express from 'express';
 import { clientErrorHandler } from 'Middleware/clientErrorHandler';
-import { errorHandler } from 'Middleware/errorHandler';
 import { disconnect } from 'mongoose';
 
 const { PORT } = envVariables;
@@ -15,7 +14,6 @@ export const bot = new Bot();
 const app = express();
 const server = app.listen(PORT);
 app.use(clientErrorHandler);
-app.use(errorHandler);
 
 bot.init();
 

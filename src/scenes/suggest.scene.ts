@@ -17,16 +17,7 @@ export const suggestScene = new Scenes.WizardScene<MyContext>(
     async context => {
         const message = context.message as Message.TextMessage;
 
-        if (isNewCommand(message.text)) {
-            await context.reply(`
-            ${constants.States.sceneLeave}
-            
-${constants.help}`);
-
-            await context.scene.leave();
-
-            return;
-        }
+        if (await isNewCommand(message.text, context)) return;
 
         const loadMessage = await context.reply(constants.States.loading);
 

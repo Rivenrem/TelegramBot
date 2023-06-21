@@ -27,16 +27,7 @@ export const subscribeScene = new Scenes.WizardScene<MyContext>(
 
         const location = (context.message as Message.TextMessage).text;
 
-        if (isNewCommand(location)) {
-            await context.reply(`
-            ${constants.States.sceneLeave}
-            
-${constants.help}`);
-
-            await context.scene.leave();
-
-            return;
-        }
+        if (await isNewCommand(location, context)) return;
 
         try {
             const weatherResponse = await api.getWeather(location);
@@ -61,16 +52,7 @@ ${constants.help}`);
     async context => {
         const time = (context.message as Message.TextMessage).text;
 
-        if (isNewCommand(time)) {
-            await context.reply(`
-            ${constants.States.sceneLeave}
-            
-${constants.help}`);
-
-            await context.scene.leave();
-
-            return;
-        }
+        if (await isNewCommand(time, context)) return;
 
         if (helpers.getHoursAndMinutes(time)) {
             const [HH, MM] = helpers.getHoursAndMinutes(

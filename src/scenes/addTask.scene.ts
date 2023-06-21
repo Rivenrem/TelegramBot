@@ -18,16 +18,7 @@ export const addTaskScene = new Scenes.WizardScene<MyContext>(
     async context => {
         const message = context.message as Message.TextMessage;
 
-        if (isNewCommand(message.text)) {
-            await context.reply(`
-            ${constants.States.sceneLeave}
-            
-${constants.help}`);
-
-            await context.scene.leave();
-
-            return;
-        }
+        if (await isNewCommand(message.text, context)) return;
 
         try {
             if (!context.session.dbObjectID && context.chat) {

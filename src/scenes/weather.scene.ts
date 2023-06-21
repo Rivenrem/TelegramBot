@@ -18,16 +18,7 @@ export const weatherScene = new Scenes.WizardScene<MyContext>(
     async context => {
         const location = context.message as Message.TextMessage;
 
-        if (isNewCommand(location.text)) {
-            await context.reply(`
-            ${constants.States.sceneLeave}
-            
-${constants.help}`);
-
-            await context.scene.leave();
-
-            return;
-        }
+        if (await isNewCommand(location.text, context)) return;
 
         const loadMessage = await context.reply(constants.States.loading);
 
