@@ -15,13 +15,11 @@ export const suggestScene = new Scenes.WizardScene<MyContext>(
     },
 
     async context => {
-        const message = context.message as Message.TextMessage;
-
-        if (await isNewCommand(message.text, context)) return;
-
         const loadMessage = await context.reply(constants.States.loading);
-
         try {
+            const message = context.message as Message.TextMessage;
+            if (await isNewCommand(message.text, context)) return;
+
             const place: IPlace = await helpers.getSuggestion(message.text);
 
             await context.replyWithHTML(
