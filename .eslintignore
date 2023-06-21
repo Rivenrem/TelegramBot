@@ -3,3 +3,4 @@ package-lock.json
 nodemon.json
 /dist
 webpack.config.js
+app.ts
