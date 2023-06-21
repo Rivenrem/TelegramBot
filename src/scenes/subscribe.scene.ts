@@ -21,7 +21,7 @@ export const subscribeScene = new Scenes.WizardScene<MyContext>(
             !('text' in context.message) ||
             /\d/.test(context.message.text)
         ) {
-            await context.reply(constants.Errors.badWeatherRequest);
+            await context.reply(constants.Errors.unknownPlace);
             return;
         }
 
@@ -29,7 +29,9 @@ export const subscribeScene = new Scenes.WizardScene<MyContext>(
 
         if (isNewCommand(location)) {
             await context.reply(`
-            Chose command: ${constants.help}`);
+            ${constants.States.sceneLeave}
+            
+${constants.help}`);
 
             await context.scene.leave();
 
@@ -61,9 +63,9 @@ export const subscribeScene = new Scenes.WizardScene<MyContext>(
 
         if (isNewCommand(time)) {
             await context.reply(`
-            Chose new command:
+            ${constants.States.sceneLeave}
             
-            ${constants.help}`);
+${constants.help}`);
 
             await context.scene.leave();
 

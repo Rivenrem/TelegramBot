@@ -3,7 +3,7 @@ import 'dotenv/config';
 
 import { Bot } from 'Classes/bot';
 import { connectToDB } from 'Config/db.config';
-import { envVariables } from 'Constants/env';
+import { envVariables } from 'Constants/envVariables';
 import express from 'express';
 import { clientErrorHandler } from 'Middleware/clientErrorHandler';
 import { disconnect } from 'mongoose';

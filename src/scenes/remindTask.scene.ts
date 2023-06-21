@@ -18,7 +18,9 @@ export const remindTaskScene = new Scenes.WizardScene<MyContext>(
 
         if (isNewCommand(time)) {
             await context.reply(`
-            Chose command: ${constants.help}`);
+            ${constants.States.sceneLeave}
+            
+${constants.help}`);
 
             await context.scene.leave();
 

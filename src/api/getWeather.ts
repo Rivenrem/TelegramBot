@@ -14,7 +14,7 @@ export async function getWeather(location: string): Promise<AxiosResponse> {
             error.response?.status ===
                 constants.Numbers.responseStatusBadRequest
         ) {
-            throw new AxiosError(constants.Weather.bagRequestMessage);
+            throw new AxiosError(constants.Errors.bagRequestMessage);
         } else {
             throw new Error();
         }

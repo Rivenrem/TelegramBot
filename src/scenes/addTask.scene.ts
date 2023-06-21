@@ -20,7 +20,9 @@ export const addTaskScene = new Scenes.WizardScene<MyContext>(
 
         if (isNewCommand(message.text)) {
             await context.reply(`
-            Chose command: ${constants.help}`);
+            ${constants.States.sceneLeave}
+            
+${constants.help}`);
 
             await context.scene.leave();
 

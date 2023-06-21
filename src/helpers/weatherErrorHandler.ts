@@ -8,9 +8,9 @@ export async function weatherErrorHandler(
 ): Promise<void> {
     if (
         error instanceof AxiosError &&
-        error.message === constants.Weather.bagRequestMessage
+        error.message === constants.Errors.bagRequestMessage
     ) {
-        await context.reply(constants.Errors.badWeatherRequest);
+        await context.reply(constants.Errors.unknownPlace);
         await context.scene.reenter();
     } else {
         await context.reply(constants.Errors.base);
