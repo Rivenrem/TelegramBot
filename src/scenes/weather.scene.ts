@@ -16,21 +16,20 @@ export const weatherScene = new Scenes.WizardScene<MyContext>(
     },
 
     async context => {
+        const location = context.message as Message.TextMessage;
+
+        if (await isNewCommand(location.text, context)) return;
+
         const loadMessage = await context.reply(constants.States.loading);
+
         try {
-            const location = context.message as Message.TextMessage;
-
-            if (await isNewCommand(location.text, context)) return;
-
             const weather = await api.getWeather(location.text);
 
             await helpers.displayWeather(context, weather.data as IWeatherData);
-            await context.deleteMessage(loadMessage.message_id);
             await context.scene.leave();
         } catch (error) {
             await weatherErrorHandler(error, context);
-
-            await context.deleteMessage(loadMessage.message_id);
         }
+        await context.deleteMessage(loadMessage.message_id);
     },
 );

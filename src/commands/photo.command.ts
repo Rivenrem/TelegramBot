@@ -17,11 +17,10 @@ export class PhotoCommand extends Command {
                 const picURL = await api.getPhotoURL(this.category);
 
                 await context.replyWithPhoto(Input.fromURL(picURL));
-                await context.deleteMessage(loadMessage.message_id);
             } catch {
-                await context.deleteMessage(loadMessage.message_id);
                 await context.reply(constants.Errors.base);
             }
+            await context.deleteMessage(loadMessage.message_id);
         });
     }
 }

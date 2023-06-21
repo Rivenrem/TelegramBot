@@ -15,11 +15,12 @@ export const suggestScene = new Scenes.WizardScene<MyContext>(
     },
 
     async context => {
+        const message = context.message as Message.TextMessage;
+
+        if (await isNewCommand(message.text, context)) return;
+
         const loadMessage = await context.reply(constants.States.loading);
         try {
-            const message = context.message as Message.TextMessage;
-            if (await isNewCommand(message.text, context)) return;
-
             const place: IPlace = await helpers.getSuggestion(message.text);
 
             await context.replyWithHTML(
@@ -42,18 +43,16 @@ export const suggestScene = new Scenes.WizardScene<MyContext>(
         `, // prettier-ignore
             );
 
-            await context.deleteMessage(loadMessage.message_id);
-
             if (place.preview?.source) {
                 await context.replyWithPhoto({
                     url: place.preview?.source,
                 });
             }
         } catch {
-            await context.deleteMessage(loadMessage.message_id);
             await context.reply(constants.Errors.base);
         }
 
+        await context.deleteMessage(loadMessage.message_id);
         await context.scene.leave();
     },
 );
