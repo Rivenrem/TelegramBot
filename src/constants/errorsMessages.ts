@@ -9,4 +9,5 @@ export enum Errors {
     wrongEnvironmentKey = 'No value for this key',
     taskNotFound = 'Task is not found',
     bagRequestMessage = 'No matching location found.',
+    dbConnectionError = 'Connection to DB error',
 }
