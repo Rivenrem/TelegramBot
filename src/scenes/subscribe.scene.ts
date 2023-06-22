@@ -11,7 +11,7 @@ import { MyContext } from 'Types/context';
 export const subscribeScene = new Scenes.WizardScene<MyContext>(
     constants.Scenes.SUBSCRRIBE_SCENE,
     async context => {
-        await context.reply(constants.Weather.subscribtion);
+        await context.reply(constants.commandsText.Weather.subscribtion);
         return context.wizard.next();
     },
 
@@ -39,7 +39,9 @@ export const subscribeScene = new Scenes.WizardScene<MyContext>(
             context.session.chatID = context.chat?.id;
             context.session.subscribedLocation = location;
 
-            await context.reply(constants.Weather.subscribtionTime);
+            await context.reply(
+                constants.commandsText.Weather.subscribtionTime,
+            );
 
             context.wizard.next();
         } catch (error) {

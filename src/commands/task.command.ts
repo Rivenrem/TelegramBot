@@ -7,15 +7,15 @@ import { ICallback } from 'Types/telegrafContextCallback';
 
 export class TaskCommand extends Command {
     handle(): void {
-        this.bot.command(constants.Commands.TASK, async context => {
-            await context.reply(constants.Task.addTask, {
+        this.bot.command(constants.CommandsNames.TASK, async context => {
+            await context.reply(constants.commandsText.Task.addTask, {
                 ...Markup.inlineKeyboard([
                     Markup.button.callback(
-                        constants.Task.getButton,
+                        constants.commandsText.Task.getButton,
                         'getAllTasks',
                     ),
                     Markup.button.callback(
-                        constants.Task.addButton,
+                        constants.commandsText.Task.addButton,
                         'addNewTask',
                     ),
                 ]),
@@ -27,7 +27,7 @@ export class TaskCommand extends Command {
                 await context.reply(constants.Errors.noTasks, {
                     ...Markup.inlineKeyboard([
                         Markup.button.callback(
-                            constants.Task.yesButton,
+                            constants.commandsText.Task.yesButton,
                             'addNewTask',
                         ),
                     ]),
@@ -45,7 +45,7 @@ export class TaskCommand extends Command {
                     await context.reply(constants.Errors.noTasks, {
                         ...Markup.inlineKeyboard([
                             Markup.button.callback(
-                                constants.Task.yesButton,
+                                constants.commandsText.Task.yesButton,
                                 'addNewTask',
                             ),
                         ]),
@@ -60,11 +60,11 @@ export class TaskCommand extends Command {
                     await context.reply(`📌 ${task}`, {
                         ...Markup.inlineKeyboard([
                             Markup.button.callback(
-                                constants.Task.deleteButton,
+                                constants.commandsText.Task.deleteButton,
                                 'deleteTask',
                             ),
                             Markup.button.callback(
-                                constants.Task.remindButton,
+                                constants.commandsText.Task.remindButton,
                                 'remindAboutTask',
                             ),
                         ]),

@@ -11,7 +11,7 @@ export const addTaskScene = new Scenes.WizardScene<MyContext>(
     constants.Scenes.ADD_TASK_SCENE,
 
     async context => {
-        await context.reply(constants.Task.addTask);
+        await context.reply(constants.commandsText.Task.addTask);
         return context.wizard.next();
     },
 
