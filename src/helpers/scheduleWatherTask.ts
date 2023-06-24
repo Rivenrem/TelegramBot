@@ -23,7 +23,7 @@ export function scheduleWeatherTask(
                     ) {
                         await context.telegram.sendMessage(
                             context.session.chatID,
-                            constants.Weather.scheduledMessage,
+                            constants.commandsText.Weather.scheduledMessage,
                         );
 
                         const weather = await api.getWeather(

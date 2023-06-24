@@ -11,7 +11,7 @@ import { IWeatherData } from 'Types/weather';
 export const weatherScene = new Scenes.WizardScene<MyContext>(
     constants.Scenes.WEATHER_SCENE,
     async context => {
-        await context.reply(constants.Weather.forecast);
+        await context.reply(constants.commandsText.Weather.forecast);
         return context.wizard.next();
     },
 

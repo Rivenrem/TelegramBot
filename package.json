@@ -60,28 +60,11 @@
         "wepack-cli": "^0.0.1-security"
     },
     "compilerOptions": {
-        "module": "ESNext",
+        "module": "commonjs",
         "esModuleInterop": true,
-        "target": "ESNext",
         "moduleResolution": "Node",
         "outDir": "./dist",
-        "forceConsistentCasingInFileNames": true,
-        "noFallthroughCasesInSwitch": true,
-        "isolatedModules": false,
         "strict": true,
-        "noImplicitAny": true,
-        "useUnknownInCatchVariables": false,
-        "inlineSourceMap": true,
-        "baseUrl": "./",
-        "rootDir": "./"
-    },
-    "ts-node": {
-        "esm": true
-    },
-    "lib": [
-        "esnext"
-    ],
-    "browser": {
-        "[module-name]": false
+        "baseUrl": "./"
     }
 }

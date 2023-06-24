@@ -1,4 +1,4 @@
-export enum Commands {
+export enum CommandsNames {
     SUBSCRIBE = 'subscribe',
     UNSUBSCRIBE = 'unsubscribe',
     SUGGEST = 'suggest',

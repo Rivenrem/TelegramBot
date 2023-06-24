@@ -26,7 +26,7 @@ export async function displayWeather(
 
     await context.replyWithPhoto({
         source: `${
-            constants.Weather.staticSourceURL
+            constants.commandsText.Weather.staticSourceURL
         }${weatherData.current.condition.icon.split('/').slice(-2).join('/')}`,
     });
 }

@@ -9,7 +9,7 @@ export const remindTaskScene = new Scenes.WizardScene<MyContext>(
     constants.Scenes.REMIND_TASK_SCENE,
 
     async context => {
-        await context.reply(constants.Task.reminderTime);
+        await context.reply(constants.commandsText.Task.reminderTime);
         return context.wizard.next();
     },
 

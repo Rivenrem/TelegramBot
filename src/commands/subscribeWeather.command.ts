@@ -4,11 +4,11 @@ import { constants } from 'Constants/index';
 
 export class WeatherSubscribtion extends Command {
     handle(): void {
-        this.bot.command(constants.Commands.SUBSCRIBE, async context => {
+        this.bot.command(constants.CommandsNames.SUBSCRIBE, async context => {
             await context.scene.enter(constants.Scenes.SUBSCRRIBE_SCENE);
         });
 
-        this.bot.command(constants.Commands.UNSUBSCRIBE, async context => {
+        this.bot.command(constants.CommandsNames.UNSUBSCRIBE, async context => {
             if (weatherTask.get() && context.session.subscribedLocation) {
                 weatherTask.get()?.stop();
 
