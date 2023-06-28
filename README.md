@@ -60,8 +60,12 @@ To run this project, you will need to add the following environment variables to
 
 'PORT'
 
+'OPENTRIP_API_KEY'
+
 'OPENTRIP_STATIC_URL'
 
 'PHOTO_STATIC_URL'
 
 'WEATHER_STATIC_URL'
+
+'GOOGLE_MAPS_SEARCH_STATIC_URL'
