@@ -1,8 +1,6 @@
 
 # Telegram Bot
 
-@wennecia_bot
-
 It can 
 
 /cat - send a photo of a cat
